@@ -5,8 +5,8 @@ import {
   type CollectionEntry
 } from "astro:content";
 
-import Layout from "../../layouts/Layout.astro";
-import Navbar from "../../components/Navbar.astro";
+import Layout
+  from "../../layouts/Layout.astro";
 
 import ConnectionsGame
   from "../../components/games/ConnectionsGame.astro";
@@ -17,7 +17,8 @@ import MatchingGame
 import SequenceGame
   from "../../components/games/SequenceGame.astro";
 
-type GameEntry = CollectionEntry<"games">;
+type GameEntry =
+  CollectionEntry<"games">;
 
 interface Props {
   game: GameEntry;
@@ -43,6 +44,7 @@ export async function getStaticPaths() {
       .join("/");
 
     return {
+
       params: {
         slug
       },
@@ -50,6 +52,7 @@ export async function getStaticPaths() {
       props: {
         game
       }
+
     };
   });
 }
@@ -68,8 +71,6 @@ const GameComponent =
   title={`${game.data.title} - First7 Play`}
   description={game.data.description}
 >
-
-  <Navbar />
 
   <main class="container py-16">
 

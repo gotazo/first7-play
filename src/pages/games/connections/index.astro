@@ -1,0 +1,139 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+const puzzles = [
+  {
+    title: "Faith Through Trials",
+
+    href: "/games/connections/faith-through-trials",
+
+    difficulty: "Medium"
+  },
+
+  {
+    title: "Hope and Strength",
+
+    href: "/games/connections/hope-and-strength",
+
+    difficulty: "Easy"
+  }
+];
+---
+
+<Layout
+  title="Bible Connections Games | First7 Play"
+  description="Play Bible connections games and discover hidden relationships between scripture themes, symbols, teachings, and spiritual ideas."
+>
+
+  <section
+    class="border-b border-[var(--color-border)]"
+  >
+
+    <div
+      class="mx-auto max-w-5xl px-5 py-24"
+    >
+
+      <div
+        class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Connections Games
+      </div>
+
+      <h1
+        class="mt-6 text-5xl font-semibold tracking-tight"
+      >
+        Bible Connections Games
+      </h1>
+
+      <p
+        class="mt-8 max-w-3xl text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Discover hidden relationships between scripture,
+        themes, spiritual ideas, symbols, teachings,
+        and deeper meanings.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- PUZZLES -->
+
+  <section
+    class="mx-auto max-w-5xl px-5 py-20"
+  >
+
+    <div
+      class="grid gap-6"
+    >
+
+      {
+        puzzles.map((puzzle) => (
+
+          <a
+            href={puzzle.href}
+            class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
+          >
+
+            <div
+              class="flex items-center justify-between"
+            >
+
+              <h2
+                class="text-2xl font-semibold tracking-tight"
+              >
+                {puzzle.title}
+              </h2>
+
+              <div
+                class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+              >
+                {puzzle.difficulty}
+              </div>
+
+            </div>
+
+            <div
+              class="mt-6 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+            >
+              Play Puzzle →
+            </div>
+
+          </a>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+  <!-- SEO -->
+
+  <section
+    class="mx-auto max-w-4xl px-5 pb-24"
+  >
+
+    <div class="prose prose-invert max-w-none">
+
+      <h2>
+        Interactive Bible Connections Puzzles
+      </h2>
+
+      <p>
+        Bible connections games challenge players
+        to discover relationships between scripture ideas,
+        spiritual themes, symbols, teachings, and meaning.
+      </p>
+
+      <p>
+        These interactive Christian puzzle games are designed
+        around reflection, learning, memory,
+        and spiritual discovery.
+      </p>
+
+    </div>
+
+  </section>
+
+</Layout>

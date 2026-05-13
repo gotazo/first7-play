@@ -1,0 +1,200 @@
+---
+import DarkToggle from "./DarkToggle.astro";
+
+const pathname = Astro.url.pathname;
+
+const links = [
+  {
+    href: "/daily",
+    label: "Daily"
+  },
+
+  {
+    href: "/games",
+    label: "Games"
+  },
+
+  {
+    href: "/mysteries",
+    label: "Mysteries"
+  }
+];
+---
+
+<nav
+  class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-xl"
+>
+
+  <div
+    class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"
+  >
+
+    <!-- LOGO -->
+
+    <a
+      href="/"
+      class="flex items-center gap-2 tracking-tight"
+    >
+
+      <span
+        class="text-2xl md:text-3xl"
+        style="font-family: 'Playfair Display', serif;"
+      >
+        first
+      </span>
+
+      <span
+        class="text-2xl md:text-3xl text-[var(--color-primary)]"
+      >
+        7
+      </span>
+
+      <span
+        class="rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-2 py-[4px] text-[10px] uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Play
+      </span>
+
+    </a>
+
+    <!-- DESKTOP NAV -->
+
+    <div
+      class="hidden md:flex items-center gap-8 text-sm"
+    >
+
+      {
+        links.map((link) => {
+
+          const isActive =
+            pathname.startsWith(link.href);
+
+          return (
+
+            <a
+              href={link.href}
+              class={`transition-colors duration-200 ${
+                isActive
+                  ? "text-[var(--color-text)]"
+                  : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
+              }`}
+            >
+              {link.label}
+            </a>
+
+          );
+        })
+      }
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div
+      class="flex items-center gap-3"
+    >
+
+      <a
+        href="https://first7.org"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden md:inline-flex text-sm text-[var(--color-muted)] transition hover:text-[var(--color-text)]"
+      >
+        Main Site ↗
+      </a>
+
+      <DarkToggle />
+
+      <!-- MOBILE MENU BUTTON -->
+
+      <button
+        id="menu-btn"
+        class="md:hidden rounded-xl border border-[var(--color-border)] p-2"
+      >
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-[var(--color-border)] md:hidden"
+  >
+
+    <div
+      class="space-y-1 px-5 py-5"
+    >
+
+      {
+        links.map((link) => {
+
+          const isActive =
+            pathname.startsWith(link.href);
+
+          return (
+
+            <a
+              href={link.href}
+              class={`block rounded-xl px-4 py-3 transition ${
+                isActive
+                  ? "bg-[rgba(214,179,106,0.08)] text-[var(--color-text)]"
+                  : "text-[var(--color-muted)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[var(--color-text)]"
+              }`}
+            >
+              {link.label}
+            </a>
+
+          );
+        })
+      }
+
+      <a
+        href="https://first7.org"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block rounded-xl px-4 py-3 text-[var(--color-muted)] transition hover:bg-[rgba(255,255,255,0.04)] hover:text-[var(--color-text)]"
+      >
+        Main Site ↗
+      </a>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<script is:inline>
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+      const btn =
+        document.getElementById(
+          "menu-btn"
+        );
+
+      const menu =
+        document.getElementById(
+          "mobile-menu"
+        );
+
+      btn?.addEventListener(
+        "click",
+        () => {
+
+          menu?.classList.toggle(
+            "hidden"
+          );
+
+        }
+      );
+
+    }
+  );
+
+</script>

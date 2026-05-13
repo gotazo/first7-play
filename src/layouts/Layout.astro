@@ -1,4 +1,7 @@
 ---
+import PlayNavbar from "../components/PlayNavbar.astro";
+import PlayFooter from "../components/PlayFooter.astro";
+
 import "../styles/global.css";
 
 interface Props {
@@ -8,21 +11,45 @@ interface Props {
 
 const {
   title = "First7 Play",
-  description = "Interactive Bible games and scripture discovery experiences."
+  description =
+    "Interactive Bible games and scripture discovery experiences."
 } = Astro.props;
 ---
 
 <!doctype html>
+
 <html lang="en">
+
   <head>
+
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
 
     <title>{title}</title>
-    <meta name="description" content={description} />
+
+    <meta
+      name="description"
+      content={description}
+    />
+
   </head>
 
   <body>
-    <slot />
+
+    <PlayNavbar />
+
+    <main>
+
+      <slot />
+
+    </main>
+
+    <PlayFooter />
+
   </body>
+
 </html>

@@ -1,0 +1,225 @@
+---
+const year = new Date().getFullYear();
+
+const exploreLinks = [
+  {
+    href: "/daily",
+    label: "Daily Puzzles"
+  },
+
+  {
+    href: "/games/connections",
+    label: "Connections"
+  },
+
+  {
+    href: "/games/sequence",
+    label: "Sequence"
+  },
+
+  {
+    href: "/games/matching",
+    label: "Matching"
+  }
+];
+
+const mysteryLinks = [
+  {
+    href: "/mysteries",
+    label: "Mysteries"
+  },
+
+  {
+    href: "/progress",
+    label: "Progress"
+  },
+
+  {
+    href: "/unlocks",
+    label: "Unlocks"
+  }
+];
+---
+
+<footer
+  class="mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg)]"
+>
+
+  <div
+    class="mx-auto max-w-6xl px-5 py-16"
+  >
+
+    <!-- TOP -->
+
+    <div
+      class="grid gap-14 md:grid-cols-4"
+    >
+
+      <!-- BRAND -->
+
+      <div class="md:col-span-2">
+
+        <a
+          href="/"
+          class="flex items-center gap-2 tracking-tight"
+        >
+
+          <span
+            class="text-3xl"
+            style="font-family: 'Playfair Display', serif;"
+          >
+            first
+          </span>
+
+          <span
+            class="text-3xl text-[var(--color-primary)]"
+          >
+            7
+          </span>
+
+          <span
+            class="rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-2 py-[4px] text-[10px] uppercase tracking-[0.18em] text-[var(--color-primary)]"
+          >
+            Play
+          </span>
+
+        </a>
+
+        <p
+          class="mt-5 max-w-md text-sm leading-7 text-[var(--color-muted)]"
+        >
+          Puzzle experiences centered around
+          reflection, discovery, progression,
+          and hidden meaning.
+        </p>
+
+        <a
+          href="https://first7.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-6 inline-flex text-sm text-[var(--color-primary)] transition hover:opacity-80"
+        >
+          Visit Main Site ↗
+        </a>
+        <a
+  href="/support"
+  class="mt-4 inline-flex rounded-xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-sm text-[var(--color-primary)] transition hover:bg-[rgba(214,179,106,0.14)]"
+>
+  Support This Project →
+</a>
+
+      </div>
+
+      <!-- EXPLORE -->
+
+      <div>
+
+        <p
+          class="text-sm font-medium text-[var(--color-text)]"
+        >
+          Explore
+        </p>
+
+        <ul
+          class="mt-4 space-y-3 text-sm"
+        >
+
+          {
+            exploreLinks.map((link) => (
+
+              <li>
+
+                <a
+                  href={link.href}
+                  class="text-[var(--color-muted)] transition hover:text-[var(--color-text)]"
+                >
+                  {link.label}
+                </a>
+
+              </li>
+
+            ))
+          }
+
+        </ul>
+
+      </div>
+
+      <!-- MYSTERIES -->
+
+      <div>
+
+        <p
+          class="text-sm font-medium text-[var(--color-text)]"
+        >
+          Journey
+        </p>
+
+        <ul
+          class="mt-4 space-y-3 text-sm"
+        >
+
+          {
+            mysteryLinks.map((link) => (
+
+              <li>
+
+                <a
+                  href={link.href}
+                  class="text-[var(--color-muted)] transition hover:text-[var(--color-text)]"
+                >
+                  {link.label}
+                </a>
+
+              </li>
+
+            ))
+          }
+
+        </ul>
+
+      </div>
+
+    </div>
+
+    <!-- MOBILE DIVIDER -->
+
+    <div
+      class="mt-14 border-t border-[var(--color-border)] pt-8"
+    >
+
+      <div
+        class="flex flex-col gap-4 text-sm text-[var(--color-muted)] md:flex-row md:items-center md:justify-between"
+      >
+
+        <p>
+          © {year} First7 Play
+        </p>
+
+        <div
+          class="flex gap-5"
+        >
+
+          <a
+            href="/privacy"
+            class="transition hover:text-[var(--color-text)]"
+          >
+            Privacy
+          </a>
+
+          <a
+            href="/terms"
+            class="transition hover:text-[var(--color-text)]"
+          >
+            Terms
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>

@@ -1,62 +1,402 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.astro";
-import GameCard from "../components/GameCard.astro";
+
+const featuredGames = [
+  {
+    title: "Connections",
+
+    description:
+      "Discover hidden relationships between scripture themes, symbols, teachings, and meaning.",
+
+    href: "/games/connections",
+
+    badge: "Popular",
+
+    difficulty: "Medium",
+
+    status: "Available"
+  },
+
+  {
+    title: "Sequence",
+
+    description:
+      "Arrange growth, journeys, events, and scripture themes in the correct order.",
+
+    href: "/games/sequence",
+
+    badge: "New",
+
+    difficulty: "Easy",
+
+    status: "Available"
+  },
+
+  {
+    title: "Matching",
+
+    description:
+      "Match verses, spiritual ideas, meanings, and symbolic connections.",
+
+    href: "/games/matching",
+
+    badge: "Soon",
+
+    difficulty: "Easy",
+
+    status: "Coming Soon"
+  }
+];
+
+const dailyPuzzle = {
+  title: "Growth Sequence",
+
+  description:
+    "Arrange the stages of growth in the correct order and unlock a scripture reward.",
+
+  href: "/games/sequence/growth-sequence"
+};
 ---
 
-<Layout>
-  <Navbar />
+<Layout
+  title="First7 Play — Interactive Bible Games & Daily Scripture Puzzles"
+  description="Play daily Bible puzzles, scripture games, mystery experiences, sequence challenges, and interactive faith-based games designed around reflection and discovery."
+>
 
-  <main>
-    <section class="container py-24 md:py-32">
+  <!-- HERO -->
+
+  <section class="relative overflow-hidden border-b border-[var(--color-border)]">
+
+    <div
+      class="mx-auto max-w-6xl px-5 py-24 md:py-32"
+    >
+
       <div class="max-w-3xl">
 
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[var(--color-muted)]">
-          <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
-          Static-first interactive scripture games
+        <div
+          class="mb-6 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+        >
+          Interactive Scripture Experiences
         </div>
 
-        <h1 class="mt-8 text-5xl md:text-7xl font-semibold tracking-tight leading-[0.95]">
-          Discover Scripture
-          <span class="text-[var(--color-primary)]">
-            Through Play
-          </span>
+        <h1
+          class="text-5xl font-semibold tracking-tight md:text-7xl"
+        >
+          Daily Bible Games,
+          Mystery Puzzles,
+          and Scripture Discovery.
         </h1>
 
-        <p class="mt-8 text-lg leading-8 text-[var(--color-muted)] max-w-2xl">
-          Elegant Bible puzzle experiences designed for curiosity,
-          reflection, memory, and discovery.
+        <p
+          class="mt-8 max-w-2xl text-lg leading-8 text-[var(--color-muted)] md:text-xl"
+        >
+          Explore interactive Bible games designed around
+          reflection, progression, hidden meaning,
+          and scripture-based discovery.
         </p>
 
-      </div>
-    </section>
+        <div
+          class="mt-10 flex flex-col gap-4 sm:flex-row"
+        >
 
-    <section class="container pb-24">
+          <a
+            href={dailyPuzzle.href}
+            class="inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-8 py-4 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.14)]"
+          >
+            Play Today's Puzzle →
+          </a>
 
-      <div class="flex items-center justify-between mb-8">
+          <a
+            href="/games"
+            class="inline-flex items-center justify-center rounded-2xl border border-[var(--color-border)] px-8 py-4 text-sm font-medium transition hover:bg-[rgba(255,255,255,0.04)]"
+          >
+            Explore Games
+          </a>
 
-        <div>
-          <h2 class="text-2xl font-semibold tracking-tight">
-            Games
-          </h2>
-
-          <p class="text-sm text-[var(--color-muted)] mt-2">
-            Small addictive experiences with meaningful depth.
-          </p>
         </div>
 
       </div>
 
-      <div class="grid gap-6">
+    </div>
 
-        <GameCard
-          title="Verse Connections"
-          description="Find hidden relationships between scripture themes, imagery, people, and ideas."
-          href="/games/connections"
-        />
+  </section>
+
+  <!-- DAILY PUZZLE -->
+
+  <section
+    class="mx-auto max-w-6xl px-5 py-20"
+  >
+
+    <div
+      class="mb-10 flex items-center justify-between"
+    >
+
+      <div>
+
+        <p
+          class="text-sm uppercase tracking-[0.18em] text-[var(--color-primary)]"
+        >
+          Daily Challenge
+        </p>
+
+        <h2
+          class="mt-3 text-3xl font-semibold tracking-tight"
+        >
+          Today's Featured Puzzle
+        </h2>
 
       </div>
 
-    </section>
-  </main>
+    </div>
+
+    <a
+      href={dailyPuzzle.href}
+      class="group block overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.14)] bg-[rgba(214,179,106,0.05)] p-8 transition-all duration-300 hover:border-[rgba(214,179,106,0.3)] hover:bg-[rgba(214,179,106,0.08)]"
+    >
+
+      <div
+        class="flex flex-col gap-10 md:flex-row md:items-center md:justify-between"
+      >
+
+        <div class="max-w-2xl">
+
+          <div
+            class="mb-4 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+          >
+            Sequence Puzzle
+          </div>
+
+          <h3
+            class="text-3xl font-semibold tracking-tight"
+          >
+            {dailyPuzzle.title}
+          </h3>
+
+          <p
+            class="mt-5 text-lg leading-8 text-[var(--color-muted)]"
+          >
+            {dailyPuzzle.description}
+          </p>
+
+        </div>
+
+        <div>
+
+          <div
+            class="inline-flex rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-6 py-4 text-sm text-[var(--color-primary)] transition-all duration-300 group-hover:bg-[rgba(214,179,106,0.14)]"
+          >
+            Start Puzzle →
+          </div>
+
+        </div>
+
+      </div>
+
+    </a>
+
+  </section>
+
+  <!-- GAME CATEGORIES -->
+
+  <section
+    class="mx-auto max-w-6xl px-5 pb-24"
+  >
+
+    <div class="mb-12">
+
+      <p
+        class="text-sm uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Explore
+      </p>
+
+      <h2
+        class="mt-3 text-3xl font-semibold tracking-tight"
+      >
+        Explore Bible Puzzle Games
+      </h2>
+
+      <p
+        class="mt-5 max-w-2xl text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Play scripture-based puzzle games designed around
+        memory, discovery, logic, spiritual reflection,
+        and hidden progression.
+      </p>
+
+    </div>
+
+    <div
+      class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+    >
+
+      {
+        featuredGames.map((game) => (
+
+          <a
+            href={game.href}
+            class="group relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
+          >
+
+            <!-- GLOW -->
+
+            <div
+              class="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style="background: radial-gradient(circle at top right, rgba(214,179,106,0.08), transparent 45%);"
+            ></div>
+
+            <div class="relative z-10">
+
+              <!-- TOP -->
+
+              <div
+                class="flex items-center justify-between gap-4"
+              >
+
+                <div
+                  class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+                >
+                  {game.badge}
+                </div>
+
+                <div
+                  class="text-xs uppercase tracking-[0.16em] text-[var(--color-muted)]"
+                >
+                  {game.difficulty}
+                </div>
+
+              </div>
+
+              <!-- TITLE -->
+
+              <h3
+                class="mt-8 text-3xl font-semibold tracking-tight"
+              >
+                {game.title}
+              </h3>
+
+              <!-- DESCRIPTION -->
+
+              <p
+                class="mt-5 leading-8 text-[var(--color-muted)]"
+              >
+                {game.description}
+              </p>
+
+              <!-- STATUS -->
+
+              <div
+                class="mt-8 flex items-center justify-between"
+              >
+
+                <div
+                  class={`rounded-full px-3 py-1 text-xs uppercase tracking-[0.14em] ${
+                    game.status === "Available"
+                      ? "border border-[rgba(74,222,128,0.18)] bg-[rgba(74,222,128,0.08)] text-[rgb(74,222,128)]"
+                      : "border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.04)] text-[var(--color-muted)]"
+                  }`}
+                >
+                  {game.status}
+                </div>
+
+                <div
+                  class="text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  Explore →
+                </div>
+
+              </div>
+
+            </div>
+
+          </a>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+  <!-- MYSTERY TEASER -->
+
+  <section
+    class="border-y border-[var(--color-border)] bg-[rgba(255,255,255,0.02)]"
+  >
+
+    <div
+      class="mx-auto max-w-6xl px-5 py-24"
+    >
+
+      <div class="max-w-3xl">
+
+        <p
+          class="text-sm uppercase tracking-[0.18em] text-[var(--color-primary)]"
+        >
+          Hidden Progression
+        </p>
+
+        <h2
+          class="mt-4 text-4xl font-semibold tracking-tight md:text-5xl"
+        >
+          Some mysteries reveal themselves only after progress.
+        </h2>
+
+        <p
+          class="mt-8 text-lg leading-8 text-[var(--color-muted)]"
+        >
+          Solve puzzles, uncover scripture fragments,
+          unlock hidden chambers,
+          and discover deeper layers of meaning.
+        </p>
+
+        <div
+          class="mt-10 inline-flex rounded-2xl border border-dashed border-[rgba(214,179,106,0.18)] px-6 py-4 text-sm text-[var(--color-primary)]"
+        >
+          ??? Chamber Locked
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SEO CONTENT -->
+
+  <section
+    class="mx-auto max-w-4xl px-5 py-24"
+  >
+
+    <div class="prose prose-invert prose-neutral max-w-none">
+
+      <h2>
+        Interactive Bible Games and Daily Scripture Puzzles
+      </h2>
+
+      <p>
+        First7 Play is an interactive Bible puzzle platform focused on
+        scripture discovery, spiritual reflection,
+        memory challenges, mystery progression,
+        and daily faith-based puzzle experiences.
+      </p>
+
+      <p>
+        Explore Bible sequence games,
+        scripture matching challenges,
+        Bible connections puzzles,
+        and hidden mystery experiences designed around
+        progression and discovery.
+      </p>
+
+      <p>
+        New daily Bible games and interactive scripture challenges
+        are continually added to encourage learning,
+        reflection, and exploration.
+      </p>
+
+    </div>
+
+  </section>
+
 </Layout>
