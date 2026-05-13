@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+.codex-games-dev.err.log
+.codex-games-dev.out.log

@@ -1,17 +1,62 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import GameCard from "../components/GameCard.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Navbar />
+
+  <main>
+    <section class="container py-24 md:py-32">
+      <div class="max-w-3xl">
+
+        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[var(--color-muted)]">
+          <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+          Static-first interactive scripture games
+        </div>
+
+        <h1 class="mt-8 text-5xl md:text-7xl font-semibold tracking-tight leading-[0.95]">
+          Discover Scripture
+          <span class="text-[var(--color-primary)]">
+            Through Play
+          </span>
+        </h1>
+
+        <p class="mt-8 text-lg leading-8 text-[var(--color-muted)] max-w-2xl">
+          Elegant Bible puzzle experiences designed for curiosity,
+          reflection, memory, and discovery.
+        </p>
+
+      </div>
+    </section>
+
+    <section class="container pb-24">
+
+      <div class="flex items-center justify-between mb-8">
+
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">
+            Games
+          </h2>
+
+          <p class="text-sm text-[var(--color-muted)] mt-2">
+            Small addictive experiences with meaningful depth.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="grid gap-6">
+
+        <GameCard
+          title="Verse Connections"
+          description="Find hidden relationships between scripture themes, imagery, people, and ideas."
+          href="/games/connections"
+        />
+
+      </div>
+
+    </section>
+  </main>
+</Layout>

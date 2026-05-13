@@ -1,0 +1,586 @@
+---
+interface Puzzle {
+
+  title: string
+
+  sequence?: string[]
+
+  hints?: string[]
+
+  scripture: {
+
+    reference: string
+
+    verse: string
+  }
+
+}
+
+interface Props {
+
+  puzzles: Puzzle[]
+
+  gameId: string
+}
+
+const {
+  puzzles,
+  gameId
+} = Astro.props as Props
+
+/*
+ For Sprint 1
+ we use the first puzzle only.
+ Later we can support multi-stage.
+*/
+
+const puzzle = puzzles[0]
+
+const shuffled =
+  [...(puzzle.sequence || [])]
+    .sort(() => Math.random() - 0.5)
+---
+
+<div class="sequence-wrapper">
+
+  <div class="sequence-header">
+
+    <h2 class="sequence-title">
+      {puzzle.title}
+    </h2>
+
+    {
+      puzzle.hints && (
+
+        <ul class="hint-list">
+
+          {
+            puzzle.hints.map((hint) => (
+
+              <li>{hint}</li>
+
+            ))
+          }
+
+        </ul>
+
+      )
+    }
+
+  </div>
+
+  <div
+    id="sequence-board"
+    class="sequence-board"
+  >
+
+    {
+      shuffled.map((item) => (
+
+        <button
+          class="sequence-card"
+          data-value={item}
+        >
+          {item}
+        </button>
+
+      ))
+    }
+
+  </div>
+
+  <div class="sequence-controls">
+
+    <button
+      id="submit-btn"
+      class="game-btn"
+    >
+      Submit
+    </button>
+
+    <button
+      id="reset-btn"
+      class="game-btn secondary"
+    >
+      Reset
+    </button>
+
+  </div>
+
+  <div
+    id="message"
+    class="message"
+  ></div>
+
+  <div
+    id="reward-box"
+    class="reward-box hidden"
+  >
+
+    <div class="reward-label">
+      Scripture Reward
+    </div>
+
+    <h3>
+      {puzzle.scripture.reference}
+    </h3>
+
+    <p>
+      {puzzle.scripture.verse}
+    </p>
+
+  </div>
+
+</div>
+
+<script define:vars={{
+  answer: puzzle.sequence,
+  gameId
+}}>
+
+  const board =
+    document.getElementById(
+      "sequence-board"
+    )
+
+  const cards = [
+    ...document.querySelectorAll(
+      ".sequence-card"
+    )
+  ]
+
+  const submitBtn =
+    document.getElementById(
+      "submit-btn"
+    )
+
+  const resetBtn =
+    document.getElementById(
+      "reset-btn"
+    )
+
+  const message =
+    document.getElementById(
+      "message"
+    )
+
+  const rewardBox =
+    document.getElementById(
+      "reward-box"
+    )
+
+  let selected = []
+
+  /*
+   LOCAL SAVE SYSTEM
+  */
+
+  const STORAGE_KEY =
+    "first7-progress"
+
+  function loadProgress() {
+
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
+      )
+
+    if (!raw) {
+
+      return {
+        completed: []
+      }
+    }
+
+    return JSON.parse(raw)
+  }
+
+  function saveProgress(data) {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(data)
+    )
+  }
+
+  function markComplete(id) {
+
+    const progress =
+      loadProgress()
+
+    if (
+      !progress.completed.includes(id)
+    ) {
+
+      progress.completed.push(id)
+
+      saveProgress(progress)
+    }
+  }
+
+  /*
+   CARD CLICK
+  */
+
+  cards.forEach((card) => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        if (
+          card.classList.contains(
+            "used"
+          )
+        ) return
+
+        card.classList.add(
+          "used"
+        )
+
+        card.classList.add(
+          "selected"
+        )
+
+        selected.push(
+          card.dataset.value
+        )
+      }
+    )
+  })
+
+  /*
+   SUBMIT
+  */
+
+  submitBtn?.addEventListener(
+    "click",
+    () => {
+
+      const correct =
+
+        JSON.stringify(selected)
+        === JSON.stringify(answer)
+
+      if (correct) {
+
+        message.textContent =
+          "Correct sequence!"
+
+        message.classList.add(
+          "success"
+        )
+
+        rewardBox?.classList.remove(
+          "hidden"
+        )
+
+        board?.classList.add(
+          "success-glow"
+        )
+
+        markComplete(gameId)
+
+      } else {
+
+        message.textContent =
+          "Wrong order. Try again."
+
+        message.classList.remove(
+          "success"
+        )
+
+        board?.classList.add(
+          "shake"
+        )
+
+        setTimeout(() => {
+
+          board?.classList.remove(
+            "shake"
+          )
+
+        }, 500)
+      }
+    }
+  )
+
+  /*
+   RESET
+  */
+
+  resetBtn?.addEventListener(
+    "click",
+    () => {
+
+      selected = []
+
+      message.textContent = ""
+
+      rewardBox?.classList.add(
+        "hidden"
+      )
+
+      cards.forEach((card) => {
+
+        card.classList.remove(
+          "used",
+          "selected"
+        )
+      })
+    }
+  )
+
+</script>
+
+<style>
+
+.sequence-wrapper {
+
+  max-width: 760px;
+
+  margin: 0 auto;
+}
+
+.sequence-header {
+
+  margin-bottom: 2rem;
+}
+
+.sequence-title {
+
+  font-size: 1.75rem;
+
+  font-weight: 700;
+}
+
+.hint-list {
+
+  margin-top: 1rem;
+
+  padding-left: 1.2rem;
+
+  color: var(--color-muted);
+}
+
+.sequence-board {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(140px, 1fr));
+
+  gap: 1rem;
+}
+
+.sequence-card {
+
+  padding: 1rem;
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  border-radius: 1rem;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.sequence-card:hover {
+
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(214,179,106,0.4);
+}
+
+.sequence-card.selected {
+
+  opacity: 0.45;
+
+  transform: scale(0.96);
+}
+
+.sequence-controls {
+
+  display: flex;
+
+  gap: 1rem;
+
+  margin-top: 2rem;
+}
+
+.game-btn {
+
+  padding:
+    0.9rem 1.25rem;
+
+  border-radius: 0.9rem;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  background:
+    rgba(214,179,106,0.12);
+
+  color:
+    var(--color-primary);
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.game-btn:hover {
+
+  transform: translateY(-1px);
+
+  background:
+    rgba(214,179,106,0.2);
+}
+
+.secondary {
+
+  background:
+    rgba(255,255,255,0.06);
+
+  color: white;
+}
+
+.message {
+
+  margin-top: 1.5rem;
+
+  font-weight: 600;
+}
+
+.success {
+
+  color:
+    rgb(74 222 128);
+}
+
+.reward-box {
+
+  margin-top: 2rem;
+
+  padding: 1.5rem;
+
+  border-radius: 1.25rem;
+
+  background:
+    rgba(214,179,106,0.08);
+
+  border:
+    1px solid rgba(214,179,106,0.2);
+
+  animation:
+    fadeUp 0.4s ease;
+}
+
+.reward-label {
+
+  font-size: 0.8rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+
+  color:
+    var(--color-primary);
+
+  margin-bottom: 0.5rem;
+}
+
+.hidden {
+
+  display: none;
+}
+
+.shake {
+
+  animation:
+    shake 0.4s ease;
+}
+
+.success-glow {
+
+  animation:
+    glow 0.6s ease;
+}
+
+@keyframes shake {
+
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+
+  75% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes glow {
+
+  0% {
+
+    box-shadow:
+      0 0 0 rgba(214,179,106,0);
+  }
+
+  50% {
+
+    box-shadow:
+      0 0 24px rgba(214,179,106,0.28);
+  }
+
+  100% {
+
+    box-shadow:
+      0 0 0 rgba(214,179,106,0);
+  }
+}
+
+@keyframes fadeUp {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+</style>
