@@ -1,0 +1,167 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+const puzzles = [
+
+  {
+    title: "Faith and Scripture",
+
+    href: "/games/matching/faith-and-scripture",
+
+    difficulty: "Easy",
+
+    description:
+      "Match spiritual ideas with their connected scripture passages and biblical themes."
+  }
+
+];
+---
+
+<Layout
+  title="Bible Matching Games | First7 Play"
+  description="Play Bible matching games and connect scripture references, spiritual ideas, biblical themes, and hidden relationships through interactive Christian puzzle experiences."
+>
+
+  <!-- HERO -->
+
+  <section
+    class="border-b border-[var(--color-border)]"
+  >
+
+    <div
+      class="mx-auto max-w-5xl px-5 py-24"
+    >
+
+      <div
+        class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Matching Games
+      </div>
+
+      <h1
+        class="mt-6 text-5xl font-semibold tracking-tight md:text-6xl"
+      >
+        Bible Matching Games
+      </h1>
+
+      <p
+        class="mt-8 max-w-3xl text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Match scripture references,
+        spiritual ideas,
+        biblical meaning,
+        symbols,
+        and hidden relationships
+        through interactive puzzle experiences.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- PUZZLES -->
+
+  <section
+    class="mx-auto max-w-5xl px-5 py-20"
+  >
+
+    <div
+      class="grid gap-6"
+    >
+
+      {
+        puzzles.map((puzzle) => (
+
+          <a
+            href={puzzle.href}
+            class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
+          >
+
+            <div
+              class="flex items-center justify-between gap-4"
+            >
+
+              <div
+                class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+              >
+                Matching Puzzle
+              </div>
+
+              <div
+                class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+              >
+                {puzzle.difficulty}
+              </div>
+
+            </div>
+
+            <h2
+              class="mt-8 text-3xl font-semibold tracking-tight"
+            >
+              {puzzle.title}
+            </h2>
+
+            <p
+              class="mt-5 leading-8 text-[var(--color-muted)]"
+            >
+              {puzzle.description}
+            </p>
+
+            <div
+              class="mt-8 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+            >
+              Play Puzzle →
+            </div>
+
+          </a>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+  <!-- SEO -->
+
+  <section
+    class="mx-auto max-w-4xl px-5 pb-24"
+  >
+
+    <div
+      class="prose prose-invert prose-neutral max-w-none"
+    >
+
+      <h2>
+        Interactive Bible Matching Games
+      </h2>
+
+      <p>
+        Bible matching games challenge players
+        to connect scripture references,
+        biblical themes,
+        spiritual concepts,
+        wisdom,
+        and meaning through interactive discovery.
+      </p>
+
+      <p>
+        These Christian puzzle experiences are designed around
+        memory,
+        reflection,
+        scripture learning,
+        and relational understanding.
+      </p>
+
+      <p>
+        Explore faith-based matching puzzles,
+        Bible verse matching games,
+        spiritual relationship challenges,
+        and interactive scripture discovery experiences.
+      </p>
+
+    </div>
+
+  </section>
+
+</Layout>

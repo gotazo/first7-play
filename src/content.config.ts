@@ -47,14 +47,24 @@ const games = defineCollection({
         }),
 
         /*
-         CONNECTIONS + MATCHING
+         CONNECTIONS
         */
-        items: z.array(
-          z.string()
+        groups: z.array(
+
+          z.object({
+
+            category: z.string(),
+
+            items: z.array(
+              z.string()
+            )
+
+          })
+
         ).optional(),
 
         /*
-         SEQUENCE GAME
+         SEQUENCE
         */
         sequence: z.array(
           z.string()
@@ -62,6 +72,21 @@ const games = defineCollection({
 
         hints: z.array(
           z.string()
+        ).optional(),
+
+        /*
+         MATCHING
+        */
+        pairs: z.array(
+
+          z.object({
+
+            left: z.string(),
+
+            right: z.string()
+
+          })
+
         ).optional()
 
       })
