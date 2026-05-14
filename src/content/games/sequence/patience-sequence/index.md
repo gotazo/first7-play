@@ -17,6 +17,8 @@ puzzles:
 
   - title: "The Growth of Patience"
 
+    fragment: "Fragment of Waiting"
+
     sequence:
       - Trial
       - Waiting

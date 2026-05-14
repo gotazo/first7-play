@@ -19,6 +19,8 @@ puzzles:
 
   - title: "Spiritual Connections"
 
+    fragment: "Fragment of Light"
+
     scripture:
       reference: "Galatians 5:22"
 

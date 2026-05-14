@@ -16,6 +16,8 @@ nextPuzzle: sequence/patience-sequence
 puzzles:
   - title: Natural Growth
 
+    fragment: "Fragment of Growth"
+
     sequence:
       - Seed
       - Sprout

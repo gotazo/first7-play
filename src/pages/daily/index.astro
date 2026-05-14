@@ -1,0 +1,282 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const dailyPuzzles = [
+
+  {
+    title: "Verse Connections",
+
+    engine: "Connections",
+
+    href: "/games/connections/verse-connections",
+
+    difficulty: "Medium"
+  },
+
+  {
+    title: "Growth Sequence",
+
+    engine: "Sequence",
+
+    href: "/games/sequence/growth-sequence",
+
+    difficulty: "Easy"
+  },
+
+  {
+    title: "Faith and Scripture",
+
+    engine: "Matching",
+
+    href: "/games/matching/faith-and-scripture",
+
+    difficulty: "Easy"
+  },
+
+  {
+    title: "Patience Sequence",
+
+    engine: "Sequence",
+
+    href: "/games/sequence/patience-sequence",
+
+    difficulty: "Medium"
+  }
+
+];
+
+/*
+  DAILY ROTATION
+*/
+
+const now = new Date();
+
+const startOfYear =
+  new Date(
+    now.getFullYear(),
+    0,
+    0
+  );
+
+const diff =
+  now.getTime() -
+  startOfYear.getTime();
+
+const oneDay =
+  1000 * 60 * 60 * 24;
+
+const dayNumber =
+  Math.floor(diff / oneDay);
+
+const dailyPuzzle =
+  dailyPuzzles[
+    dayNumber %
+    dailyPuzzles.length
+  ];
+---
+
+<Layout
+  title="Daily Bible Puzzle | First7 Play"
+  description="Play today's daily Bible puzzle featuring scripture challenges, Bible sequence games, Christian matching puzzles, and interactive faith-based discovery experiences."
+>
+
+  <!-- HERO -->
+
+  <section
+    class="border-b border-[var(--color-border)]"
+  >
+
+    <div
+      class="mx-auto max-w-5xl px-5 py-24"
+    >
+
+      <div
+        class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Daily Puzzle
+      </div>
+
+      <h1
+        class="mt-6 text-5xl font-semibold tracking-tight md:text-6xl"
+      >
+        Today's Scripture Challenge
+      </h1>
+
+      <p
+        class="mt-8 max-w-3xl text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Return daily to uncover new scripture puzzles,
+        hidden meaning,
+        spiritual connections,
+        and progression-based Bible challenges.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- DAILY CARD -->
+
+  <section
+    class="mx-auto max-w-4xl px-5 py-24"
+  >
+
+    <div
+      class="overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.16)] bg-[rgba(214,179,106,0.05)] p-10"
+    >
+
+      <div
+        class="flex flex-wrap items-center gap-4"
+      >
+
+        <div
+          class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+        >
+          {dailyPuzzle.engine}
+        </div>
+
+        <div
+          class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+        >
+          {dailyPuzzle.difficulty}
+        </div>
+
+      </div>
+
+      <h2
+        class="mt-8 text-4xl font-semibold tracking-tight"
+      >
+        {dailyPuzzle.title}
+      </h2>
+
+      <p
+        class="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Complete today's featured puzzle
+        and continue uncovering hidden spiritual patterns,
+        scripture meaning,
+        and mystery progression.
+      </p>
+
+      <!-- BUTTONS -->
+
+      <div
+        class="mt-10 flex flex-wrap gap-4"
+      >
+
+        <a
+          href={dailyPuzzle.href}
+          class="inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-8 py-4 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.14)]"
+        >
+          Play Today's Puzzle →
+        </a>
+
+        <div
+          id="daily-status"
+          class="hidden rounded-2xl border border-[rgba(74,222,128,0.18)] bg-[rgba(74,222,128,0.08)] px-6 py-4 text-sm text-[rgb(74,222,128)]"
+        >
+          ✓ Completed Today
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SEO -->
+
+  <section
+    class="mx-auto max-w-4xl px-5 pb-24"
+  >
+
+    <div
+      class="prose prose-invert prose-neutral max-w-none"
+    >
+
+      <h2>
+        Daily Bible Puzzle Challenges
+      </h2>
+
+      <p>
+        First7 Play features rotating daily Bible puzzles
+        designed around scripture discovery,
+        spiritual reflection,
+        progression,
+        memory,
+        and hidden meaning.
+      </p>
+
+      <p>
+        Explore daily Christian puzzle games,
+        scripture matching challenges,
+        Bible sequence games,
+        and interactive faith-based experiences.
+      </p>
+
+    </div>
+
+  </section>
+
+</Layout>
+
+<script is:inline define:vars={{ dailyPuzzle }}>
+
+  const status =
+    document.getElementById(
+      'daily-status'
+    );
+
+  /*
+    UNIQUE DAILY KEY
+  */
+
+  const now =
+    new Date();
+
+  const key =
+    `daily-complete-${
+      now.getFullYear()
+    }-${
+      now.getMonth()
+    }-${
+      now.getDate()
+    }`;
+
+  /*
+    CHECK IF COMPLETED
+  */
+
+  if (
+    localStorage.getItem(key)
+  ) {
+
+    status.classList.remove(
+      'hidden'
+    );
+
+  }
+
+  /*
+    MARK COMPLETE
+    WHEN USER CLICKS PLAY
+  */
+
+  const playButton =
+    document.querySelector(
+      `a[href="${dailyPuzzle.href}"]`
+    );
+
+  playButton?.addEventListener(
+    'click',
+    () => {
+
+      localStorage.setItem(
+        key,
+        'true'
+      );
+
+    }
+  );
+
+</script>

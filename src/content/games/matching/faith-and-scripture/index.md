@@ -19,6 +19,8 @@ puzzles:
 
   - title: "Faith Connections"
 
+    fragment: "Fragment of Wisdom"
+
     scripture:
       reference: "Hebrews 11:1"
 

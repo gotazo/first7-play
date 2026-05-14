@@ -7,6 +7,8 @@ interface Pair {
 interface Puzzle {
   title: string;
 
+  fragment?: string;
+
   scripture: {
     reference: string;
     verse: string;
@@ -158,6 +160,48 @@ const rightItems =
       'matches-count'
     );
 
+  const FRAGMENTS_KEY =
+    'first7-fragments';
+
+  function unlockFragment(fragment) {
+
+    if (!fragment) return;
+
+    let fragments = [];
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          FRAGMENTS_KEY
+        );
+
+      fragments =
+        raw ? JSON.parse(raw) : [];
+
+      if (!Array.isArray(fragments)) {
+        fragments = [];
+      }
+
+    } catch {
+
+      fragments = [];
+
+    }
+
+    if (
+      fragments.includes(fragment)
+    ) return;
+
+    fragments.push(fragment);
+
+    localStorage.setItem(
+      FRAGMENTS_KEY,
+      JSON.stringify(fragments)
+    );
+
+  }
+
   function updateUI() {
 
     matchesCount.textContent =
@@ -277,6 +321,10 @@ const rightItems =
           matchedCount ===
           puzzle.pairs.length
         ) {
+
+          unlockFragment(
+            puzzle.fragment
+          );
 
           feedback.innerHTML = `
 

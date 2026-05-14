@@ -7,6 +7,8 @@ interface Group {
 interface Puzzle {
   title: string;
 
+  fragment?: string;
+
   scripture: {
     reference: string;
     verse: string;
@@ -25,7 +27,10 @@ const puzzles =
 
 const puzzle = puzzles[0];
 
-const allItems = puzzle.groups
+const groups =
+  puzzle.groups || [];
+
+const allItems = groups
   .flatMap((group) =>
     group.items.map((item) => ({
       item,
@@ -79,7 +84,7 @@ const allItems = puzzle.groups
       id="groups-count"
       class="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm text-[var(--color-muted)]"
     >
-      0 / {puzzle.groups.length} groups solved
+      0 / {groups.length} groups solved
     </div>
 
   </div>
@@ -187,13 +192,55 @@ const allItems = puzzle.groups
       'solved-groups'
     );
 
+  const FRAGMENTS_KEY =
+    'first7-fragments';
+
+  function unlockFragment(fragment) {
+
+    if (!fragment) return;
+
+    let fragments = [];
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          FRAGMENTS_KEY
+        );
+
+      fragments =
+        raw ? JSON.parse(raw) : [];
+
+      if (!Array.isArray(fragments)) {
+        fragments = [];
+      }
+
+    } catch {
+
+      fragments = [];
+
+    }
+
+    if (
+      fragments.includes(fragment)
+    ) return;
+
+    fragments.push(fragment);
+
+    localStorage.setItem(
+      FRAGMENTS_KEY,
+      JSON.stringify(fragments)
+    );
+
+  }
+
   function updateUI() {
 
     selectionCount.textContent =
       `${selected.length} / 4 selected`;
 
     groupsCount.textContent =
-      `${solvedGroups.size} / ${puzzle.groups.length} groups solved`;
+      `${solvedGroups.size} / ${(puzzle.groups || []).length} groups solved`;
 
     submitBtn.disabled =
       selected.length !== 4;
@@ -354,8 +401,12 @@ const allItems = puzzle.groups
 
         if (
           solvedGroups.size ===
-          puzzle.groups.length
+          (puzzle.groups || []).length
         ) {
+
+          unlockFragment(
+            puzzle.fragment
+          );
 
           feedback.innerHTML = `
 

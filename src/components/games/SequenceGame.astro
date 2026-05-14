@@ -3,6 +3,8 @@ interface Puzzle {
 
   title: string
 
+  fragment?: string
+
   sequence?: string[]
 
   hints?: string[]
@@ -135,6 +137,7 @@ const shuffled =
 
 <script define:vars={{
   answer: puzzle.sequence,
+  fragment: puzzle.fragment,
   gameId
 }}>
 
@@ -178,6 +181,9 @@ const shuffled =
   const STORAGE_KEY =
     "first7-progress"
 
+  const FRAGMENTS_KEY =
+    "first7-fragments"
+
   function loadProgress() {
 
     const raw =
@@ -216,6 +222,44 @@ const shuffled =
 
       saveProgress(progress)
     }
+  }
+
+  function unlockFragment(fragment) {
+
+    if (!fragment) return
+
+    let fragments = []
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          FRAGMENTS_KEY
+        )
+
+      fragments =
+        raw ? JSON.parse(raw) : []
+
+      if (!Array.isArray(fragments)) {
+        fragments = []
+      }
+
+    } catch {
+
+      fragments = []
+
+    }
+
+    if (
+      fragments.includes(fragment)
+    ) return
+
+    fragments.push(fragment)
+
+    localStorage.setItem(
+      FRAGMENTS_KEY,
+      JSON.stringify(fragments)
+    )
   }
 
   /*
@@ -280,6 +324,8 @@ const shuffled =
         )
 
         markComplete(gameId)
+
+        unlockFragment(fragment)
 
       } else {
 

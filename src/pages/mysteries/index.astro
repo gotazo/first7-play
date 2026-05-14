@@ -1,0 +1,456 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const allFragments = [
+  {
+    name: "Fragment of Light",
+    engine: "Connections",
+    unlockPath: "/games/connections/verse-connections",
+    description: "Recovered from hidden spiritual connections."
+  },
+
+  {
+    name: "Fragment of Growth",
+    engine: "Sequence",
+    unlockPath: "/games/sequence/growth-sequence",
+    description: "Recovered through sacred progression."
+  },
+
+  {
+    name: "Fragment of Waiting",
+    engine: "Sequence",
+    unlockPath: "/games/sequence/patience-sequence",
+    description: "Recovered through endurance and patience."
+  },
+
+  {
+    name: "Fragment of Wisdom",
+    engine: "Matching",
+    unlockPath: "/games/matching/faith-and-scripture",
+    description: "Recovered from restored spiritual meaning."
+  }
+];
+---
+
+<Layout
+  title="Mysteries | First7 Play"
+  description="Explore hidden scripture mysteries, progression systems, locked chambers, and unfolding puzzle experiences inside First7 Play."
+>
+
+  <!-- HERO -->
+
+  <section
+    class="relative overflow-hidden border-b border-[var(--color-border)]"
+  >
+
+    <!-- BACKGROUND GLOW -->
+
+    <div
+      class="absolute inset-0 opacity-30"
+      style="background: radial-gradient(circle at top center, rgba(214,179,106,0.08), transparent 60%);"
+    ></div>
+
+    <div
+      class="relative mx-auto max-w-5xl px-5 py-28"
+    >
+
+      <div
+        class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Hidden Progression
+      </div>
+
+      <h1
+        class="mt-6 max-w-4xl text-5xl font-semibold tracking-tight md:text-7xl"
+      >
+        Some mysteries reveal themselves slowly.
+      </h1>
+
+      <p
+        class="mt-8 max-w-3xl text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Recover scripture fragments through puzzle paths,
+        return to this archive,
+        and watch sealed chambers begin to answer.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- MYSTERY GRID -->
+
+  <section
+    class="relative mx-auto max-w-6xl px-5 py-24"
+  >
+
+    <div
+      class="pointer-events-none absolute inset-x-5 top-12 h-px bg-gradient-to-r from-transparent via-[rgba(214,179,106,0.24)] to-transparent opacity-60"
+    ></div>
+
+    <div class="mb-12 max-w-3xl">
+
+      <div
+        id="fragment-progress"
+        class="text-sm uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        0 / {allFragments.length} Fragments Recovered
+      </div>
+
+      <p
+        class="mt-5 text-lg leading-8 text-[var(--color-muted)]"
+      >
+        Each sealed fragment remembers the path that can restore it.
+        Begin a recovery,
+        complete the puzzle,
+        then return to find the archive changed.
+      </p>
+
+    </div>
+
+    <div
+      class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+    >
+
+      {
+        allFragments.map((fragment) => (
+
+          <div
+            class="fragment-card group relative min-h-[360px] overflow-hidden rounded-2xl border border-[rgba(214,179,106,0.12)] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(255,255,255,0.012))] p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.28)] hover:bg-[rgba(255,255,255,0.04)] hover:shadow-[0_0_36px_rgba(214,179,106,0.07)]"
+            data-fragment={fragment.name}
+            data-description={fragment.description}
+          >
+
+            <!-- GLOW -->
+
+            <div
+              class="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style="background: radial-gradient(circle at top right, rgba(214,179,106,0.08), transparent 45%);"
+            ></div>
+
+            <div class="relative z-10">
+
+              <div
+                class="fragment-status inline-flex rounded-full border border-dashed border-[rgba(214,179,106,0.18)] bg-[rgba(0,0,0,0.12)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+              >
+                Sealed
+              </div>
+
+              <h2
+                class="fragment-title mt-8 text-3xl font-semibold tracking-tight transition-colors duration-500"
+              >
+                ???
+              </h2>
+
+              <p
+                class="fragment-description mt-5 leading-8 text-[var(--color-muted)]"
+              >
+                A scripture fragment sleeps beneath the seal.
+                Its name is veiled until the recovery path is completed.
+              </p>
+
+              <div
+                class="fragment-method mt-10 rounded-2xl border border-[rgba(214,179,106,0.12)] bg-[rgba(214,179,106,0.04)] p-4 text-sm leading-7 text-[var(--color-muted)]"
+              >
+                <span class="text-[var(--color-primary)]">
+                  Recovered Through:
+                </span>
+                {fragment.engine} Puzzle
+              </div>
+
+              <a
+                href={fragment.unlockPath}
+                class="fragment-cta mt-8 inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-6 py-3 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.34)] hover:bg-[rgba(214,179,106,0.14)]"
+              >
+                Begin Recovery →
+              </a>
+
+            </div>
+
+          </div>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+  <script is:inline define:vars={{ allFragments }}>
+
+    function hydrateMysteries() {
+
+    const FRAGMENTS_KEY =
+      'first7-fragments';
+
+    let unlockedFragments = [];
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          FRAGMENTS_KEY
+        );
+
+      unlockedFragments =
+        raw ? JSON.parse(raw) : [];
+
+      if (!Array.isArray(unlockedFragments)) {
+        unlockedFragments = [];
+      }
+
+    } catch {
+
+      unlockedFragments = [];
+
+    }
+
+    const unlockedCount =
+      allFragments.filter((fragment) =>
+        unlockedFragments.includes(fragment.name)
+      ).length;
+
+    const progress =
+      document.getElementById(
+        'fragment-progress'
+      );
+
+    if (progress) {
+      progress.textContent =
+        `${unlockedCount} / ${allFragments.length} Fragments Recovered`;
+    }
+
+    document
+      .querySelectorAll('.fragment-card')
+      .forEach((card) => {
+
+        const fragment =
+          card.dataset.fragment;
+
+        const description =
+          card.dataset.description || '';
+
+        const isUnlocked =
+          unlockedFragments.includes(fragment);
+
+        if (!isUnlocked) return;
+
+        card.classList.add(
+          'border-[rgba(214,179,106,0.38)]',
+          'bg-[rgba(214,179,106,0.08)]',
+          'shadow-[0_0_44px_rgba(214,179,106,0.11)]'
+        );
+
+        card
+          .querySelector('.fragment-status')
+          .textContent = 'Recovered';
+
+        card
+          .querySelector('.fragment-title')
+          .textContent = fragment;
+
+        card
+          .querySelector('.fragment-description')
+          .textContent = description;
+
+        const method =
+          card.querySelector('.fragment-method');
+
+        if (method) {
+          method.innerHTML = `
+            <span>Fragment</span>
+            <div class="h-px w-10 bg-[rgba(214,179,106,0.26)]"></div>
+            <span>Unlocked</span>
+          `;
+          method.className =
+            'fragment-method mt-10 flex items-center gap-3 text-sm text-[var(--color-primary)] opacity-80';
+        }
+
+        card
+          .querySelector('.fragment-cta')
+          ?.remove();
+
+      });
+
+    const chamberCard =
+      document.getElementById(
+        'hidden-chamber-card'
+      );
+
+    const chamberText =
+      document.getElementById(
+        'hidden-chamber-requirement'
+      );
+
+    const chamberButton =
+      document.getElementById(
+        'hidden-chamber-button'
+      );
+
+    if (
+      unlockedCount >= 3 &&
+      chamberCard &&
+      chamberText &&
+      chamberButton
+    ) {
+      chamberCard.classList.add(
+        'border-[rgba(214,179,106,0.38)]',
+        'bg-[rgba(214,179,106,0.07)]',
+        'shadow-[0_0_48px_rgba(214,179,106,0.1)]'
+      );
+
+      chamberText.textContent =
+        'The seal recognizes the recovered fragments.';
+
+      chamberButton.textContent =
+        'Enter Chamber →';
+
+      chamberButton.setAttribute(
+        'href',
+        '/mysteries/hidden-chamber'
+      );
+
+      chamberButton.removeAttribute(
+        'aria-disabled'
+      );
+
+      chamberButton.classList.remove(
+        'pointer-events-none',
+        'opacity-45'
+      );
+    }
+
+    }
+
+    if (
+      document.readyState === 'loading'
+    ) {
+      document.addEventListener(
+        'DOMContentLoaded',
+        hydrateMysteries
+      );
+    } else {
+      hydrateMysteries();
+    }
+
+  </script>
+
+  <!-- HIDDEN CHAMBERS -->
+
+  <section
+    class="border-y border-[var(--color-border)] bg-[rgba(255,255,255,0.02)]"
+  >
+
+    <div
+      class="mx-auto max-w-5xl px-5 py-24"
+    >
+
+      <div class="max-w-3xl">
+
+        <div
+          class="text-sm uppercase tracking-[0.18em] text-[var(--color-primary)]"
+        >
+          Hidden Chambers
+        </div>
+
+        <h2
+          class="mt-5 text-4xl font-semibold tracking-tight"
+        >
+          A sealed threshold waits below the archive.
+        </h2>
+
+        <p
+          class="mt-8 text-lg leading-8 text-[var(--color-muted)]"
+        >
+          Some doors do not open from effort alone.
+          They open when enough fragments have returned.
+        </p>
+
+      </div>
+
+      <div
+        id="hidden-chamber-card"
+        class="group relative mt-14 overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.14)] bg-[rgba(0,0,0,0.14)] p-10 transition-all duration-500 hover:border-[rgba(214,179,106,0.24)] hover:shadow-[0_0_42px_rgba(214,179,106,0.06)]"
+      >
+
+        <div
+          class="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style="background: radial-gradient(circle at top center, rgba(214,179,106,0.08), transparent 55%);"
+        ></div>
+
+        <div class="relative z-10 max-w-3xl">
+
+          <div
+            class="inline-flex rounded-full border border-dashed border-[rgba(214,179,106,0.2)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+          >
+            Chamber Sealed
+          </div>
+
+          <h3
+            class="mt-8 text-3xl font-semibold tracking-tight md:text-4xl"
+          >
+            The Hidden Chamber
+          </h3>
+
+          <p
+            id="hidden-chamber-requirement"
+            class="mt-5 text-lg leading-8 text-[var(--color-muted)]"
+          >
+            Requires 3 recovered fragments
+          </p>
+
+          <a
+            id="hidden-chamber-button"
+            class="pointer-events-none mt-10 inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.16)] bg-[rgba(214,179,106,0.06)] px-7 py-4 text-sm font-medium text-[var(--color-primary)] opacity-45 transition-all duration-300"
+            aria-disabled="true"
+          >
+            Seal Unbroken
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SEO -->
+
+  <section
+    class="mx-auto max-w-4xl px-5 py-24"
+  >
+
+    <div
+      class="prose prose-invert prose-neutral max-w-none"
+    >
+
+      <h2>
+        Hidden Bible Mysteries and Puzzle Progression
+      </h2>
+
+      <p>
+        First7 Play includes hidden scripture mysteries,
+        progression systems,
+        secret puzzle paths,
+        and unfolding interactive discovery experiences.
+      </p>
+
+      <p>
+        Solve Bible puzzle games,
+        uncover scripture fragments,
+        reveal hidden chambers,
+        and explore mystery-based progression designed around reflection and discovery.
+      </p>
+
+      <p>
+        New mysteries,
+        hidden routes,
+        and progression systems will continue expanding over time.
+      </p>
+
+    </div>
+
+  </section>
+
+</Layout>

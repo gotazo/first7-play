@@ -38,6 +38,8 @@ const games = defineCollection({
 
         title: z.string(),
 
+        fragment: z.string().optional(),
+
         scripture: z.object({
 
           reference: z.string(),
