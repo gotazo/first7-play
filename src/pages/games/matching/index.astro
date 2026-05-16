@@ -1,20 +1,25 @@
 ---
+import {
+  getCollection
+} from "astro:content";
+
 import Layout from "../../../layouts/Layout.astro";
 
-const puzzles = [
+import {
+  getGameUrl
+} from "../../../lib/getGameUrl";
 
-  {
-    title: "Faith and Scripture",
+import {
+  sortGamesByTitle
+} from "../../../lib/sortGames";
 
-    href: "/games/matching/faith-and-scripture",
-
-    difficulty: "Easy",
-
-    description:
-      "Match spiritual ideas with their connected scripture passages and biblical themes."
-  }
-
-];
+const puzzles =
+  sortGamesByTitle(
+    (await getCollection("games"))
+      .filter((game) =>
+        game.data.engine === "matching"
+      )
+  );
 ---
 
 <Layout
@@ -73,7 +78,7 @@ const puzzles = [
         puzzles.map((puzzle) => (
 
           <a
-            href={puzzle.href}
+            href={getGameUrl(puzzle.id)}
             class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
           >
 
@@ -90,7 +95,7 @@ const puzzles = [
               <div
                 class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
               >
-                {puzzle.difficulty}
+                {puzzle.data.difficulty}
               </div>
 
             </div>
@@ -98,19 +103,19 @@ const puzzles = [
             <h2
               class="mt-8 text-3xl font-semibold tracking-tight"
             >
-              {puzzle.title}
+              {puzzle.data.title}
             </h2>
 
             <p
               class="mt-5 leading-8 text-[var(--color-muted)]"
             >
-              {puzzle.description}
+              {puzzle.data.description}
             </p>
 
             <div
               class="mt-8 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
             >
-              Play Puzzle →
+              Play Puzzle &rarr;
             </div>
 
           </a>

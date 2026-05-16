@@ -5,6 +5,11 @@ import {
   type CollectionEntry
 } from "astro:content";
 
+import {
+  getGameSlug,
+  getGameUrl
+} from "../../lib/getGameUrl";
+
 import Layout
   from "../../layouts/Layout.astro";
 
@@ -37,11 +42,8 @@ export async function getStaticPaths() {
 
   return games.map((game) => {
 
-    const slug = game.id
-      .replace(/(^|\/)index$/, "")
-      .split("/")
-      .filter(Boolean)
-      .join("/");
+    const slug =
+      getGameSlug(game.id);
 
     return {
 
@@ -129,10 +131,10 @@ const GameComponent =
             <div class="mt-16">
 
               <a
-                href={`/games/${game.data.nextPuzzle}`}
+                href={getGameUrl(game.data.nextPuzzle)}
                 class="inline-flex rounded-xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-6 py-4 text-sm text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.12)]"
               >
-                Continue To Next Puzzle →
+                Continue To Next Puzzle &rarr;
               </a>
 
             </div>

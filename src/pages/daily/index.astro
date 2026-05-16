@@ -1,49 +1,32 @@
 ---
+import {
+  getCollection
+} from "astro:content";
+
 import Layout from "../../layouts/Layout.astro";
 
-const dailyPuzzles = [
+import {
+  getGameUrl
+} from "../../lib/getGameUrl";
 
-  {
-    title: "Verse Connections",
+import {
+  sortGamesByTitle
+} from "../../lib/sortGames";
 
-    engine: "Connections",
+const titleCase = (value: string) =>
+  value.charAt(0).toUpperCase() +
+  value.slice(1);
 
-    href: "/games/connections/verse-connections",
-
-    difficulty: "Medium"
-  },
-
-  {
-    title: "Growth Sequence",
-
-    engine: "Sequence",
-
-    href: "/games/sequence/growth-sequence",
-
-    difficulty: "Easy"
-  },
-
-  {
-    title: "Faith and Scripture",
-
-    engine: "Matching",
-
-    href: "/games/matching/faith-and-scripture",
-
-    difficulty: "Easy"
-  },
-
-  {
-    title: "Patience Sequence",
-
-    engine: "Sequence",
-
-    href: "/games/sequence/patience-sequence",
-
-    difficulty: "Medium"
-  }
-
-];
+const dailyPuzzles =
+  sortGamesByTitle(
+    await getCollection("games")
+  )
+    .map((game) => ({
+      title: game.data.title,
+      engine: titleCase(game.data.engine),
+      href: getGameUrl(game.id),
+      difficulty: titleCase(game.data.difficulty)
+    }));
 
 /*
   DAILY ROTATION
@@ -130,12 +113,14 @@ const dailyPuzzle =
       >
 
         <div
+          id="daily-engine"
           class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
         >
           {dailyPuzzle.engine}
         </div>
 
         <div
+          id="daily-difficulty"
           class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
         >
           {dailyPuzzle.difficulty}
@@ -144,6 +129,7 @@ const dailyPuzzle =
       </div>
 
       <h2
+        id="daily-title"
         class="mt-8 text-4xl font-semibold tracking-tight"
       >
         {dailyPuzzle.title}
@@ -165,17 +151,18 @@ const dailyPuzzle =
       >
 
         <a
+          id="daily-play"
           href={dailyPuzzle.href}
           class="inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-8 py-4 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.14)]"
         >
-          Play Today's Puzzle →
+          Play Today's Puzzle &rarr;
         </a>
 
         <div
           id="daily-status"
           class="hidden rounded-2xl border border-[rgba(74,222,128,0.18)] bg-[rgba(74,222,128,0.08)] px-6 py-4 text-sm text-[rgb(74,222,128)]"
         >
-          ✓ Completed Today
+          &#10003; Completed Today
         </div>
 
       </div>
@@ -220,11 +207,31 @@ const dailyPuzzle =
 
 </Layout>
 
-<script is:inline define:vars={{ dailyPuzzle }}>
+<script is:inline define:vars={{ dailyPuzzles, dailyPuzzle }}>
 
   const status =
     document.getElementById(
       'daily-status'
+    );
+
+  const title =
+    document.getElementById(
+      'daily-title'
+    );
+
+  const engine =
+    document.getElementById(
+      'daily-engine'
+    );
+
+  const difficulty =
+    document.getElementById(
+      'daily-difficulty'
+    );
+
+  const playButton =
+    document.getElementById(
+      'daily-play'
     );
 
   /*
@@ -242,6 +249,48 @@ const dailyPuzzle =
     }-${
       now.getDate()
     }`;
+
+  const startOfYear =
+    new Date(
+      now.getFullYear(),
+      0,
+      0
+    );
+
+  const oneDay =
+    1000 * 60 * 60 * 24;
+
+  const dayNumber =
+    Math.floor(
+      (
+        now.getTime() -
+        startOfYear.getTime()
+      ) / oneDay
+    );
+
+  const todaysPuzzle =
+    dailyPuzzles.length
+      ? dailyPuzzles[
+        dayNumber %
+        dailyPuzzles.length
+      ]
+      : dailyPuzzle;
+
+  if (todaysPuzzle) {
+
+    title.textContent =
+      todaysPuzzle.title;
+
+    engine.textContent =
+      todaysPuzzle.engine;
+
+    difficulty.textContent =
+      todaysPuzzle.difficulty;
+
+    playButton.href =
+      todaysPuzzle.href;
+
+  }
 
   /*
     CHECK IF COMPLETED
@@ -261,11 +310,6 @@ const dailyPuzzle =
     MARK COMPLETE
     WHEN USER CLICKS PLAY
   */
-
-  const playButton =
-    document.querySelector(
-      `a[href="${dailyPuzzle.href}"]`
-    );
 
   playButton?.addEventListener(
     'click',

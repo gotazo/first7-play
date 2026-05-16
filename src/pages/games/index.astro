@@ -1,46 +1,70 @@
 ---
+import {
+  getCollection,
+  type CollectionEntry
+} from "astro:content";
+
 import Layout from "../../layouts/Layout.astro";
 
-const gameCategories = [
-  {
-    title: "Connections",
+import {
+  getGameUrl
+} from "../../lib/getGameUrl";
 
+import {
+  sortGamesByTitle
+} from "../../lib/sortGames";
+
+type GameEntry =
+  CollectionEntry<"games">;
+
+const engineOrder = [
+  "connections",
+  "sequence",
+  "matching"
+] as const;
+
+const engineMeta = {
+  connections: {
+    title: "Connections",
     description:
       "Discover hidden relationships between scripture themes, symbols, teachings, and ideas.",
-
     href: "/games/connections",
-
-    badge: "Popular",
-
-    difficulty: "Medium"
+    badge: "Hidden Patterns"
   },
-
-  {
+  sequence: {
     title: "Sequence",
-
     description:
       "Arrange journeys, spiritual growth, scripture themes, and events into the correct order.",
-
     href: "/games/sequence",
-
-    badge: "New",
-
-    difficulty: "Easy"
+    badge: "Progression"
   },
-
-  {
+  matching: {
     title: "Matching",
-
     description:
       "Match scripture meanings, verses, symbols, and spiritual ideas.",
-
     href: "/games/matching",
-
-    badge: "Coming Soon",
-
-    difficulty: "Easy"
+    badge: "Reflection"
   }
-];
+};
+
+const games =
+  sortGamesByTitle(
+    await getCollection("games")
+  );
+
+const gamesByEngine =
+  engineOrder.map((engine) => ({
+    engine,
+    ...engineMeta[engine],
+    puzzles: games.filter((game) =>
+      game.data.engine === engine
+    )
+  })).filter((group) =>
+    group.puzzles.length > 0
+  );
+
+const getDifficultyLabel = (game: GameEntry) =>
+  game.data.difficulty;
 ---
 
 <Layout
@@ -93,60 +117,105 @@ const gameCategories = [
     class="mx-auto max-w-6xl px-5 py-20"
   >
 
-    <div
-      class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-    >
+    {
+      gamesByEngine.map((group) => (
 
-      {
-        gameCategories.map((game) => (
+        <section class="mb-16 last:mb-0">
 
-          <a
-            href={game.href}
-            class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
+          <div
+            class="mb-8 flex flex-wrap items-end justify-between gap-6"
           >
 
-            <div
-              class="flex items-center justify-between"
-            >
+            <div>
 
               <div
                 class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
               >
-                {game.badge}
+                {group.badge}
               </div>
 
-              <div
-                class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+              <h2
+                class="mt-5 text-3xl font-semibold tracking-tight"
               >
-                {game.difficulty}
-              </div>
+                {group.title}
+              </h2>
+
+              <p
+                class="mt-4 max-w-2xl leading-8 text-[var(--color-muted)]"
+              >
+                {group.description}
+              </p>
 
             </div>
 
-            <h2
-              class="mt-8 text-3xl font-semibold tracking-tight"
+            <a
+              href={group.href}
+              class="text-sm text-[var(--color-primary)] transition-colors duration-300 hover:text-white"
             >
-              {game.title}
-            </h2>
+              Explore {group.title} &rarr;
+            </a>
 
-            <p
-              class="mt-5 leading-8 text-[var(--color-muted)]"
-            >
-              {game.description}
-            </p>
+          </div>
 
-            <div
-              class="mt-8 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
-            >
-              Explore →
-            </div>
+          <div
+            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
 
-          </a>
+            {
+              group.puzzles.map((game) => (
 
-        ))
-      }
+                <a
+                  href={getGameUrl(game.id)}
+                  class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
+                >
 
-    </div>
+                  <div
+                    class="flex items-center justify-between gap-4"
+                  >
+
+                    <div
+                      class="text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+                    >
+                      {group.title}
+                    </div>
+
+                    <div
+                      class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+                    >
+                      {getDifficultyLabel(game)}
+                    </div>
+
+                  </div>
+
+                  <h3
+                    class="mt-8 text-2xl font-semibold tracking-tight"
+                  >
+                    {game.data.title}
+                  </h3>
+
+                  <p
+                    class="mt-5 leading-8 text-[var(--color-muted)]"
+                  >
+                    {game.data.description}
+                  </p>
+
+                  <div
+                    class="mt-8 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    Play Puzzle &rarr;
+                  </div>
+
+                </a>
+
+              ))
+            }
+
+          </div>
+
+        </section>
+
+      ))
+    }
 
   </section>
 

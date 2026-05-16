@@ -1,23 +1,25 @@
 ---
+import {
+  getCollection
+} from "astro:content";
+
 import Layout from "../../../layouts/Layout.astro";
 
-const puzzles = [
-  {
-    title: "Faith Through Trials",
+import {
+  getGameUrl
+} from "../../../lib/getGameUrl";
 
-    href: "/games/connections/faith-through-trials",
+import {
+  sortGamesByTitle
+} from "../../../lib/sortGames";
 
-    difficulty: "Medium"
-  },
-
-  {
-    title: "Hope and Strength",
-
-    href: "/games/connections/hope-and-strength",
-
-    difficulty: "Easy"
-  }
-];
+const puzzles =
+  sortGamesByTitle(
+    (await getCollection("games"))
+      .filter((game) =>
+        game.data.engine === "connections"
+      )
+  );
 ---
 
 <Layout
@@ -71,7 +73,7 @@ const puzzles = [
         puzzles.map((puzzle) => (
 
           <a
-            href={puzzle.href}
+            href={getGameUrl(puzzle.id)}
             class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
           >
 
@@ -82,13 +84,13 @@ const puzzles = [
               <h2
                 class="text-2xl font-semibold tracking-tight"
               >
-                {puzzle.title}
+                {puzzle.data.title}
               </h2>
 
               <div
                 class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
               >
-                {puzzle.difficulty}
+                {puzzle.data.difficulty}
               </div>
 
             </div>
@@ -96,7 +98,7 @@ const puzzles = [
             <div
               class="mt-6 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
             >
-              Play Puzzle →
+              Play Puzzle &rarr;
             </div>
 
           </a>

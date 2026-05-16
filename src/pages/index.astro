@@ -1,65 +1,80 @@
 ---
+import {
+  getCollection
+} from "astro:content";
+
 import Layout from "../layouts/Layout.astro";
 
-const featuredGames = [
-  {
-    title: "Connections",
+import {
+  getGameUrl
+} from "../lib/getGameUrl";
 
-    description:
-      "Discover hidden relationships between scripture themes, symbols, teachings, and meaning.",
+import {
+  sortGamesByTitle
+} from "../lib/sortGames";
 
-    href: "/games/connections",
+const titleCase = (value: string) =>
+  value.charAt(0).toUpperCase() +
+  value.slice(1);
 
-    badge: "Popular",
+const games =
+  sortGamesByTitle(
+    await getCollection("games")
+  );
 
-    difficulty: "Medium",
+const featuredEntries =
+  games.filter((game) =>
+    game.data.featured
+  );
 
+const featuredGames =
+  (featuredEntries.length
+    ? featuredEntries
+    : games
+  ).slice(0, 3).map((game) => ({
+    title: game.data.title,
+    description: game.data.description,
+    href: getGameUrl(game.id),
+    badge: titleCase(game.data.engine),
+    difficulty: titleCase(game.data.difficulty),
     status: "Available"
-  },
+  }));
 
-  {
-    title: "Sequence",
+const now = new Date();
 
-    description:
-      "Arrange growth, journeys, events, and scripture themes in the correct order.",
+const startOfYear =
+  new Date(
+    now.getFullYear(),
+    0,
+    0
+  );
 
-    href: "/games/sequence",
+const dayNumber =
+  Math.floor(
+    (
+      now.getTime() -
+      startOfYear.getTime()
+    ) / (
+      1000 * 60 * 60 * 24
+    )
+  );
 
-    badge: "New",
-
-    difficulty: "Easy",
-
-    status: "Available"
-  },
-
-  {
-    title: "Matching",
-
-    description:
-      "Match verses, spiritual ideas, meanings, and symbolic connections.",
-
-    href: "/games/matching",
-
-    badge: "Soon",
-
-    difficulty: "Easy",
-
-    status: "Coming Soon"
-  }
-];
+const dailyEntry =
+  games[
+    dayNumber %
+    games.length
+  ];
 
 const dailyPuzzle = {
-  title: "Growth Sequence",
-
-  description:
-    "Arrange the stages of growth in the correct order and unlock a scripture reward.",
-
-  href: "/games/sequence/growth-sequence"
+  title: dailyEntry.data.title,
+  description: dailyEntry.data.description,
+  href: getGameUrl(dailyEntry.id),
+  badge: `${titleCase(dailyEntry.data.engine)} Puzzle`
 };
 ---
 
 <Layout
-  title="First7 Play — Interactive Bible Games & Daily Scripture Puzzles"
+  title="First7 Play - Interactive Bible Games & Daily Scripture Puzzles"
   description="Play daily Bible puzzles, scripture games, mystery experiences, sequence challenges, and interactive faith-based games designed around reflection and discovery."
 >
 
@@ -103,7 +118,7 @@ const dailyPuzzle = {
             href={dailyPuzzle.href}
             class="inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-8 py-4 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.14)]"
           >
-            Play Today's Puzzle →
+            Play Today's Puzzle &rarr;
           </a>
 
           <a
@@ -163,7 +178,7 @@ const dailyPuzzle = {
           <div
             class="mb-4 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
           >
-            Sequence Puzzle
+            {dailyPuzzle.badge}
           </div>
 
           <h3
@@ -185,7 +200,7 @@ const dailyPuzzle = {
           <div
             class="inline-flex rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-6 py-4 text-sm text-[var(--color-primary)] transition-all duration-300 group-hover:bg-[rgba(214,179,106,0.14)]"
           >
-            Start Puzzle →
+            Start Puzzle &rarr;
           </div>
 
         </div>
@@ -302,7 +317,7 @@ const dailyPuzzle = {
                 <div
                   class="text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
                 >
-                  Explore →
+                  Explore &rarr;
                 </div>
 
               </div>

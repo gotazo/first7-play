@@ -26,6 +26,8 @@ const games = defineCollection({
       "hard"
     ]),
 
+    featured: z.boolean().optional(),
+
     nextPuzzle: z.string().optional(),
 
     categories: z.array(
