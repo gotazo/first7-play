@@ -1,0 +1,213 @@
+---
+type Variant =
+  | "light"
+  | "wisdom"
+  | "fire"
+  | "vision"
+  | "wilderness"
+  | "kingdom"
+  | "water"
+  | "shepherd"
+  | "restoration"
+  | "covenant"
+  | "courage"
+  | "scroll"
+  | "dreams"
+  | "heaven"
+  | "gate"
+  | "provision"
+  | "identity"
+  | "prophecy"
+  | "warning"
+  | "strength"
+  | "abundance"
+  | "hope"
+  | "awakening"
+  | "generic";
+
+interface Props {
+  variant?: Variant;
+  label?: string;
+}
+
+const {
+  variant = "light",
+  label = `${variant} fragment`
+} = Astro.props;
+---
+
+<svg
+  class={`fragment-symbol fragment-symbol-${variant}`}
+  viewBox="0 0 64 64"
+  role="img"
+  aria-label={label}
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle class="fragment-symbol-ring" cx="32" cy="32" r="25" />
+  <circle class="fragment-symbol-inner" cx="32" cy="32" r="15" />
+
+  {
+    (variant === "light" || variant === "hope" || variant === "awakening") && (
+      <>
+        <path d="M32 14v10" />
+        <path d="M32 40v10" />
+        <path d="M14 32h10" />
+        <path d="M40 32h10" />
+        <path d="M24 24l16 16" />
+        <path d="M40 24L24 40" />
+        {variant === "awakening" && <path d="M21 47c5-5 17-5 22 0" />}
+        <circle cx="32" cy="32" r="4" />
+      </>
+    )
+  }
+
+  {
+    (variant === "wisdom" || variant === "scroll" || variant === "prophecy") && (
+      <>
+        <path d="M20 24c5-4 19-4 24 0v18c-5-4-19-4-24 0V24z" />
+        <path d="M32 22v20" />
+        <path d="M24 29h5" />
+        <path d="M35 29h5" />
+        <path d="M24 35h5" />
+        <path d="M35 35h5" />
+        {variant === "scroll" && <path d="M18 24c0-4 4-6 8-4" />}
+        {variant === "prophecy" && <path d="M32 14v5" />}
+      </>
+    )
+  }
+
+  {
+    (variant === "fire" || variant === "courage" || variant === "strength") && (
+      <>
+        <path d="M33 49c8-4 11-10 9-16-1-5-5-8-8-13-1 6-8 9-7 17" />
+        <path d="M31 49c-7-3-10-8-9-14 1-5 5-8 7-13 1 7 9 10 7 19" />
+        <path d="M32 45c3-2 5-5 4-9-1-2-2-4-4-6-2 4-6 7-4 12 1 2 2 3 4 3z" />
+        {variant === "strength" && <path d="M22 50h20" />}
+      </>
+    )
+  }
+
+  {
+    (variant === "vision" || variant === "dreams") && (
+      <>
+        <path d="M14 32s7-11 18-11 18 11 18 11-7 11-18 11-18-11-18-11z" />
+        <circle cx="32" cy="32" r="6" />
+        <path d="M32 18v-5" />
+        <path d="M32 51v-5" />
+        {variant === "dreams" && <path d="M22 19c5-4 15-4 20 0" />}
+      </>
+    )
+  }
+
+  {
+    variant === "wilderness" && (
+      <>
+        <path d="M18 42c6-9 10-16 14-25 4 9 8 16 14 25H18z" />
+        <path d="M23 42c4-5 7-9 9-15 2 6 5 10 9 15" />
+        <path d="M17 48h30" />
+      </>
+    )
+  }
+
+  {
+    (variant === "kingdom" || variant === "heaven") && (
+      <>
+        <path d="M20 47V27l6 5 6-10 6 10 6-5v20H20z" />
+        <path d="M25 47V36h14v11" />
+        <path d="M20 27h24" />
+        {variant === "heaven" && <path d="M22 20c5-5 15-5 20 0" />}
+      </>
+    )
+  }
+
+  {
+    (variant === "water" || variant === "provision" || variant === "abundance") && (
+      <>
+        <path d="M32 16c7 8 12 15 12 22a12 12 0 0 1-24 0c0-7 5-14 12-22z" />
+        <path d="M24 39c4 3 12 3 16 0" />
+        <path d="M27 45c3 2 7 2 10 0" />
+        {variant === "provision" && <path d="M21 24c5 2 17 2 22 0" />}
+        {variant === "abundance" && <path d="M20 31c7 3 17 3 24 0" />}
+      </>
+    )
+  }
+
+  {
+    variant === "shepherd" && (
+      <>
+        <path d="M34 49V20a7 7 0 1 1 7 7" />
+        <path d="M26 49V29" />
+        <path d="M22 36c4-4 12-4 16 0" />
+        <path d="M22 43c4-3 12-3 16 0" />
+      </>
+    )
+  }
+
+  {
+    (variant === "restoration" || variant === "identity") && (
+      <>
+        <path d="M18 36c5 9 17 12 26 5" />
+        <path d="M44 41h-9" />
+        <path d="M44 41v-9" />
+        <path d="M46 28c-5-9-17-12-26-5" />
+        <path d="M20 23h9" />
+        <path d="M20 23v9" />
+        {variant === "identity" && <circle cx="32" cy="32" r="5" />}
+      </>
+    )
+  }
+
+  {
+    (variant === "covenant" || variant === "gate" || variant === "warning" || variant === "generic") && (
+      <>
+        <path d="M18 40c3-9 8-15 14-15s11 6 14 15" />
+        <path d="M21 41c4-6 8-9 11-9s7 3 11 9" />
+        <path d="M24 42c3-3 6-5 8-5s5 2 8 5" />
+        <path d="M32 20v-5" />
+        {variant === "gate" && <path d="M24 47V29h16v18" />}
+        {variant === "warning" && <path d="M32 25v10" />}
+        {variant === "warning" && <path d="M32 42h.1" />}
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .fragment-symbol {
+    height: 5rem;
+    width: 5rem;
+    color: rgba(214, 179, 106, 0.58);
+    filter: drop-shadow(0 0 0 rgba(214, 179, 106, 0));
+    opacity: 0.46;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition:
+      color 500ms ease,
+      filter 500ms ease,
+      opacity 500ms ease,
+      transform 500ms ease;
+  }
+
+  .fragment-symbol-ring {
+    opacity: 0.42;
+  }
+
+  .fragment-symbol-inner {
+    opacity: 0.18;
+    stroke-dasharray: 2 7;
+  }
+
+  :global(.fragment-card:hover) .fragment-symbol {
+    opacity: 0.72;
+    transform: translateY(-2px);
+  }
+
+  :global(.fragment-card.is-unlocked) .fragment-symbol {
+    color: rgb(214, 179, 106);
+    filter: drop-shadow(0 0 14px rgba(214, 179, 106, 0.26));
+    opacity: 1;
+  }
+</style>

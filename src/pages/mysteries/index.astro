@@ -1,35 +1,140 @@
 ---
+import {
+  getCollection
+} from "astro:content";
+
 import Layout from "../../layouts/Layout.astro";
+import ChamberSeal from "../../components/mysteries/ChamberSeal.astro";
+import FragmentIcon from "../../components/mysteries/FragmentIcon.astro";
 
-const allFragments = [
-  {
-    name: "Fragment of Light",
-    engine: "Connections",
-    unlockPath: "/games/connections/verse-connections",
-    description: "Recovered from hidden spiritual connections."
-  },
+const iconVariants = [
+  "light",
+  "wisdom",
+  "fire",
+  "vision",
+  "wilderness",
+  "kingdom",
+  "water",
+  "shepherd",
+  "restoration",
+  "covenant",
+  "courage",
+  "scroll",
+  "dreams",
+  "heaven",
+  "gate",
+  "provision",
+  "identity",
+  "prophecy",
+  "warning",
+  "strength",
+  "abundance",
+  "hope",
+  "awakening",
+  "generic"
+] as const;
 
-  {
-    name: "Fragment of Growth",
-    engine: "Sequence",
-    unlockPath: "/games/sequence/growth-sequence",
-    description: "Recovered through sacred progression."
-  },
+type IconVariant = typeof iconVariants[number];
 
-  {
-    name: "Fragment of Waiting",
-    engine: "Sequence",
-    unlockPath: "/games/sequence/patience-sequence",
-    description: "Recovered through endurance and patience."
-  },
+const getFragmentIconVariant = (name: string): IconVariant => {
+  const normalized =
+    name.toLowerCase();
 
-  {
-    name: "Fragment of Wisdom",
-    engine: "Matching",
-    unlockPath: "/games/matching/faith-and-scripture",
-    description: "Recovered from restored spiritual meaning."
-  }
-];
+  if (normalized.includes("light")) return "light";
+  if (normalized.includes("wisdom")) return "wisdom";
+  if (normalized.includes("fire")) return "fire";
+  if (normalized.includes("courage")) return "courage";
+  if (normalized.includes("scroll")) return "scroll";
+  if (normalized.includes("dream")) return "dreams";
+  if (normalized.includes("heaven")) return "heaven";
+  if (normalized.includes("vision")) return "vision";
+  if (normalized.includes("gate")) return "gate";
+  if (normalized.includes("watchman")) return "warning";
+  if (normalized.includes("warning")) return "warning";
+  if (normalized.includes("waiting")) return "wilderness";
+  if (normalized.includes("wilderness")) return "wilderness";
+  if (normalized.includes("kingdom")) return "kingdom";
+  if (normalized.includes("provision")) return "provision";
+  if (normalized.includes("bread")) return "provision";
+  if (normalized.includes("identity")) return "identity";
+  if (normalized.includes("name")) return "identity";
+  if (normalized.includes("prophecy")) return "prophecy";
+  if (normalized.includes("prophet")) return "prophecy";
+  if (normalized.includes("strength")) return "strength";
+  if (normalized.includes("abundance")) return "abundance";
+  if (normalized.includes("fruit")) return "abundance";
+  if (normalized.includes("hope")) return "hope";
+  if (normalized.includes("awakening")) return "awakening";
+  if (normalized.includes("faith")) return "covenant";
+  if (normalized.includes("trust")) return "covenant";
+  if (normalized.includes("calling")) return "shepherd";
+  if (normalized.includes("discipleship")) return "shepherd";
+  if (normalized.includes("temple")) return "gate";
+  if (normalized.includes("city")) return "gate";
+  if (normalized.includes("altar")) return "fire";
+  if (normalized.includes("sacrifice")) return "covenant";
+  if (normalized.includes("song")) return "hope";
+  if (normalized.includes("praise")) return "hope";
+  if (normalized.includes("miracle")) return "awakening";
+  if (normalized.includes("compassion")) return "water";
+  if (normalized.includes("deliverance")) return "courage";
+  if (normalized.includes("preparation")) return "wisdom";
+  if (normalized.includes("guidance")) return "vision";
+  if (normalized.includes("journey")) return "wilderness";
+  if (normalized.includes("garden")) return "abundance";
+  if (normalized.includes("preservation")) return "scroll";
+  if (normalized.includes("revelation")) return "prophecy";
+  if (normalized.includes("sign")) return "vision";
+  if (normalized.includes("wonder")) return "heaven";
+  if (normalized.includes("water")) return "water";
+  if (normalized.includes("river")) return "water";
+  if (normalized.includes("shepherd")) return "shepherd";
+  if (normalized.includes("growth")) return "restoration";
+  if (normalized.includes("renewal")) return "restoration";
+  if (normalized.includes("return")) return "restoration";
+  if (normalized.includes("restoration")) return "restoration";
+  if (normalized.includes("covenant")) return "covenant";
+
+  return "generic";
+};
+
+const getFragmentSlug = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const games =
+  await getCollection("games");
+
+const fragmentNames =
+  Array.from(
+    new Set(
+      games.flatMap((game) =>
+        game.data.puzzles
+          .map((puzzle) =>
+            puzzle.fragment
+          )
+          .filter((fragment): fragment is string =>
+            Boolean(fragment)
+          )
+      )
+    )
+  ).sort((a, b) =>
+    a.localeCompare(
+      b,
+      undefined,
+      {
+        sensitivity: "base"
+      }
+    )
+  );
+
+const allFragments = fragmentNames.map((name) => ({
+  name,
+  slug: getFragmentSlug(name),
+  iconVariant: getFragmentIconVariant(name)
+}));
 ---
 
 <Layout
@@ -109,16 +214,17 @@ const allFragments = [
     </div>
 
     <div
-      class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+      class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
     >
 
       {
         allFragments.map((fragment) => (
 
           <div
-            class="fragment-card group relative min-h-[360px] overflow-hidden rounded-2xl border border-[rgba(214,179,106,0.12)] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(255,255,255,0.012))] p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.28)] hover:bg-[rgba(255,255,255,0.04)] hover:shadow-[0_0_36px_rgba(214,179,106,0.07)]"
+            class="fragment-card group relative min-h-[360px] overflow-hidden rounded-2xl border border-[rgba(214,179,106,0.12)] bg-[linear-gradient(145deg,rgba(255,255,255,0.035),rgba(255,255,255,0.012))] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(255,255,255,0.045)] hover:shadow-[0_0_42px_rgba(214,179,106,0.09)]"
             data-fragment={fragment.name}
-            data-description={fragment.description}
+            data-fragment-slug={fragment.slug}
+            data-description={`Recovered from the hidden archive as ${fragment.name.toLowerCase()}.`}
           >
 
             <!-- GLOW -->
@@ -130,14 +236,23 @@ const allFragments = [
 
             <div class="relative z-10">
 
-              <div
-                class="fragment-status inline-flex rounded-full border border-dashed border-[rgba(214,179,106,0.18)] bg-[rgba(0,0,0,0.12)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
-              >
-                Sealed
+              <div class="flex items-start justify-between gap-6">
+
+                <FragmentIcon
+                  variant={fragment.iconVariant}
+                  label={`${fragment.name} symbol`}
+                />
+
+                <div
+                  class="fragment-status inline-flex rounded-full border border-dashed border-[rgba(214,179,106,0.18)] bg-[rgba(0,0,0,0.12)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+                >
+                  Sealed
+                </div>
+
               </div>
 
               <h2
-                class="fragment-title mt-8 text-3xl font-semibold tracking-tight transition-colors duration-500"
+                class="fragment-title mt-7 text-3xl font-semibold tracking-tight transition-colors duration-500"
               >
                 ???
               </h2>
@@ -155,14 +270,14 @@ const allFragments = [
                 <span class="text-[var(--color-primary)]">
                   Recovered Through:
                 </span>
-                {fragment.engine} Puzzle
+                Hidden in the puzzle archive
               </div>
 
               <a
-                href={fragment.unlockPath}
+                href="/games"
                 class="fragment-cta mt-8 inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-6 py-3 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.34)] hover:bg-[rgba(214,179,106,0.14)]"
               >
-                Begin Recovery →
+                Search Puzzle Paths &rarr;
               </a>
 
             </div>
@@ -236,6 +351,7 @@ const allFragments = [
         if (!isUnlocked) return;
 
         card.classList.add(
+          'is-unlocked',
           'border-[rgba(214,179,106,0.38)]',
           'bg-[rgba(214,179,106,0.08)]',
           'shadow-[0_0_44px_rgba(214,179,106,0.11)]'
@@ -303,7 +419,7 @@ const allFragments = [
         'The seal recognizes the recovered fragments.';
 
       chamberButton.textContent =
-        'Enter Chamber →';
+        'Enter Chamber \u2192';
 
       chamberButton.setAttribute(
         'href',
@@ -370,7 +486,7 @@ const allFragments = [
 
       <div
         id="hidden-chamber-card"
-        class="group relative mt-14 overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.14)] bg-[rgba(0,0,0,0.14)] p-10 transition-all duration-500 hover:border-[rgba(214,179,106,0.24)] hover:shadow-[0_0_42px_rgba(214,179,106,0.06)]"
+        class="group relative mt-14 overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.14)] bg-[rgba(0,0,0,0.14)] p-10 transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.28)] hover:shadow-[0_0_46px_rgba(214,179,106,0.08)]"
       >
 
         <div
@@ -378,34 +494,42 @@ const allFragments = [
           style="background: radial-gradient(circle at top center, rgba(214,179,106,0.08), transparent 55%);"
         ></div>
 
-        <div class="relative z-10 max-w-3xl">
+        <div
+          class="relative z-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+        >
 
-          <div
-            class="inline-flex rounded-full border border-dashed border-[rgba(214,179,106,0.2)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
-          >
-            Chamber Sealed
+          <div class="max-w-3xl">
+
+            <div
+              class="inline-flex rounded-full border border-dashed border-[rgba(214,179,106,0.2)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+            >
+              Chamber Sealed
+            </div>
+
+            <h3
+              class="mt-8 text-3xl font-semibold tracking-tight md:text-4xl"
+            >
+              The Hidden Chamber
+            </h3>
+
+            <p
+              id="hidden-chamber-requirement"
+              class="mt-5 text-lg leading-8 text-[var(--color-muted)]"
+            >
+              Requires 3 recovered fragments
+            </p>
+
+            <a
+              id="hidden-chamber-button"
+              class="pointer-events-none mt-10 inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.16)] bg-[rgba(214,179,106,0.06)] px-7 py-4 text-sm font-medium text-[var(--color-primary)] opacity-45 transition-all duration-300"
+              aria-disabled="true"
+            >
+              Seal Unbroken
+            </a>
+
           </div>
 
-          <h3
-            class="mt-8 text-3xl font-semibold tracking-tight md:text-4xl"
-          >
-            The Hidden Chamber
-          </h3>
-
-          <p
-            id="hidden-chamber-requirement"
-            class="mt-5 text-lg leading-8 text-[var(--color-muted)]"
-          >
-            Requires 3 recovered fragments
-          </p>
-
-          <a
-            id="hidden-chamber-button"
-            class="pointer-events-none mt-10 inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.16)] bg-[rgba(214,179,106,0.06)] px-7 py-4 text-sm font-medium text-[var(--color-primary)] opacity-45 transition-all duration-300"
-            aria-disabled="true"
-          >
-            Seal Unbroken
-          </a>
+          <ChamberSeal />
 
         </div>
 

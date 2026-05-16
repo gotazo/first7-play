@@ -1,0 +1,95 @@
+<div class="chamber-seal" aria-hidden="true">
+  <svg
+    viewBox="0 0 160 160"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle class="seal-glow" cx="80" cy="80" r="58" />
+    <g class="seal-rotor">
+      <circle cx="80" cy="80" r="58" />
+      <circle cx="80" cy="80" r="43" />
+      <circle cx="80" cy="80" r="24" />
+      <path d="M80 22v22" />
+      <path d="M80 116v22" />
+      <path d="M22 80h22" />
+      <path d="M116 80h22" />
+      <path d="M39 39l16 16" />
+      <path d="M121 39l-16 16" />
+      <path d="M39 121l16-16" />
+      <path d="M121 121l-16-16" />
+      <path d="M80 54l23 26-23 26-23-26 23-26z" />
+      <path d="M68 80h24" />
+      <path d="M80 68v24" />
+    </g>
+    <g class="seal-stars">
+      <circle cx="80" cy="22" r="2" />
+      <circle cx="80" cy="138" r="2" />
+      <circle cx="22" cy="80" r="2" />
+      <circle cx="138" cy="80" r="2" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .chamber-seal {
+    display: grid;
+    min-height: 11rem;
+    place-items: center;
+  }
+
+  .chamber-seal svg {
+    height: clamp(8.5rem, 20vw, 12rem);
+    width: clamp(8.5rem, 20vw, 12rem);
+    color: rgba(214, 179, 106, 0.76);
+    filter: drop-shadow(0 0 26px rgba(214, 179, 106, 0.13));
+    stroke: currentColor;
+    stroke-width: 1.35;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .seal-glow {
+    fill: rgba(214, 179, 106, 0.035);
+    stroke: rgba(214, 179, 106, 0.16);
+    transform-origin: 80px 80px;
+    animation: seal-pulse 5.5s ease-in-out infinite;
+  }
+
+  .seal-rotor {
+    opacity: 0.72;
+    transform-origin: 80px 80px;
+    animation: seal-rotate 34s linear infinite;
+  }
+
+  .seal-stars {
+    fill: currentColor;
+    opacity: 0.48;
+    stroke: none;
+    animation: seal-pulse 4.5s ease-in-out infinite reverse;
+  }
+
+  @keyframes seal-rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes seal-pulse {
+    0%,
+    100% {
+      opacity: 0.34;
+    }
+
+    50% {
+      opacity: 0.86;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seal-glow,
+    .seal-rotor,
+    .seal-stars {
+      animation: none;
+    }
+  }
+</style>

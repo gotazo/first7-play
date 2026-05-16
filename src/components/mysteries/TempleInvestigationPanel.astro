@@ -1,0 +1,341 @@
+---
+const discoveries = [
+  {
+    id: "altar",
+    label: "Altar",
+    fragment: "Fragment of Sacrifice",
+    scripture: "Hebrews 13:10",
+    note:
+      "The altar stood at the center of offering and surrender."
+  },
+
+  {
+    id: "veil",
+    label: "Veil",
+    fragment: "Fragment of Access",
+    scripture: "Matthew 27:51",
+    note:
+      "The veil concealed what only priests could approach."
+  },
+
+  {
+    id: "lampstand",
+    label: "Lampstand",
+    fragment: "Fragment of Light",
+    scripture: "Exodus 25:37",
+    note:
+      "Light remained burning continually within the holy place."
+  },
+
+  {
+    id: "ark",
+    label: "Ark",
+    fragment: "Fragment of Covenant",
+    scripture: "Exodus 25:22",
+    note:
+      "The ark represented covenant, presence, and remembrance."
+  }
+];
+---
+
+<section class="relative overflow-hidden rounded-[32px] border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] p-6 md:p-10">
+
+  <!-- HEADER -->
+
+  <div class="max-w-2xl">
+
+    <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+      Investigation Archive
+    </div>
+
+    <h2 class="mt-6 text-4xl font-semibold tracking-tight md:text-5xl">
+      Temple Investigation Panel
+    </h2>
+
+    <p class="mt-6 text-lg leading-8 text-[var(--color-muted)]">
+      Explore symbolic locations within the sacred temple layout.
+      Hover and investigate hidden archive fragments.
+    </p>
+
+  </div>
+
+  <!-- INVESTIGATION LAYOUT -->
+
+  <div class="mt-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+
+    <!-- SVG PANEL -->
+
+    <div class="relative rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-4 md:p-8">
+
+      <svg
+        viewBox="0 0 900 600"
+        class="w-full"
+      >
+
+        <!-- OUTER FRAME -->
+
+        <rect
+          x="60"
+          y="60"
+          width="780"
+          height="480"
+          rx="24"
+          fill="rgba(255,255,255,0.01)"
+          stroke="rgba(214,179,106,0.18)"
+          stroke-width="3"
+        />
+
+        <!-- INNER ROOM -->
+
+        <rect
+          x="250"
+          y="140"
+          width="400"
+          height="320"
+          rx="18"
+          fill="rgba(214,179,106,0.03)"
+          stroke="rgba(214,179,106,0.18)"
+          stroke-width="2"
+        />
+
+        <!-- ALTAR -->
+
+        <g class="investigation-node" data-target="altar">
+
+          <circle
+            cx="450"
+            cy="420"
+            r="42"
+            fill="rgba(214,179,106,0.08)"
+            stroke="rgba(214,179,106,0.8)"
+            stroke-width="3"
+          />
+
+          <path
+            d="M430 420 L470 420 M450 400 L450 440"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+        </g>
+
+        <!-- VEIL -->
+
+        <g class="investigation-node" data-target="veil">
+
+          <rect
+            x="410"
+            y="170"
+            width="80"
+            height="120"
+            rx="10"
+            fill="rgba(214,179,106,0.06)"
+            stroke="rgba(214,179,106,0.7)"
+            stroke-width="3"
+          />
+
+          <line
+            x1="450"
+            y1="170"
+            x2="450"
+            y2="290"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="3"
+          />
+
+        </g>
+
+        <!-- LAMPSTAND -->
+
+        <g class="investigation-node" data-target="lampstand">
+
+          <circle
+            cx="320"
+            cy="260"
+            r="30"
+            fill="rgba(214,179,106,0.08)"
+            stroke="rgba(214,179,106,0.7)"
+            stroke-width="3"
+          />
+
+          <path
+            d="M320 235 L320 285"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+          <path
+            d="M300 250 Q320 220 340 250"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="3"
+            fill="none"
+          />
+
+        </g>
+
+        <!-- ARK -->
+
+        <g class="investigation-node" data-target="ark">
+
+          <rect
+            x="560"
+            y="220"
+            width="90"
+            height="70"
+            rx="12"
+            fill="rgba(214,179,106,0.08)"
+            stroke="rgba(214,179,106,0.7)"
+            stroke-width="3"
+          />
+
+          <circle
+            cx="585"
+            cy="210"
+            r="8"
+            fill="rgba(214,179,106,1)"
+          />
+
+          <circle
+            cx="625"
+            cy="210"
+            r="8"
+            fill="rgba(214,179,106,1)"
+          />
+
+        </g>
+
+      </svg>
+
+    </div>
+
+    <!-- DISCOVERY PANEL -->
+
+    <div
+      id="archive-panel"
+      class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8"
+    >
+
+      <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        Archive Notes
+      </div>
+
+      <div class="mt-8 space-y-6">
+
+        <div>
+          <div
+            id="archive-label"
+            class="text-2xl font-semibold"
+          >
+            Select A Symbol
+          </div>
+
+          <div
+            id="archive-fragment"
+            class="mt-3 text-sm text-[var(--color-primary)]"
+          >
+            Awaiting investigation...
+          </div>
+        </div>
+
+        <blockquote
+          id="archive-note"
+          class="border-l border-[rgba(214,179,106,0.18)] pl-5 text-[15px] leading-7 text-[var(--color-muted)]"
+        >
+          Hover or click a symbolic location within the temple layout to recover an archive note.
+        </blockquote>
+
+        <div
+          id="archive-scripture"
+          class="text-sm text-[var(--color-muted)]"
+        >
+          Scripture reference will appear here.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+
+  .investigation-node {
+    cursor: pointer;
+    transition: all 0.35s ease;
+    transform-origin: center;
+  }
+
+  .investigation-node:hover {
+    filter:
+      drop-shadow(0 0 12px rgba(214,179,106,0.45));
+
+    transform: scale(1.03);
+  }
+
+</style>
+
+<script
+  is:inline
+  define:vars={{ discoveries }}
+>
+
+  const panelLabel =
+    document.getElementById(
+      'archive-label'
+    );
+
+  const panelFragment =
+    document.getElementById(
+      'archive-fragment'
+    );
+
+  const panelNote =
+    document.getElementById(
+      'archive-note'
+    );
+
+  const panelScripture =
+    document.getElementById(
+      'archive-scripture'
+    );
+
+  const nodes =
+    document.querySelectorAll(
+      '.investigation-node'
+    );
+
+  nodes.forEach((node) => {
+
+    node.addEventListener('mouseenter', () => {
+
+      const target =
+        node.dataset.target;
+
+      const match =
+        discoveries.find(
+          (item) => item.id === target
+        );
+
+      if (!match) return;
+
+      panelLabel.textContent =
+        match.label;
+
+      panelFragment.textContent =
+        match.fragment;
+
+      panelNote.textContent =
+        match.note;
+
+      panelScripture.textContent =
+        match.scripture;
+
+    });
+
+  });
+
+</script>

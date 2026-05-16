@@ -101,6 +101,60 @@ const games = defineCollection({
 
 });
 
+const investigations = defineCollection({
+
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/investigations"
+  }),
+
+  schema: z.object({
+
+    title: z.string(),
+
+    description: z.string(),
+
+    fragment: z.string(),
+
+    difficulty: z.enum([
+      "easy",
+      "medium",
+      "hard"
+    ]),
+
+    archiveNotes: z.array(
+  z.string()
+),
+
+scriptureHints: z.array(
+  z.string()
+),
+
+    nodes: z.array(
+
+      z.object({
+
+        id: z.string(),
+
+        label: z.string(),
+
+        scripture: z.string(),
+
+        note: z.string()
+
+      })
+
+    ),
+
+    solution: z.array(
+      z.string()
+    )
+
+  })
+
+});
+
 export const collections = {
-  games
+  games,
+  investigations
 };

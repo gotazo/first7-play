@@ -1,0 +1,507 @@
+---
+interface Node {
+  id: string;
+  label: string;
+  scripture: string;
+  note: string;
+}
+
+interface Props {
+  title: string;
+  fragment: string;
+  nodes: Node[];
+  solution: string[];
+
+  archiveNotes: string[];
+  scriptureHints: string[];
+}
+
+const {
+  title,
+  fragment,
+  nodes,
+  solution,
+  archiveNotes,
+  scriptureHints
+} = Astro.props as Props;
+---
+
+<section class="space-y-10">
+
+  <!-- HEADER -->
+
+  <div class="space-y-5">
+
+    <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+      Investigation Archive
+    </div>
+
+    <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">
+      {title}
+    </h1>
+
+    <div class="max-w-2xl space-y-6">
+
+      <!-- ARCHIVE NOTES -->
+
+      <div>
+
+        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Archive Notes
+        </div>
+
+        <div class="space-y-3">
+
+          {
+            archiveNotes.map((note) => (
+
+              <blockquote class="border-l border-[rgba(214,179,106,0.14)] pl-5 text-[15px] leading-7 text-[var(--color-muted)]">
+                {note}
+              </blockquote>
+
+            ))
+          }
+
+        </div>
+
+      </div>
+
+      <!-- SCRIPTURE HINTS -->
+
+      <div>
+
+        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Scripture Hints
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+
+          {
+            scriptureHints.map((hint) => (
+
+              <div class="rounded-full border border-[rgba(214,179,106,0.12)] bg-[rgba(214,179,106,0.05)] px-4 py-2 text-sm text-[var(--color-muted)]">
+                {hint}
+              </div>
+
+            ))
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- STATUS -->
+
+  <div
+    id="recovery-status"
+    class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4 text-sm text-[var(--color-muted)]"
+  >
+    Awaiting investigation...
+  </div>
+
+  <!-- PANEL -->
+
+  <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+
+    <!-- SVG PANEL -->
+
+    <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8">
+
+      <svg
+        viewBox="0 0 900 600"
+        class="w-full"
+      >
+
+        <!-- TITLE -->
+
+        <text
+          x="450"
+          y="115"
+          text-anchor="middle"
+          fill="rgba(214,179,106,0.38)"
+          font-size="18"
+          letter-spacing="6"
+        >
+          TEMPLE ARCHIVE
+        </text>
+
+        <!-- FRAME -->
+
+        <rect
+          x="60"
+          y="60"
+          width="780"
+          height="480"
+          rx="24"
+          fill="rgba(255,255,255,0.01)"
+          stroke="rgba(214,179,106,0.18)"
+          stroke-width="3"
+        />
+
+        <!-- GRID LINES -->
+
+        <line
+          x1="450"
+          y1="60"
+          x2="450"
+          y2="540"
+          stroke="rgba(214,179,106,0.05)"
+          stroke-width="2"
+        />
+
+        <line
+          x1="60"
+          y1="300"
+          x2="840"
+          y2="300"
+          stroke="rgba(214,179,106,0.05)"
+          stroke-width="2"
+        />
+
+        <!-- INNER CHAMBER -->
+
+        <rect
+          x="250"
+          y="140"
+          width="400"
+          height="320"
+          rx="18"
+          fill="rgba(214,179,106,0.03)"
+          stroke="rgba(214,179,106,0.18)"
+          stroke-width="2"
+        />
+
+        <!-- ALTAR -->
+
+        <g
+          class="investigation-node"
+          data-node="altar"
+        >
+
+          <circle
+            cx="450"
+            cy="420"
+            r="42"
+            fill="rgba(214,179,106,0.08)"
+            stroke="rgba(214,179,106,0.8)"
+            stroke-width="3"
+          />
+
+          <path
+            d="M430 420 L470 420 M450 400 L450 440"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+        </g>
+
+        <!-- VEIL -->
+
+        <g
+          class="investigation-node"
+          data-node="veil"
+        >
+
+          <rect
+            x="410"
+            y="170"
+            width="80"
+            height="120"
+            rx="10"
+            fill="rgba(214,179,106,0.06)"
+            stroke="rgba(214,179,106,0.7)"
+            stroke-width="3"
+          />
+
+          <line
+            x1="450"
+            y1="170"
+            x2="450"
+            y2="290"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="3"
+          />
+
+        </g>
+
+        <!-- LAMP -->
+
+        <g
+          class="investigation-node"
+          data-node="lampstand"
+        >
+
+          <circle
+            cx="320"
+            cy="260"
+            r="30"
+            fill="rgba(214,179,106,0.08)"
+            stroke="rgba(214,179,106,0.7)"
+            stroke-width="3"
+          />
+
+          <path
+            d="M300 250 Q320 220 340 250"
+            stroke="rgba(214,179,106,1)"
+            stroke-width="3"
+            fill="none"
+          />
+
+        </g>
+
+        <!-- ARK -->
+
+        <g
+          class="investigation-node"
+          data-node="ark"
+        >
+
+          <rect
+            x="560"
+            y="220"
+            width="90"
+            height="70"
+            rx="12"
+            fill="rgba(214,179,106,0.08)"
+            stroke="rgba(214,179,106,0.7)"
+            stroke-width="3"
+          />
+
+          <circle
+            cx="585"
+            cy="210"
+            r="8"
+            fill="rgba(214,179,106,1)"
+          />
+
+          <circle
+            cx="625"
+            cy="210"
+            r="8"
+            fill="rgba(214,179,106,1)"
+          />
+
+        </g>
+
+        <!-- FADED SCRIPTURE -->
+
+        <text
+          x="450"
+          y="500"
+          text-anchor="middle"
+          fill="rgba(214,179,106,0.08)"
+          font-size="20"
+          letter-spacing="4"
+        >
+          THE VEIL CONCEALED THE COVENANT
+        </text>
+
+      </svg>
+
+    </div>
+
+    <!-- ARCHIVE PANEL -->
+
+    <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8">
+
+      <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        Investigation Notes
+      </div>
+
+      <div class="mt-8 space-y-6">
+
+        <div>
+
+          <div
+            id="archive-label"
+            class="text-2xl font-semibold"
+          >
+            Select A Symbol
+          </div>
+
+          <div
+            id="archive-scripture"
+            class="mt-3 text-sm text-[var(--color-primary)]"
+          >
+            Scripture reference will appear here.
+          </div>
+
+        </div>
+
+        <blockquote
+          id="archive-note"
+          class="border-l border-[rgba(214,179,106,0.18)] pl-5 text-[15px] leading-7 text-[var(--color-muted)]"
+        >
+          Investigate the temple symbols to recover hidden fragments.
+        </blockquote>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+
+  svg {
+    filter:
+      drop-shadow(0 0 40px rgba(214,179,106,0.03));
+  }
+
+  .investigation-node {
+    cursor: pointer;
+    transition: all 0.35s ease;
+    transform-origin: center;
+    opacity: 0.82;
+  }
+
+  .investigation-node:hover {
+    filter:
+      drop-shadow(0 0 12px rgba(214,179,106,0.45));
+
+    transform: scale(1.04);
+
+    opacity: 1;
+  }
+
+</style>
+
+<script
+  is:inline
+  define:vars={{
+    nodes,
+    solution,
+    fragment
+  }}
+>
+
+  const archiveLabel =
+    document.getElementById(
+      'archive-label'
+    );
+
+  const archiveScripture =
+    document.getElementById(
+      'archive-scripture'
+    );
+
+  const archiveNote =
+    document.getElementById(
+      'archive-note'
+    );
+
+  const recoveryStatus =
+    document.getElementById(
+      'recovery-status'
+    );
+
+  const clickedSequence = [];
+
+  const svgNodes =
+    document.querySelectorAll(
+      '.investigation-node'
+    );
+
+  function updateArchive(nodeId) {
+
+    const match =
+      nodes.find(
+        (node) => node.id === nodeId
+      );
+
+    if (!match) return;
+
+    archiveLabel.textContent =
+      match.label;
+
+    archiveScripture.textContent =
+      match.scripture;
+
+    archiveNote.textContent =
+      match.note;
+
+  }
+
+  function checkSolution() {
+
+    if (
+      clickedSequence.slice(-solution.length)
+        .join(",")
+      ===
+      solution.join(",")
+    ) {
+
+      recoveryStatus.innerHTML = `
+
+        <div>
+          Fragment recovered — ${fragment}
+        </div>
+
+        <div
+          class="mt-4 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]"
+        >
+          Archive Seal Broken
+        </div>
+
+      `;
+
+      recoveryStatus.animate(
+        [
+          {
+            opacity: 0.4,
+            transform: 'scale(0.98)'
+          },
+
+          {
+            opacity: 1,
+            transform: 'scale(1)'
+          }
+        ],
+        {
+          duration: 700,
+          easing: 'ease-out'
+        }
+      );
+
+      recoveryStatus.className =
+        'rounded-2xl border border-[rgba(214,179,106,0.22)] bg-[rgba(214,179,106,0.08)] px-5 py-4 text-sm text-[var(--color-primary)]';
+
+      localStorage.setItem(
+        `fragment-${fragment}`,
+        'recovered'
+      );
+
+    }
+
+  }
+
+  svgNodes.forEach((node) => {
+
+    node.addEventListener(
+      'click',
+      () => {
+
+        const nodeId =
+          node.dataset.node;
+
+        clickedSequence.push(
+          nodeId
+        );
+
+        updateArchive(nodeId);
+
+        checkSolution();
+
+      }
+    );
+
+  });
+
+</script>
