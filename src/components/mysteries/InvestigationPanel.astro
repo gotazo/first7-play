@@ -440,14 +440,25 @@ const {
 
       recoveryStatus.innerHTML = `
 
-        <div>
-          Fragment recovered — ${fragment}
-        </div>
+        <div class="space-y-5">
 
-        <div
-          class="mt-4 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]"
-        >
-          Archive Seal Broken
+          <div>
+            Fragment recovered — ${fragment}
+          </div>
+
+          <div
+            class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]"
+          >
+            Archive Seal Broken
+          </div>
+
+          <button
+            id="share-discovery"
+            class="inline-flex items-center gap-2 rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-3 text-sm text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.22)] hover:text-[var(--color-text)]"
+          >
+            Share Discovery
+          </button>
+
         </div>
 
       `;
@@ -476,6 +487,57 @@ const {
       localStorage.setItem(
         `fragment-${fragment}`,
         'recovered'
+      );
+
+      const shareButton =
+        document.getElementById(
+          'share-discovery'
+        );
+
+      shareButton?.addEventListener(
+        'click',
+        async () => {
+
+          const shareText = `Recovered Archive Fragment:
+
+"${archiveNote.textContent}"
+
+${window.location.href}
+
+First7 Play — Interactive Scripture Investigation`;
+
+          try {
+
+            if (navigator.share) {
+
+              await navigator.share({
+
+                title:
+                  'First7 Play Discovery',
+
+                text:
+                  shareText
+
+              });
+
+            } else {
+
+              await navigator.clipboard.writeText(
+                shareText
+              );
+
+              shareButton.textContent =
+                'Discovery Copied';
+
+            }
+
+          } catch (error) {
+
+            console.error(error);
+
+          }
+
+        }
       );
 
     }
