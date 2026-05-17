@@ -131,6 +131,16 @@ const shuffled =
       {puzzle.scripture.verse}
     </p>
 
+    <button
+      id="share-discovery"
+      class="share-discovery-btn"
+      type="button"
+      data-share-title="First7 Play Sacred Order"
+      data-share-message={`Sacred Order Restored:\n${(puzzle.sequence || []).join(' -> ')}\n\n${puzzle.scripture.reference}\n"${puzzle.scripture.verse}"\n\nFirst7 Play - transmitted from the recovered archive.`}
+    >
+      Share Discovery
+    </button>
+
   </div>
 
 </div>
@@ -379,6 +389,14 @@ const shuffled =
 
 </script>
 
+<script>
+  import { bindDiscoveryShareButtons } from '../../lib/shareDiscovery';
+
+  bindDiscoveryShareButtons({
+    selector: '#share-discovery'
+  });
+</script>
+
 <style>
 
 .sequence-wrapper {
@@ -533,6 +551,50 @@ const shuffled =
 
   animation:
     fadeUp 0.4s ease;
+}
+
+.share-discovery-btn {
+
+  margin-top: 1.25rem;
+
+  padding:
+    0.7rem 1rem;
+
+  border-radius: 0.8rem;
+
+  border:
+    1px solid rgba(214,179,106,0.12);
+
+  background:
+    rgba(255,255,255,0.02);
+
+  color:
+    var(--color-muted);
+
+  cursor: pointer;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.share-discovery-btn:hover {
+
+  border-color:
+    rgba(214,179,106,0.24);
+
+  background:
+    rgba(214,179,106,0.06);
+
+  color:
+    var(--color-primary);
 }
 
 .reward-label {

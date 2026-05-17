@@ -9,6 +9,7 @@ interface Node {
 interface Props {
   title: string;
   fragment: string;
+  scene?: "temple" | "wilderness" | "dream" | "scroll";
   nodes: Node[];
   solution: string[];
 
@@ -16,14 +17,30 @@ interface Props {
   scriptureHints: string[];
 }
 
+import DreamScene from "./scenes/DreamScene.astro";
+import ScrollScene from "./scenes/ScrollScene.astro";
+import TempleScene from "./scenes/TempleScene.astro";
+import WildernessScene from "./scenes/WildernessScene.astro";
+
 const {
   title,
   fragment,
+  scene = "temple",
   nodes,
   solution,
   archiveNotes,
   scriptureHints
 } = Astro.props as Props;
+
+const sceneComponents = {
+  temple: TempleScene,
+  wilderness: WildernessScene,
+  dream: DreamScene,
+  scroll: ScrollScene
+};
+
+const SceneComponent =
+  sceneComponents[scene] || TempleScene;
 ---
 
 <section class="space-y-10">
@@ -90,6 +107,32 @@ const {
 
       </div>
 
+      <!-- ARCHIVE PROTOCOL -->
+
+      <div class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4">
+
+        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Archive Protocol
+        </div>
+
+        <div class="space-y-2 text-[15px] leading-7 text-[var(--color-muted)]">
+
+          <p>
+            Investigate the symbols in their proper sequence.
+          </p>
+
+          <p>
+            Recovered notes and scripture hints may reveal the hidden order.
+          </p>
+
+          <p>
+            Incorrect paths fade without revelation.
+          </p>
+
+        </div>
+
+      </div>
+
     </div>
 
   </div>
@@ -107,201 +150,11 @@ const {
 
   <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
 
-    <!-- SVG PANEL -->
+    <!-- SCENE PANEL -->
 
     <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8">
 
-      <svg
-        viewBox="0 0 900 600"
-        class="w-full"
-      >
-
-        <!-- TITLE -->
-
-        <text
-          x="450"
-          y="115"
-          text-anchor="middle"
-          fill="rgba(214,179,106,0.38)"
-          font-size="18"
-          letter-spacing="6"
-        >
-          TEMPLE ARCHIVE
-        </text>
-
-        <!-- FRAME -->
-
-        <rect
-          x="60"
-          y="60"
-          width="780"
-          height="480"
-          rx="24"
-          fill="rgba(255,255,255,0.01)"
-          stroke="rgba(214,179,106,0.18)"
-          stroke-width="3"
-        />
-
-        <!-- GRID LINES -->
-
-        <line
-          x1="450"
-          y1="60"
-          x2="450"
-          y2="540"
-          stroke="rgba(214,179,106,0.05)"
-          stroke-width="2"
-        />
-
-        <line
-          x1="60"
-          y1="300"
-          x2="840"
-          y2="300"
-          stroke="rgba(214,179,106,0.05)"
-          stroke-width="2"
-        />
-
-        <!-- INNER CHAMBER -->
-
-        <rect
-          x="250"
-          y="140"
-          width="400"
-          height="320"
-          rx="18"
-          fill="rgba(214,179,106,0.03)"
-          stroke="rgba(214,179,106,0.18)"
-          stroke-width="2"
-        />
-
-        <!-- ALTAR -->
-
-        <g
-          class="investigation-node"
-          data-node="altar"
-        >
-
-          <circle
-            cx="450"
-            cy="420"
-            r="42"
-            fill="rgba(214,179,106,0.08)"
-            stroke="rgba(214,179,106,0.8)"
-            stroke-width="3"
-          />
-
-          <path
-            d="M430 420 L470 420 M450 400 L450 440"
-            stroke="rgba(214,179,106,1)"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
-
-        </g>
-
-        <!-- VEIL -->
-
-        <g
-          class="investigation-node"
-          data-node="veil"
-        >
-
-          <rect
-            x="410"
-            y="170"
-            width="80"
-            height="120"
-            rx="10"
-            fill="rgba(214,179,106,0.06)"
-            stroke="rgba(214,179,106,0.7)"
-            stroke-width="3"
-          />
-
-          <line
-            x1="450"
-            y1="170"
-            x2="450"
-            y2="290"
-            stroke="rgba(214,179,106,1)"
-            stroke-width="3"
-          />
-
-        </g>
-
-        <!-- LAMP -->
-
-        <g
-          class="investigation-node"
-          data-node="lampstand"
-        >
-
-          <circle
-            cx="320"
-            cy="260"
-            r="30"
-            fill="rgba(214,179,106,0.08)"
-            stroke="rgba(214,179,106,0.7)"
-            stroke-width="3"
-          />
-
-          <path
-            d="M300 250 Q320 220 340 250"
-            stroke="rgba(214,179,106,1)"
-            stroke-width="3"
-            fill="none"
-          />
-
-        </g>
-
-        <!-- ARK -->
-
-        <g
-          class="investigation-node"
-          data-node="ark"
-        >
-
-          <rect
-            x="560"
-            y="220"
-            width="90"
-            height="70"
-            rx="12"
-            fill="rgba(214,179,106,0.08)"
-            stroke="rgba(214,179,106,0.7)"
-            stroke-width="3"
-          />
-
-          <circle
-            cx="585"
-            cy="210"
-            r="8"
-            fill="rgba(214,179,106,1)"
-          />
-
-          <circle
-            cx="625"
-            cy="210"
-            r="8"
-            fill="rgba(214,179,106,1)"
-          />
-
-        </g>
-
-        <!-- FADED SCRIPTURE -->
-
-        <text
-          x="450"
-          y="500"
-          text-anchor="middle"
-          fill="rgba(214,179,106,0.08)"
-          font-size="20"
-          letter-spacing="4"
-        >
-          THE VEIL CONCEALED THE COVENANT
-        </text>
-
-      </svg>
+      <SceneComponent />
 
     </div>
 
@@ -337,7 +190,7 @@ const {
           id="archive-note"
           class="border-l border-[rgba(214,179,106,0.18)] pl-5 text-[15px] leading-7 text-[var(--color-muted)]"
         >
-          Investigate the temple symbols to recover hidden fragments.
+          Investigate the symbols to recover hidden fragments.
         </blockquote>
 
       </div>
@@ -350,19 +203,19 @@ const {
 
 <style>
 
-  svg {
+  :global(.investigation-scene) {
     filter:
       drop-shadow(0 0 40px rgba(214,179,106,0.03));
   }
 
-  .investigation-node {
+  :global(.investigation-node) {
     cursor: pointer;
     transition: all 0.35s ease;
     transform-origin: center;
     opacity: 0.82;
   }
 
-  .investigation-node:hover {
+  :global(.investigation-node:hover) {
     filter:
       drop-shadow(0 0 12px rgba(214,179,106,0.45));
 
@@ -371,11 +224,30 @@ const {
     opacity: 1;
   }
 
+  :global(.investigation-node.is-active) {
+    filter:
+      drop-shadow(0 0 14px rgba(214,179,106,0.34));
+
+    opacity: 1;
+  }
+
+  :global(.investigation-node.is-active *) {
+    stroke-opacity: 1;
+  }
+
+  :global(.investigation-node.is-fading) {
+    filter:
+      drop-shadow(0 0 4px rgba(214,179,106,0.12));
+
+    opacity: 0.46;
+  }
+
 </style>
 
 <script
   is:inline
   define:vars={{
+    title,
     nodes,
     solution,
     fragment
@@ -404,6 +276,12 @@ const {
 
   const clickedSequence = [];
 
+  let isResolving =
+    false;
+
+  let isRecovered =
+    false;
+
   const svgNodes =
     document.querySelectorAll(
       '.investigation-node'
@@ -429,21 +307,169 @@ const {
 
   }
 
-  function checkSolution() {
+  function escapeAttribute(value) {
+
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('"', '&quot;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;');
+
+  }
+
+  function setRecoveryStatus(
+    message,
+    tone = 'muted'
+  ) {
+
+    const toneClass =
+      tone === 'primary'
+        ? 'text-[var(--color-primary)]'
+        : 'text-[var(--color-muted)]';
+
+    recoveryStatus.textContent =
+      message;
+
+    recoveryStatus.className =
+      `rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4 text-sm ${toneClass}`;
+
+    recoveryStatus.animate(
+      [
+        {
+          opacity: 0.55,
+          transform: 'translateY(2px)'
+        },
+
+        {
+          opacity: 1,
+          transform: 'translateY(0)'
+        }
+      ],
+      {
+        duration: 360,
+        easing: 'ease-out'
+      }
+    );
+
+  }
+
+  function clearActiveNodes() {
+
+    svgNodes.forEach((node) => {
+
+      node.classList.remove(
+        'is-active',
+        'is-fading'
+      );
+
+    });
+
+  }
+
+  function fadeAttempt() {
+
+    svgNodes.forEach((node) => {
+
+      if (
+        node.classList.contains(
+          'is-active'
+        )
+      ) {
+
+        node.classList.add(
+          'is-fading'
+        );
+
+      }
+
+    });
+
+  }
+
+  function resetAttempt() {
+
+    clickedSequence.length = 0;
+
+    clearActiveNodes();
+
+    isResolving = false;
+
+  }
+
+  function isCurrentPathPossible() {
+
+    return clickedSequence.every(
+      (nodeId, index) =>
+        solution[index] === nodeId
+    );
+
+  }
+
+  function acknowledgeProgress() {
 
     if (
+      clickedSequence.length === 1
+    ) {
+
+      setRecoveryStatus(
+        'The archive responds...',
+        'primary'
+      );
+
+      return;
+
+    }
+
+    setRecoveryStatus(
+      'A hidden pattern begins to emerge...',
+      'primary'
+    );
+
+  }
+
+  function handleFadedSequence() {
+
+    isResolving = true;
+
+    setRecoveryStatus(
+      'The sequence faded without revelation.'
+    );
+
+    fadeAttempt();
+
+    window.setTimeout(
+      resetAttempt,
+      900
+    );
+
+  }
+
+  function checkSolution() {
+
+    if (!isCurrentPathPossible()) {
+
+      handleFadedSequence();
+
+      return;
+
+    }
+
+    if (
+      clickedSequence.length === solution.length &&
       clickedSequence.slice(-solution.length)
         .join(",")
       ===
       solution.join(",")
     ) {
 
+      isRecovered = true;
+
       recoveryStatus.innerHTML = `
 
         <div class="space-y-5">
 
           <div>
-            Fragment recovered — ${fragment}
+            Fragment recovered - ${fragment}
           </div>
 
           <div
@@ -454,7 +480,9 @@ const {
 
           <button
             id="share-discovery"
-            class="inline-flex items-center gap-2 rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-3 text-sm text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.22)] hover:text-[var(--color-text)]"
+            class="inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
+            data-share-title="First7 Play Archive Discovery"
+            data-share-message="${escapeAttribute(`Recovered Archive Fragment:\n${fragment}\n\n'${archiveNote.textContent}'\n\n${title}\nFirst7 Play - transmitted from the recovered archive.`)}"
           >
             Share Discovery
           </button>
@@ -489,58 +517,12 @@ const {
         'recovered'
       );
 
-      const shareButton =
-        document.getElementById(
-          'share-discovery'
-        );
-
-      shareButton?.addEventListener(
-        'click',
-        async () => {
-
-          const shareText = `Recovered Archive Fragment:
-
-"${archiveNote.textContent}"
-
-${window.location.href}
-
-First7 Play — Interactive Scripture Investigation`;
-
-          try {
-
-            if (navigator.share) {
-
-              await navigator.share({
-
-                title:
-                  'First7 Play Discovery',
-
-                text:
-                  shareText
-
-              });
-
-            } else {
-
-              await navigator.clipboard.writeText(
-                shareText
-              );
-
-              shareButton.textContent =
-                'Discovery Copied';
-
-            }
-
-          } catch (error) {
-
-            console.error(error);
-
-          }
-
-        }
-      );
+      return;
 
     }
+
+    acknowledgeProgress();
+
 
   }
 
@@ -550,11 +532,22 @@ First7 Play — Interactive Scripture Investigation`;
       'click',
       () => {
 
+        if (
+          isResolving ||
+          isRecovered
+        ) return;
+
         const nodeId =
           node.dataset.node;
 
+        if (!nodeId) return;
+
         clickedSequence.push(
           nodeId
+        );
+
+        node.classList.add(
+          'is-active'
         );
 
         updateArchive(nodeId);
@@ -567,3 +560,12 @@ First7 Play — Interactive Scripture Investigation`;
   });
 
 </script>
+
+<script>
+  import { bindDiscoveryShareButtons } from '../../lib/shareDiscovery';
+
+  bindDiscoveryShareButtons({
+    selector: '#share-discovery'
+  });
+</script>
+

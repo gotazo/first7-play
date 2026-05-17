@@ -267,6 +267,16 @@ const allItems = groups
 
   }
 
+  function escapeAttribute(value) {
+
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('"', '&quot;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;');
+
+  }
+
   cards.forEach((card) => {
 
     card.addEventListener('click', () => {
@@ -341,6 +351,9 @@ const allItems = groups
         const solvedGroup =
           groups[0];
 
+        const discoveredItems =
+          [...selected];
+
         solvedGroups.add(
           solvedGroup
         );
@@ -368,8 +381,17 @@ const allItems = groups
     </div>
 
     <div class="flex flex-wrap gap-2 text-sm text-[var(--color-text)]">
-      ${selected.join(', ')}
+      ${discoveredItems.join(', ')}
     </div>
+
+    <button
+      type="button"
+      class="share-discovery-btn mt-5 inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
+      data-share-title="First7 Play Scripture Connection"
+      data-share-message="${escapeAttribute(`Recovered Scripture Connection:\n'${solvedGroup}: ${discoveredItems.join(' / ')}'\n\nFirst7 Play - transmitted from the recovered archive.`)}"
+    >
+      Share Discovery
+    </button>
 
   </div>
 
@@ -453,4 +475,12 @@ const allItems = groups
 
   updateUI();
 
+</script>
+
+<script>
+  import { bindDiscoveryShareButtons } from '../../lib/shareDiscovery';
+
+  bindDiscoveryShareButtons({
+    selector: '.share-discovery-btn'
+  });
 </script>

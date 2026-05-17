@@ -116,6 +116,13 @@ const investigations = defineCollection({
 
     fragment: z.string(),
 
+    scene: z.enum([
+      "temple",
+      "wilderness",
+      "dream",
+      "scroll"
+    ]).optional(),
+
     difficulty: z.enum([
       "easy",
       "medium",

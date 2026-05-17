@@ -5,6 +5,8 @@ description: "Investigate the sacred temple structure and recover the hidden cov
 
 fragment: "Fragment of Covenant"
 
+scene: "temple"
+
 difficulty: "easy"
 
 archiveNotes:

@@ -1,0 +1,154 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "../../layouts/Layout.astro";
+
+const investigations =
+  await getCollection(
+    "investigations"
+  );
+
+const sortedInvestigations =
+  investigations.sort((a, b) =>
+    a.data.title.localeCompare(
+      b.data.title
+    )
+  );
+---
+
+<Layout
+  title="Investigation Archive"
+  description="Explore symbolic scripture investigations and recover hidden archive fragments."
+>
+
+  <main class="container py-20 space-y-20">
+
+    <!-- HERO -->
+
+    <section class="max-w-3xl space-y-8">
+
+      <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        Sacred Archive
+      </div>
+
+      <div class="space-y-6">
+
+        <h1 class="text-5xl font-semibold tracking-tight md:text-6xl">
+          Investigation Archive
+        </h1>
+
+        <p class="text-lg leading-8 text-[var(--color-muted)]">
+
+          Explore symbolic scripture investigations through
+          sacred chambers, wilderness paths, dream constellations,
+          and fragmented scroll archives.
+
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- INVESTIGATIONS GRID -->
+
+    <section class="grid gap-8 md:grid-cols-2">
+
+      {
+        sortedInvestigations.map(
+          (investigation) => {
+
+            const {
+              title,
+              description,
+              fragment,
+              difficulty
+            } = investigation.data;
+
+            return (
+
+              <a
+                href={`/investigations/${investigation.id}`}
+                class="group relative overflow-hidden rounded-[32px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8 transition duration-500 hover:border-[rgba(214,179,106,0.18)] hover:bg-[rgba(255,255,255,0.03)]"
+              >
+
+                <!-- GLOW -->
+
+                <div class="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
+
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(214,179,106,0.08),transparent_60%)]" />
+
+                </div>
+
+                <!-- CONTENT -->
+
+                <div class="relative space-y-6">
+
+                  <!-- TOP -->
+
+                  <div class="flex items-start justify-between gap-4">
+
+                    <div class="space-y-3">
+
+                      <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.14)] bg-[rgba(214,179,106,0.05)] px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+                        {difficulty}
+                      </div>
+
+                      <h2 class="text-3xl font-semibold tracking-tight">
+                        {title}
+                      </h2>
+
+                    </div>
+
+                    <!-- SYMBOL -->
+
+                    <div class="flex h-14 w-14 items-center justify-center rounded-full border border-[rgba(214,179,106,0.12)] bg-[rgba(214,179,106,0.04)] text-[var(--color-primary)]">
+
+                      ✦
+
+                    </div>
+
+                  </div>
+
+                  <!-- DESCRIPTION -->
+
+                  <p class="leading-7 text-[var(--color-muted)]">
+                    {description}
+                  </p>
+
+                  <!-- FRAGMENT -->
+
+                  <div class="flex items-center justify-between gap-4 pt-4">
+
+                    <div class="space-y-1">
+
+                      <div class="text-[10px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+                        Recoverable Fragment
+                      </div>
+
+                      <div class="text-sm text-[var(--color-muted)]">
+                        {fragment}
+                      </div>
+
+                    </div>
+
+                    <div class="text-sm text-[var(--color-primary)] transition duration-300 group-hover:translate-x-1">
+                      Enter Archive →
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </a>
+
+            );
+
+          }
+        )
+      }
+
+    </section>
+
+  </main>
+
+</Layout>
