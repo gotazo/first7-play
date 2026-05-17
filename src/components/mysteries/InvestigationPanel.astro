@@ -43,27 +43,31 @@ const SceneComponent =
   sceneComponents[scene] || TempleScene;
 ---
 
-<section class="space-y-10">
+<section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]">
 
-  <!-- HEADER -->
+  <!-- INVESTIGATION SPACE -->
 
-  <div class="space-y-5">
+  <div class="space-y-8">
 
-    <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
-      Investigation Archive
+    <div class="space-y-5">
+
+      <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        Investigation Archive
+      </div>
+
+      <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">
+        {title}
+      </h1>
+
     </div>
 
-    <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">
-      {title}
-    </h1>
-
-    <div class="max-w-2xl space-y-6">
+    <div class="grid gap-5 xl:grid-cols-[1fr_0.85fr]">
 
       <!-- ARCHIVE NOTES -->
 
-      <div>
+      <div class="rounded-[24px] border border-[rgba(214,179,106,0.07)] bg-[rgba(255,255,255,0.015)] p-6">
 
-        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="mb-4 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
           Archive Notes
         </div>
 
@@ -85,9 +89,9 @@ const SceneComponent =
 
       <!-- SCRIPTURE HINTS -->
 
-      <div>
+      <div class="rounded-[24px] border border-[rgba(214,179,106,0.07)] bg-[rgba(255,255,255,0.015)] p-6">
 
-        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="mb-4 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
           Scripture Hints
         </div>
 
@@ -107,9 +111,39 @@ const SceneComponent =
 
       </div>
 
+    </div>
+
+    <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-5 md:p-8">
+
+      <SceneComponent />
+
+    </div>
+
+  </div>
+
+  <!-- ARCHIVE CONSOLE -->
+
+  <aside class="lg:sticky lg:top-24 lg:self-start">
+
+    <div class="space-y-6 rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-6 md:p-8">
+
+      <div>
+
+        <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Archive Console
+        </div>
+
+        <div class="mt-3 text-sm leading-7 text-[var(--color-muted)]">
+          Read the evidence, then test the symbols in sequence.
+        </div>
+
+      </div>
+
+      <div class="h-px bg-[rgba(214,179,106,0.08)]"></div>
+
       <!-- ARCHIVE PROTOCOL -->
 
-      <div class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4">
+      <div>
 
         <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
           Archive Protocol
@@ -133,46 +167,25 @@ const SceneComponent =
 
       </div>
 
-    </div>
+      <div class="h-px bg-[rgba(214,179,106,0.08)]"></div>
 
-  </div>
+      <!-- SELECTED SYMBOL -->
 
-  <!-- STATUS -->
+      <div class="space-y-5">
 
-  <div
-    id="recovery-status"
-    class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4 text-sm text-[var(--color-muted)]"
-  >
-    Awaiting investigation...
-  </div>
-
-  <!-- PANEL -->
-
-  <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-
-    <!-- SCENE PANEL -->
-
-    <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8">
-
-      <SceneComponent />
-
-    </div>
-
-    <!-- ARCHIVE PANEL -->
-
-    <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-8">
-
-      <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
-        Investigation Notes
-      </div>
-
-      <div class="mt-8 space-y-6">
+        <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Investigation Notes
+        </div>
 
         <div>
 
+          <div class="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
+            Selected Symbol
+          </div>
+
           <div
             id="archive-label"
-            class="text-2xl font-semibold"
+            class="mt-3 text-2xl font-semibold"
           >
             Select A Symbol
           </div>
@@ -195,9 +208,28 @@ const SceneComponent =
 
       </div>
 
+      <div class="h-px bg-[rgba(214,179,106,0.08)]"></div>
+
+      <!-- RECOVERY FEEDBACK -->
+
+      <div>
+
+        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Recovery Feedback
+        </div>
+
+        <div
+          id="recovery-status"
+          class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4 text-sm text-[var(--color-muted)]"
+        >
+          Awaiting investigation...
+        </div>
+
+      </div>
+
     </div>
 
-  </div>
+  </aside>
 
 </section>
 
