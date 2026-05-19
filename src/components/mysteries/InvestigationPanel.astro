@@ -43,40 +43,40 @@ const SceneComponent =
   sceneComponents[scene] || TempleScene;
 ---
 
-<section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]">
+<section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_400px]">
 
   <!-- INVESTIGATION SPACE -->
 
-  <div class="space-y-8">
+  <div class="flex flex-col gap-5 lg:gap-8">
 
-    <div class="space-y-5">
+    <div class="order-1 space-y-3 sm:space-y-5">
 
-      <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+      <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:px-4 sm:py-2 sm:text-[11px]">
         Investigation Archive
       </div>
 
-      <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">
+      <h1 class="text-3xl font-semibold tracking-tight md:text-5xl">
         {title}
       </h1>
 
     </div>
 
-    <div class="grid gap-5 xl:grid-cols-[1fr_0.85fr]">
+    <div class="order-3 grid gap-3 sm:gap-5 xl:grid-cols-[1fr_0.85fr]">
 
       <!-- ARCHIVE NOTES -->
 
-      <div class="rounded-[24px] border border-[rgba(214,179,106,0.07)] bg-[rgba(255,255,255,0.015)] p-6">
+      <div class="rounded-2xl border border-[rgba(214,179,106,0.07)] bg-[rgba(255,255,255,0.015)] p-4 sm:rounded-[24px] sm:p-6">
 
-        <div class="mb-4 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="mb-3 text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:mb-4 sm:text-xs sm:tracking-[0.22em]">
           Archive Notes
         </div>
 
-        <div class="space-y-3">
+        <div class="space-y-2.5 sm:space-y-3">
 
           {
             archiveNotes.map((note) => (
 
-              <blockquote class="border-l border-[rgba(214,179,106,0.14)] pl-5 text-[15px] leading-7 text-[var(--color-muted)]">
+              <blockquote class="border-l border-[rgba(214,179,106,0.14)] pl-4 text-sm leading-6 text-[var(--color-muted)] sm:pl-5 sm:text-[15px] sm:leading-7">
                 {note}
               </blockquote>
 
@@ -89,18 +89,18 @@ const SceneComponent =
 
       <!-- SCRIPTURE HINTS -->
 
-      <div class="rounded-[24px] border border-[rgba(214,179,106,0.07)] bg-[rgba(255,255,255,0.015)] p-6">
+      <div class="rounded-2xl border border-[rgba(214,179,106,0.07)] bg-[rgba(255,255,255,0.015)] p-4 sm:rounded-[24px] sm:p-6">
 
-        <div class="mb-4 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="mb-3 text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:mb-4 sm:text-xs sm:tracking-[0.22em]">
           Scripture Hints
         </div>
 
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-2 sm:gap-3">
 
           {
             scriptureHints.map((hint) => (
 
-              <div class="rounded-full border border-[rgba(214,179,106,0.12)] bg-[rgba(214,179,106,0.05)] px-4 py-2 text-sm text-[var(--color-muted)]">
+              <div class="rounded-full border border-[rgba(214,179,106,0.12)] bg-[rgba(214,179,106,0.05)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm">
                 {hint}
               </div>
 
@@ -113,7 +113,7 @@ const SceneComponent =
 
     </div>
 
-    <div class="rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-5 md:p-8">
+    <div class="order-2 overflow-hidden rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-2.5 sm:rounded-[28px] sm:p-5 md:p-8">
 
       <SceneComponent />
 
@@ -125,15 +125,15 @@ const SceneComponent =
 
   <aside class="lg:sticky lg:top-24 lg:self-start">
 
-    <div class="space-y-6 rounded-[28px] border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-6 md:p-8">
+    <div class="space-y-4 rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-4 sm:space-y-6 sm:rounded-[28px] sm:p-6 md:p-8">
 
       <div>
 
-        <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:text-xs sm:tracking-[0.22em]">
           Archive Console
         </div>
 
-        <div class="mt-3 text-sm leading-7 text-[var(--color-muted)]">
+        <div class="mt-2 text-sm leading-6 text-[var(--color-muted)] sm:mt-3 sm:leading-7">
           Read the evidence, then test the symbols in sequence.
         </div>
 
@@ -145,11 +145,11 @@ const SceneComponent =
 
       <div>
 
-        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="mb-2 text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:mb-3 sm:text-xs sm:tracking-[0.22em]">
           Archive Protocol
         </div>
 
-        <div class="space-y-2 text-[15px] leading-7 text-[var(--color-muted)]">
+        <div class="space-y-1.5 text-sm leading-6 text-[var(--color-muted)] sm:space-y-2 sm:text-[15px] sm:leading-7">
 
           <p>
             Investigate the symbols in their proper sequence.
@@ -171,9 +171,9 @@ const SceneComponent =
 
       <!-- SELECTED SYMBOL -->
 
-      <div class="space-y-5">
+      <div class="space-y-4 sm:space-y-5">
 
-        <div class="text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:text-xs sm:tracking-[0.22em]">
           Investigation Notes
         </div>
 
@@ -185,7 +185,7 @@ const SceneComponent =
 
           <div
             id="archive-label"
-            class="mt-3 text-2xl font-semibold"
+            class="mt-2 text-xl font-semibold sm:mt-3 sm:text-2xl"
           >
             Select A Symbol
           </div>
@@ -201,7 +201,7 @@ const SceneComponent =
 
         <blockquote
           id="archive-note"
-          class="border-l border-[rgba(214,179,106,0.18)] pl-5 text-[15px] leading-7 text-[var(--color-muted)]"
+          class="border-l border-[rgba(214,179,106,0.18)] pl-4 text-sm leading-6 text-[var(--color-muted)] sm:pl-5 sm:text-[15px] sm:leading-7"
         >
           Investigate the symbols to recover hidden fragments.
         </blockquote>
@@ -214,13 +214,13 @@ const SceneComponent =
 
       <div>
 
-        <div class="mb-3 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]">
+        <div class="mb-2 text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] sm:mb-3 sm:text-xs sm:tracking-[0.22em]">
           Recovery Feedback
         </div>
 
         <div
           id="recovery-status"
-          class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-5 py-4 text-sm text-[var(--color-muted)]"
+          class="rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] px-4 py-3 text-sm text-[var(--color-muted)] sm:px-5 sm:py-4"
         >
           Awaiting investigation...
         </div>
@@ -236,6 +236,11 @@ const SceneComponent =
 <style>
 
   :global(.investigation-scene) {
+    display: block;
+    height: auto;
+    max-height: min(68vh, 620px);
+    min-height: 280px;
+
     filter:
       drop-shadow(0 0 40px rgba(214,179,106,0.03));
   }
@@ -245,6 +250,14 @@ const SceneComponent =
     transition: all 0.35s ease;
     transform-origin: center;
     opacity: 0.82;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  :global(.investigation-node .node-hit-area) {
+    fill: rgba(255, 255, 255, 0);
+    pointer-events: all;
+    stroke: transparent;
   }
 
   :global(.investigation-node:hover) {
@@ -272,6 +285,21 @@ const SceneComponent =
       drop-shadow(0 0 4px rgba(214,179,106,0.12));
 
     opacity: 0.46;
+  }
+
+  @media (max-width: 640px) {
+
+    :global(.investigation-scene) {
+      width: 112%;
+      max-width: none;
+      margin-inline: -6%;
+      min-height: 250px;
+      max-height: 54vh;
+    }
+
+    :global(.investigation-node) {
+      opacity: 0.95;
+    }
   }
 
 </style>
