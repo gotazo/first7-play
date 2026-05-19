@@ -80,13 +80,40 @@ const dailyPuzzle = {
 
   <!-- HERO -->
 
-  <section class="relative overflow-hidden border-b border-[var(--color-border)]">
+  <section
+    class="relative overflow-hidden border-b border-[var(--color-border)]"
+  >
+
+    <!-- BACKGROUND GLOW -->
 
     <div
-      class="mx-auto max-w-6xl px-5 py-24 md:py-32"
+      class="absolute inset-0"
+      aria-hidden="true"
     >
 
-      <div class="max-w-3xl">
+      <div
+        class="absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[rgba(214,179,106,0.08)] blur-3xl"
+      ></div>
+
+      <div
+        class="absolute inset-0 opacity-[0.04]"
+        style="
+          background-image:
+            linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+          background-size: 60px 60px;
+        "
+      ></div>
+
+    </div>
+
+    <div
+      class="relative mx-auto grid min-h-[92vh] max-w-7xl items-center gap-20 px-5 py-24 lg:grid-cols-[1.1fr_0.9fr]"
+    >
+
+      <!-- LEFT CONTENT -->
+
+      <div>
 
         <div
           class="mb-6 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
@@ -95,20 +122,25 @@ const dailyPuzzle = {
         </div>
 
         <h1
-          class="text-5xl font-semibold tracking-tight md:text-7xl"
+          class="max-w-3xl text-5xl font-semibold leading-tight tracking-tight md:text-7xl"
         >
-          Daily Bible Games,
-          Mystery Puzzles,
-          and Scripture Discovery.
+          Discover Scripture Through
+          <span class="text-[var(--color-primary)]">
+            Mystery,
+          </span>
+          Progression,
+          and Interactive Play.
         </h1>
 
         <p
           class="mt-8 max-w-2xl text-lg leading-8 text-[var(--color-muted)] md:text-xl"
         >
-          Explore interactive Bible games designed around
-          reflection, progression, hidden meaning,
-          and scripture-based discovery.
+          Explore immersive Bible games, hidden puzzles,
+          scripture mysteries, and daily interactive experiences
+          designed around reflection, discovery, and spiritual progression.
         </p>
+
+        <!-- CTA -->
 
         <div
           class="mt-10 flex flex-col gap-4 sm:flex-row"
@@ -116,17 +148,166 @@ const dailyPuzzle = {
 
           <a
             href={dailyPuzzle.href}
-            class="inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-8 py-4 text-sm font-medium text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.14)]"
+            class="inline-flex items-center justify-center rounded-2xl border border-[rgba(214,179,106,0.24)] bg-[rgba(214,179,106,0.12)] px-8 py-4 text-sm font-medium text-[var(--color-primary)] shadow-[0_0_40px_rgba(214,179,106,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(214,179,106,0.38)] hover:bg-[rgba(214,179,106,0.18)]"
           >
             Play Today's Puzzle &rarr;
           </a>
 
           <a
             href="/games"
-            class="inline-flex items-center justify-center rounded-2xl border border-[var(--color-border)] px-8 py-4 text-sm font-medium transition hover:bg-[rgba(255,255,255,0.04)]"
+            class="inline-flex items-center justify-center rounded-2xl border border-[var(--color-border)] px-8 py-4 text-sm font-medium transition-all duration-300 hover:bg-[rgba(255,255,255,0.04)]"
           >
             Explore Games
           </a>
+
+        </div>
+
+        <!-- MINI STATS -->
+
+        <div
+          class="mt-14 flex flex-wrap gap-8 border-t border-[rgba(255,255,255,0.06)] pt-8"
+        >
+
+          <div>
+
+            <div
+              class="text-2xl font-semibold"
+            >
+              1300+
+            </div>
+
+            <div
+              class="mt-1 text-sm text-[var(--color-muted)]"
+            >
+              Scripture Pages
+            </div>
+
+          </div>
+
+          <div>
+
+            <div
+              class="text-2xl font-semibold"
+            >
+              Daily
+            </div>
+
+            <div
+              class="mt-1 text-sm text-[var(--color-muted)]"
+            >
+              Puzzle Challenges
+            </div>
+
+          </div>
+
+          <div>
+
+            <div
+              class="text-2xl font-semibold"
+            >
+              Mystery
+            </div>
+
+            <div
+              class="mt-1 text-sm text-[var(--color-muted)]"
+            >
+              Progression System
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT VISUAL -->
+
+      <div
+        class="relative hidden lg:flex items-center justify-center"
+      >
+
+        <div
+          class="relative aspect-square w-full max-w-[540px]"
+        >
+
+          <!-- OUTER GLOW -->
+
+          <div
+            class="absolute inset-0 rounded-full bg-[rgba(214,179,106,0.06)] blur-3xl"
+          ></div>
+
+          <!-- SVG VISUAL -->
+
+          <svg
+            viewBox="0 0 600 600"
+            class="relative z-10 h-full w-full"
+            fill="none"
+          >
+
+            <!-- CIRCLES -->
+
+            <circle
+              cx="300"
+              cy="300"
+              r="220"
+              stroke="rgba(214,179,106,0.14)"
+              stroke-width="1"
+            />
+
+            <circle
+              cx="300"
+              cy="300"
+              r="160"
+              stroke="rgba(214,179,106,0.1)"
+              stroke-width="1"
+            />
+
+            <circle
+              cx="300"
+              cy="300"
+              r="100"
+              stroke="rgba(214,179,106,0.08)"
+              stroke-width="1"
+            />
+
+            <!-- CONNECTION PATHS -->
+
+            <path
+              d="M180 220 L300 150 L420 240 L360 380 L220 420 L180 220"
+              stroke="rgba(214,179,106,0.28)"
+              stroke-width="2"
+            />
+
+            <!-- NODES -->
+
+            <circle cx="180" cy="220" r="8" fill="#d6b36a" />
+            <circle cx="300" cy="150" r="8" fill="#d6b36a" />
+            <circle cx="420" cy="240" r="8" fill="#d6b36a" />
+            <circle cx="360" cy="380" r="8" fill="#d6b36a" />
+            <circle cx="220" cy="420" r="8" fill="#d6b36a" />
+
+            <!-- CENTER -->
+
+            <circle
+              cx="300"
+              cy="300"
+              r="42"
+              fill="rgba(214,179,106,0.12)"
+              stroke="rgba(214,179,106,0.35)"
+            />
+
+            <text
+              x="300"
+              y="308"
+              text-anchor="middle"
+              fill="#d6b36a"
+              font-size="18"
+              letter-spacing="4"
+            >
+              F7
+            </text>
+
+          </svg>
 
         </div>
 
