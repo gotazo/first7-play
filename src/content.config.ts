@@ -161,7 +161,62 @@ scriptureHints: z.array(
 
 });
 
+const quizCollection = defineCollection({
+
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/quiz"
+  }),
+
+  schema: z.object({
+
+    title: z.string(),
+
+    description: z.string(),
+
+    difficulty: z.enum([
+      "easy",
+      "medium",
+      "hard"
+    ]),
+
+    book: z.string(),
+
+    questions: z.array(
+
+      z.object({
+
+        question: z.string(),
+
+        choices: z.array(
+          z.string()
+        ),
+
+        answer: z.string(),
+
+        scripture: z.object({
+
+          reference:
+            z.string()
+
+        }),
+
+        explanation:
+          z.string()
+
+      })
+
+    )
+
+  })
+
+});
+
 export const collections = {
   games,
-  investigations
+  investigations,
+
+quiz:
+    quizCollection
+
 };

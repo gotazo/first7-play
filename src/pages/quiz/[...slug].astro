@@ -1,0 +1,318 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+
+  const quizzes =
+    await getCollection("quiz");
+
+  return quizzes.map((quiz) => ({
+
+    params: {
+      slug: quiz.id
+    },
+
+    props: {
+      quiz
+    }
+
+  }));
+
+}
+
+const { quiz } =
+  Astro.props as {
+    quiz: any
+  };
+
+const {
+  title,
+  description,
+  questions
+} = quiz.data;
+---
+
+<Layout
+  title={title}
+  description={description}
+>
+
+  <main class="container py-20">
+
+    <div class="mx-auto max-w-3xl">
+
+      <div class="mb-10 space-y-4">
+
+        <div class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+          Scripture Journey
+        </div>
+
+        <h1 class="text-5xl font-semibold tracking-tight">
+          {title}
+        </h1>
+
+        <p class="text-lg text-[var(--color-muted)]">
+          {description}
+        </p>
+
+      </div>
+
+      <div
+        id="quiz-app"
+        data-questions={JSON.stringify(
+          questions
+        )}
+      ></div>
+
+    </div>
+
+  </main>
+
+</Layout>
+
+<script>
+
+const root =
+  document.getElementById(
+    "quiz-app"
+  );
+
+if (!root) {
+  throw new Error(
+    "Quiz root not found."
+  );
+}
+
+const quizRoot = root;
+
+const questions = JSON.parse(
+  root.dataset.questions || "[]"
+);
+
+/** @typedef {{
+ * question:string,
+ * choices:string[],
+ * answer:string,
+ * scripture:{reference:string},
+ * explanation:string
+ * }} QuizQuestion */
+
+/** @type {QuizQuestion[]} */
+const typedQuestions = questions;
+
+  let current = 0;
+
+  let score = 0;
+
+  function renderQuestion() {
+
+    const q =
+      typedQuestions[current];
+
+    quizRoot.innerHTML = `
+
+      <div class="space-y-8">
+
+        <div class="flex items-center justify-between">
+
+          <div class="text-sm text-[var(--color-primary)]">
+
+            Question ${
+              current + 1
+            } of ${
+              typedQuestions.length
+            }
+
+          </div>
+
+          <div class="text-sm text-[var(--color-muted)]">
+
+            Score: ${score}
+
+          </div>
+
+        </div>
+
+        <h2 class="text-3xl font-semibold">
+
+          ${q.question}
+
+        </h2>
+
+        <div class="grid gap-4">
+
+          ${q.choices.map((choice: string) => `
+
+            <button
+              class="quiz-choice rounded-2xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-5 py-4 text-left transition hover:border-[rgba(214,179,106,0.24)]"
+              data-answer="${choice}"
+            >
+
+              ${choice}
+
+            </button>
+
+          `).join("")}
+
+        </div>
+
+        <div id="feedback"></div>
+
+      </div>
+
+    `;
+
+    attachEvents();
+
+  }
+
+  function attachEvents() {
+
+    const buttons =
+      document.querySelectorAll(
+        ".quiz-choice"
+      );
+
+    buttons.forEach((button) => {
+
+  if (
+    !(button instanceof HTMLElement)
+  ) return;
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const q =
+            typedQuestions[current];
+
+          const answer =
+            button.dataset.answer || "";
+
+          const correct =
+            answer === q.answer;
+
+          const feedback =
+            document.getElementById(
+              "feedback"
+            );
+
+          if (!feedback) return;
+
+          if (correct) {
+
+            score++;
+
+            feedback.innerHTML = `
+
+              <div class="mt-6 rounded-2xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] p-5">
+
+                <div class="mb-2 text-[var(--color-primary)]">
+                  Correct
+                </div>
+
+                <div class="mb-2">
+                  ${q.explanation}
+                </div>
+
+                <div class="text-sm text-[var(--color-muted)]">
+                  ${q.scripture.reference}
+                </div>
+
+                <button
+                  id="next-question"
+                  class="mt-4 rounded-xl border border-[rgba(214,179,106,0.18)] px-4 py-2"
+                >
+                  Continue
+                </button>
+
+              </div>
+
+            `;
+
+          } else {
+
+            feedback.innerHTML = `
+
+              <div class="mt-6 rounded-2xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.03)] p-5">
+
+                <div class="mb-2">
+                  Not quite.
+                </div>
+
+                <div class="text-sm text-[var(--color-muted)]">
+                  Study the passage and try again.
+                </div>
+
+              </div>
+
+            `;
+
+            return;
+
+          }
+
+          document
+            .getElementById(
+              "next-question"
+            )
+            ?.addEventListener(
+              "click",
+              () => {
+
+                current++;
+
+                if (
+                  current >=
+                  typedQuestions.length
+                ) {
+
+                  quizRoot.innerHTML = `
+
+                    <div class="rounded-3xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] p-10 text-center">
+
+                      <div class="mb-4 text-[11px] uppercase tracking-[0.22em] text-[var(--color-primary)]">
+
+                        Journey Complete
+
+                      </div>
+
+                      <h2 class="mb-4 text-4xl font-semibold">
+
+                        Scripture Journey Finished
+
+                      </h2>
+
+                      <p class="text-lg text-[var(--color-muted)]">
+
+                        Final Score:
+                        ${score}
+                        /
+                        ${typedQuestions.length}
+
+                      </p>
+
+                    </div>
+
+                  `;
+
+                } else {
+
+                  renderQuestion();
+
+                }
+
+              }
+            );
+
+        }
+      );
+
+    });
+
+  }
+
+  renderQuestion();
+
+</script>

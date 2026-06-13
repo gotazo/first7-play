@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+const quizzes =
+  await getCollection("quiz");
+---
+
+<Layout
+  title="Bible Quizzes"
+  description="Interactive Bible study quizzes."
+>
+
+<main class="container py-20">
+
+  <h1 class="mb-12 text-5xl font-semibold">
+    Bible Quizzes
+  </h1>
+
+  <div class="grid gap-8 md:grid-cols-2">
+
+    {
+      quizzes.map((quiz) => (
+
+        <a
+          href={`/quiz/${quiz.id}`}
+          class="rounded-3xl border border-[rgba(214,179,106,0.1)] p-8"
+        >
+
+          <div class="mb-3 text-xs uppercase tracking-[0.2em] text-[var(--color-primary)]">
+            {quiz.data.book}
+          </div>
+
+          <h2 class="mb-3 text-2xl font-semibold">
+            {quiz.data.title}
+          </h2>
+
+          <p class="text-[var(--color-muted)]">
+            {quiz.data.description}
+          </p>
+
+        </a>
+
+      ))
+    }
+
+  </div>
+
+</main>
+
+</Layout>
