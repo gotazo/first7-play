@@ -1,0 +1,121 @@
+---
+title: "Great Women of Scripture"
+
+description: "Discover remarkable women found throughout Scripture."
+
+difficulty: "easy"
+
+book: "People"
+
+questions:
+
+  - question: "Who was Adam's wife?"
+    choices:
+      - Sarah
+      - Eve
+      - Rebekah
+      - Rachel
+    answer: "Eve"
+    scripture:
+      reference: "Genesis 3:20"
+    explanation: "Eve was the mother of all living."
+
+  - question: "Who was Abraham's wife?"
+    choices:
+      - Sarah
+      - Leah
+      - Miriam
+      - Esther
+    answer: "Sarah"
+    scripture:
+      reference: "Genesis 17:15"
+    explanation: "Sarah was Abraham's wife."
+
+  - question: "Who hid the Israelite spies in Jericho?"
+    choices:
+      - Ruth
+      - Esther
+      - Rahab
+      - Deborah
+    answer: "Rahab"
+    scripture:
+      reference: "Joshua 2:4"
+    explanation: "Rahab protected the spies."
+
+  - question: "Who became the great-grandmother of David?"
+    choices:
+      - Ruth
+      - Sarah
+      - Hannah
+      - Miriam
+    answer: "Ruth"
+    scripture:
+      reference: "Ruth 4:17"
+    explanation: "Ruth became part of David's family line."
+
+  - question: "Who was a prophetess and judge in Israel?"
+    choices:
+      - Deborah
+      - Esther
+      - Mary
+      - Martha
+    answer: "Deborah"
+    scripture:
+      reference: "Judges 4:4"
+    explanation: "Deborah judged Israel."
+
+  - question: "Who prayed for a son and gave him to the Lord?"
+    choices:
+      - Hannah
+      - Leah
+      - Ruth
+      - Abigail
+    answer: "Hannah"
+    scripture:
+      reference: "1 Samuel 1:27"
+    explanation: "Hannah prayed for Samuel."
+
+  - question: "Who became queen and saved her people?"
+    choices:
+      - Esther
+      - Ruth
+      - Deborah
+      - Sarah
+    answer: "Esther"
+    scripture:
+      reference: "Esther 4:14"
+    explanation: "Esther courageously helped save Israel."
+
+  - question: "Who was the mother of Jesus?"
+    choices:
+      - Martha
+      - Mary
+      - Elizabeth
+      - Anna
+    answer: "Mary"
+    scripture:
+      reference: "Luke 1:31"
+    explanation: "Mary gave birth to Jesus."
+
+  - question: "Who was the mother of John the Baptist?"
+    choices:
+      - Elizabeth
+      - Sarah
+      - Hannah
+      - Leah
+    answer: "Elizabeth"
+    scripture:
+      reference: "Luke 1:13"
+    explanation: "Elizabeth was John the Baptist's mother."
+
+  - question: "Who sat at Jesus' feet to hear His teaching?"
+    choices:
+      - Martha
+      - Mary of Bethany
+      - Esther
+      - Ruth
+    answer: "Mary of Bethany"
+    scripture:
+      reference: "Luke 10:39"
+    explanation: "Mary listened carefully to Jesus."
+---
