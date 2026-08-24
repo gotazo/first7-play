@@ -1,0 +1,564 @@
+<svg
+  viewBox="0 0 900 600"
+  class="investigation-scene w-full"
+  aria-label="Decoded scroll revelation scene"
+>
+  <!--
+    ============================================================
+    SCROLL DECODER — REVELATION / AFTER SCENE
+    ============================================================
+
+    Solved state:
+      The damaged scroll has opened.
+      The seal has been broken.
+      The hidden writing is now revealed.
+
+    Design rules:
+      - Direct SVG fill colors only
+      - No gradients
+      - No external images
+      - No animation
+      - Intentionally different composition from ScrollScene
+  -->
+
+  <!--
+    ============================================================
+    TITLE
+    ============================================================
+  -->
+
+  <text
+    x="450"
+    y="72"
+    text-anchor="middle"
+    fill="#F0D58A"
+    fill-opacity="0.9"
+    font-size="19"
+    letter-spacing="6"
+  >
+    THE SCROLL IS REVEALED
+  </text>
+
+
+  <!--
+    ============================================================
+    REVELATION LIGHT
+    ============================================================
+  -->
+
+  <circle
+    cx="450"
+    cy="270"
+    r="225"
+    fill="#E8C96D"
+    fill-opacity="0.035"
+  />
+
+  <circle
+    cx="450"
+    cy="270"
+    r="150"
+    fill="#FFF0B0"
+    fill-opacity="0.035"
+  />
+
+
+  <!--
+    ============================================================
+    OPEN SCROLL
+    ============================================================
+  -->
+
+  <!-- Shadow beneath the opened scroll -->
+
+  <path
+    d="M205 160
+       C260 142 320 150 385 144
+       C430 140 470 140 515 144
+       C580 150 640 142 695 160
+       L670 455
+       C605 470 535 458 450 470
+       C365 458 295 470 230 455 Z"
+    fill="#38251B"
+    fill-opacity="0.48"
+  />
+
+  <!-- Large open parchment -->
+
+  <path
+    d="M205 150
+       C260 132 325 140 390 134
+       C430 130 470 130 510 134
+       C575 140 640 132 695 150
+       L670 440
+       C610 456 535 444 450 458
+       C365 444 290 456 230 440 Z"
+    fill="#D8BB79"
+    stroke="#EED79B"
+    stroke-width="4"
+  />
+
+  <!-- Left page -->
+
+  <path
+    d="M215 158
+       C270 145 330 150 390 143
+       C410 141 430 142 450 146
+       L450 440
+       C370 428 300 446 238 428 Z"
+    fill="#E4CA91"
+    fill-opacity="0.82"
+  />
+
+  <!-- Right page -->
+
+  <path
+    d="M450 146
+       C470 142 490 141 510 143
+       C570 150 630 145 685 158
+       L662 428
+       C600 446 530 428 450 440 Z"
+    fill="#E0C387"
+    fill-opacity="0.82"
+  />
+
+  <!-- Center fold -->
+
+  <path
+    d="M450 150 V435"
+    stroke="#8B633B"
+    stroke-opacity="0.38"
+    stroke-width="5"
+  />
+
+  <path
+    d="M456 150 V435"
+    stroke="#F8E6B1"
+    stroke-opacity="0.6"
+    stroke-width="2"
+  />
+
+
+  <!--
+    ============================================================
+    REVEALED WRITING
+    ============================================================
+  -->
+
+  <!-- Left page heading -->
+
+  <text
+    x="330"
+    y="205"
+    text-anchor="middle"
+    fill="#70482E"
+    fill-opacity="0.85"
+    font-size="15"
+    letter-spacing="4"
+  >
+    THE WRITING
+  </text>
+
+  <!-- Right page heading -->
+
+  <text
+    x="570"
+    y="205"
+    text-anchor="middle"
+    fill="#70482E"
+    fill-opacity="0.85"
+    font-size="15"
+    letter-spacing="4"
+  >
+    IS REVEALED
+  </text>
+
+  <!-- Left writing -->
+
+  <g
+    stroke="#60442F"
+    stroke-opacity="0.72"
+    stroke-width="4"
+    stroke-linecap="round"
+  >
+    <path d="M260 235 H405" />
+    <path d="M260 260 H420" />
+    <path d="M260 285 H390" />
+    <path d="M260 310 H405" />
+    <path d="M260 335 H375" />
+    <path d="M260 360 H415" />
+  </g>
+
+  <!-- Right writing -->
+
+  <g
+    stroke="#60442F"
+    stroke-opacity="0.72"
+    stroke-width="4"
+    stroke-linecap="round"
+  >
+    <path d="M485 235 H640" />
+    <path d="M485 260 H625" />
+    <path d="M485 285 H650" />
+    <path d="M485 310 H610" />
+    <path d="M485 335 H635" />
+    <path d="M485 360 H620" />
+  </g>
+
+  <!-- Highlighted revealed line -->
+
+  <path
+    d="M280 390 H620"
+    stroke="#9B6A32"
+    stroke-opacity="0.78"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M300 390 H600"
+    stroke="#F2D58A"
+    stroke-opacity="0.72"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+
+
+  <!--
+    ============================================================
+    BROKEN SEAL
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="seal"
+  >
+    <circle
+      class="node-hit-area"
+      cx="450"
+      cy="475"
+      r="64"
+    />
+
+    <!-- Broken wax pieces -->
+
+    <path
+      d="M405 465
+         C410 442 432 430 450 438
+         C466 431 490 444 495 465
+         C500 486 480 502 458 498
+         C440 510 416 497 405 480 Z"
+      fill="#8C2935"
+      fill-opacity="0.82"
+    />
+
+    <path
+      d="M418 458
+         C426 442 443 437 456 444
+         C469 451 473 466 465 479
+         C457 492 439 493 428 483
+         C418 475 414 466 418 458 Z"
+      fill="#C7464A"
+      fill-opacity="0.72"
+    />
+
+    <!-- Broken seal crack -->
+
+    <path
+      d="M450 438
+         L444 453
+         L455 464
+         L445 477
+         L454 495"
+      fill="none"
+      stroke="#F4A17D"
+      stroke-opacity="0.9"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Wax fragments -->
+
+    <path
+      d="M402 486 L417 478 L424 495 L408 503 Z"
+      fill="#9B3039"
+    />
+
+    <path
+      d="M482 480 L499 473 L505 490 L488 499 Z"
+      fill="#9B3039"
+    />
+
+    <!-- Reveal point -->
+
+    <circle
+      cx="450"
+      cy="466"
+      r="6"
+      fill="#FFE6A0"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    REVEALED EYE
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="eye"
+  >
+    <rect
+      class="node-hit-area"
+      x="690"
+      y="355"
+      width="160"
+      height="100"
+      rx="34"
+    />
+
+    <!-- Eye shadow -->
+
+    <path
+      d="M705 405
+         C735 373 790 373 825 405
+         C790 437 735 437 705 405 Z"
+      fill="#214247"
+      fill-opacity="0.46"
+    />
+
+    <!-- Eye -->
+
+    <path
+      d="M705 405
+         C735 373 790 373 825 405
+         C790 437 735 437 705 405 Z"
+      fill="#D3E5D4"
+      stroke="#8DB9A5"
+      stroke-width="3"
+    />
+
+    <!-- Iris -->
+
+    <circle
+      cx="765"
+      cy="405"
+      r="18"
+      fill="#4E918A"
+      stroke="#BCE8D1"
+      stroke-width="3"
+    />
+
+    <!-- Pupil -->
+
+    <circle
+      cx="765"
+      cy="405"
+      r="8"
+      fill="#163C43"
+    />
+
+    <!-- Eye light -->
+
+    <circle
+      cx="759"
+      cy="399"
+      r="4"
+      fill="#F1FFF5"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    REVELATION FLAME
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="flame"
+  >
+    <rect
+      class="node-hit-area"
+      x="50"
+      y="350"
+      width="160"
+      height="125"
+      rx="32"
+    />
+
+    <!-- Flame outer -->
+
+    <path
+      d="M125 452
+         C86 421 105 383 133 355
+         C130 391 165 399 157 430
+         C152 451 137 462 125 452 Z"
+      fill="#D85B32"
+      fill-opacity="0.9"
+      stroke="#F4A34A"
+      stroke-width="3"
+    />
+
+    <!-- Flame inner -->
+
+    <path
+      d="M127 444
+         C112 426 126 407 139 389
+         C138 410 153 416 148 433
+         C145 445 135 450 127 444 Z"
+      fill="#F39A35"
+    />
+
+    <!-- Flame core -->
+
+    <path
+      d="M132 439
+         C126 429 134 417 140 407
+         C140 420 147 425 144 435
+         C142 440 137 443 132 439 Z"
+      fill="#FFE28B"
+    />
+
+    <!-- Light -->
+
+    <circle
+      cx="140"
+      cy="375"
+      r="7"
+      fill="#FFE9A7"
+      fill-opacity="0.7"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    OPEN SCROLL ROLLS
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="scroll"
+  >
+    <rect
+      class="node-hit-area"
+      x="142"
+      y="142"
+      width="114"
+      height="306"
+      rx="34"
+    />
+
+    <!-- Left roll -->
+
+    <rect
+      x="160"
+      y="155"
+      width="78"
+      height="285"
+      rx="28"
+      fill="#AA7941"
+      stroke="#E2C78C"
+      stroke-width="3"
+    />
+
+    <rect
+      x="171"
+      y="166"
+      width="24"
+      height="263"
+      rx="12"
+      fill="#E0C68C"
+      fill-opacity="0.68"
+    />
+
+    <rect
+      x="213"
+      y="166"
+      width="14"
+      height="263"
+      rx="7"
+      fill="#69462D"
+      fill-opacity="0.46"
+    />
+
+    <!-- Small roll detail -->
+
+    <circle
+      cx="198"
+      cy="190"
+      r="5"
+      fill="#F2D99D"
+    />
+
+    <circle
+      cx="198"
+      cy="408"
+      r="5"
+      fill="#F2D99D"
+      fill-opacity="0.7"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    SPARKS / DISCOVERY MARKERS
+    ============================================================
+  -->
+
+  <circle
+    cx="290"
+    cy="115"
+    r="5"
+    fill="#FFE8A0"
+  />
+
+  <circle
+    cx="610"
+    cy="105"
+    r="4"
+    fill="#BDE4F5"
+  />
+
+  <circle
+    cx="735"
+    cy="275"
+    r="5"
+    fill="#F3D27C"
+  />
+
+  <circle
+    cx="185"
+    cy="285"
+    r="4"
+    fill="#D5C0EF"
+  />
+
+
+  <!--
+    ============================================================
+    FOOTER
+    ============================================================
+  -->
+
+  <text
+    x="450"
+    y="555"
+    text-anchor="middle"
+    fill="#E0C68A"
+    fill-opacity="0.5"
+    font-size="18"
+    letter-spacing="4"
+  >
+    THE WRITING WAS REVEALED
+  </text>
+
+</svg>

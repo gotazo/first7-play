@@ -1,0 +1,513 @@
+<svg
+  viewBox="0 0 900 600"
+  class="investigation-scene w-full"
+  aria-label="Wilderness passage revealed scene"
+>
+  <!--
+    ============================================================
+    WILDERNESS PASSAGE — AFTER SCENE
+    ============================================================
+
+    Solved state:
+      The hidden way is revealed.
+      The rock gives water, manna is abundant,
+      and the wilderness path opens toward the horizon.
+
+    Design rules:
+      - Direct SVG fill colors only
+      - No gradients
+      - No external images
+      - No animation
+      - Intentionally different composition from WildernessScene
+  -->
+
+  <text
+    x="450"
+    y="72"
+    text-anchor="middle"
+    fill="#E4C978"
+    fill-opacity="0.9"
+    font-size="19"
+    letter-spacing="6"
+  >
+    THE WAY IS REVEALED
+  </text>
+
+
+  <!--
+    ============================================================
+    OPEN HORIZON
+    ============================================================
+  -->
+
+  <circle
+    cx="450"
+    cy="260"
+    r="220"
+    fill="#E8C96D"
+    fill-opacity="0.035"
+  />
+
+  <circle
+    cx="450"
+    cy="260"
+    r="130"
+    fill="#FFF0AE"
+    fill-opacity="0.045"
+  />
+
+  <!-- Horizon light -->
+
+  <path
+    d="M130 385
+       C250 350 330 370 450 350
+       C570 370 650 350 770 385
+       L770 450
+       L130 450 Z"
+    fill="#D5B96F"
+    fill-opacity="0.08"
+  />
+
+
+  <!--
+    ============================================================
+    OPENED MOUNTAIN PASS
+    ============================================================
+  -->
+
+  <!-- Left mountain -->
+
+  <path
+    d="M70 450
+       L210 245
+       L330 450 Z"
+    fill="#57524B"
+    stroke="#A99A7D"
+    stroke-opacity="0.48"
+    stroke-width="3"
+  />
+
+  <!-- Left mountain light -->
+
+  <path
+    d="M210 245
+       L170 330
+       L207 310
+       L250 370
+       L285 450
+       L330 450 Z"
+    fill="#80786A"
+    fill-opacity="0.7"
+  />
+
+  <!-- Right mountain -->
+
+  <path
+    d="M570 450
+       L690 245
+       L830 450 Z"
+    fill="#4F4A45"
+    stroke="#9F9279"
+    stroke-opacity="0.46"
+    stroke-width="3"
+  />
+
+  <!-- Right mountain light -->
+
+  <path
+    d="M690 245
+       L655 325
+       L695 305
+       L735 370
+       L785 450
+       L830 450 Z"
+    fill="#777065"
+    fill-opacity="0.68"
+  />
+
+  <!-- Open valley -->
+
+  <path
+    d="M210 450
+       C285 390 350 345 450 325
+       C550 345 615 390 690 450 Z"
+    fill="#8B704B"
+    fill-opacity="0.42"
+  />
+
+  <!-- Bright path through valley -->
+
+  <path
+    d="M450 330
+       C430 365 405 395 355 450
+       H545
+       C495 395 470 365 450 330 Z"
+    fill="#D9B96F"
+    fill-opacity="0.72"
+  />
+
+  <path
+    d="M450 340
+       C438 375 420 405 390 442"
+    fill="none"
+    stroke="#F2D995"
+    stroke-opacity="0.62"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M450 340
+       C462 375 480 405 510 442"
+    fill="none"
+    stroke="#B48A4D"
+    stroke-opacity="0.45"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+
+
+  <!--
+    ============================================================
+    PILLAR — GUIDE MARKER
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="pillar"
+  >
+    <rect
+      class="node-hit-area"
+      x="110"
+      y="130"
+      width="120"
+      height="230"
+      rx="24"
+    />
+
+    <!-- Pillar -->
+
+    <path
+      d="M145 165
+         C120 215 125 285 170 325
+         C205 285 215 215 180 165
+         C170 140 155 135 145 165 Z"
+      fill="#D7D0BA"
+      stroke="#E6CC82"
+      stroke-width="3"
+    />
+
+    <!-- Warm side -->
+
+    <path
+      d="M164 151
+         C188 190 192 250 180 286
+         C176 301 173 315 170 325
+         C195 300 205 265 205 225
+         C204 191 188 163 164 151 Z"
+      fill="#AFA58F"
+      fill-opacity="0.7"
+    />
+
+    <!-- Guide light -->
+
+    <path
+      d="M145 172
+         C133 205 134 245 145 270"
+      fill="none"
+      stroke="#FFF2B8"
+      stroke-opacity="0.62"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <!-- Marker glow -->
+
+    <circle
+      cx="170"
+      cy="150"
+      r="15"
+      fill="#F5D77C"
+      fill-opacity="0.12"
+    />
+
+    <circle
+      cx="170"
+      cy="150"
+      r="6"
+      fill="#FFE9A2"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    ROCK — WATER FLOWS
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="rock"
+  >
+    <rect
+      class="node-hit-area"
+      x="545"
+      y="300"
+      width="190"
+      height="170"
+      rx="22"
+    />
+
+    <!-- Rock -->
+
+    <path
+      d="M560 365
+         L620 315
+         L690 345
+         L710 415
+         L645 450
+         L575 425 Z"
+      fill="#77736C"
+      stroke="#B8AA8D"
+      stroke-width="3"
+    />
+
+    <!-- Rock light -->
+
+    <path
+      d="M620 315
+         L690 345
+         L645 385
+         L575 425
+         L575 365 Z"
+      fill="#958E82"
+      fill-opacity="0.72"
+    />
+
+    <!-- Rock dark face -->
+
+    <path
+      d="M645 385
+         L710 415
+         L645 450
+         L575 425 Z"
+      fill="#4F4B46"
+      fill-opacity="0.72"
+    />
+
+    <!-- Opened crack -->
+
+    <path
+      d="M620 316
+         L645 385
+         L610 420"
+      fill="none"
+      stroke="#4A4640"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Water emerging -->
+
+    <path
+      d="M610 420
+         C585 438 570 447 550 455"
+      fill="none"
+      stroke="#4FA5A0"
+      stroke-width="10"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M610 420
+         C585 438 570 447 550 455"
+      fill="none"
+      stroke="#A8E2D8"
+      stroke-opacity="0.72"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M625 430
+         C600 450 585 458 565 466"
+      fill="none"
+      stroke="#63B9B1"
+      stroke-opacity="0.72"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    MANNA — ABUNDANT PROVISION
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="manna"
+  >
+    <circle
+      class="node-hit-area"
+      cx="365"
+      cy="465"
+      r="68"
+    />
+
+    <!-- Ground -->
+
+    <ellipse
+      cx="365"
+      cy="478"
+      rx="58"
+      ry="14"
+      fill="#4B3928"
+      fill-opacity="0.4"
+    />
+
+    <!-- Many manna pieces -->
+
+    <circle cx="330" cy="462" r="8" fill="#F0DDAA" />
+    <circle cx="350" cy="445" r="9" fill="#D8C18A" />
+    <circle cx="371" cy="462" r="10" fill="#F3E2B3" />
+    <circle cx="394" cy="445" r="8" fill="#C8A969" />
+    <circle cx="410" cy="468" r="9" fill="#E7D29C" />
+    <circle cx="345" cy="480" r="7" fill="#B99657" />
+    <circle cx="375" cy="485" r="8" fill="#DCC38A" />
+    <circle cx="400" cy="485" r="6" fill="#F1DEAA" />
+
+    <!-- Manna highlights -->
+
+    <circle cx="348" cy="442" r="3" fill="#FFF3C5" />
+    <circle cx="369" cy="458" r="3" fill="#FFF3C5" />
+    <circle cx="392" cy="442" r="3" fill="#FFF0BA" />
+  </g>
+
+
+  <!--
+    ============================================================
+    RIVER — OPEN WATERWAY
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="river"
+  >
+    <rect
+      class="node-hit-area"
+      x="220"
+      y="485"
+      width="500"
+      height="65"
+      rx="28"
+    />
+
+    <!-- Main river -->
+
+    <path
+      d="M245 510
+         C320 480 380 530 450 500
+         C520 470 585 525 655 495
+         C685 483 710 488 735 500"
+      fill="none"
+      stroke="#286F73"
+      stroke-opacity="0.82"
+      stroke-width="18"
+      stroke-linecap="round"
+    />
+
+    <!-- River highlight -->
+
+    <path
+      d="M245 505
+         C320 478 380 523 450 495
+         C520 465 585 518 655 490
+         C685 479 710 484 735 495"
+      fill="none"
+      stroke="#75C8C0"
+      stroke-opacity="0.82"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+
+    <!-- Bright water streak -->
+
+    <path
+      d="M285 520
+         C335 505 375 528 420 510"
+      fill="none"
+      stroke="#B2E8DF"
+      stroke-opacity="0.58"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M500 515
+         C550 495 595 522 640 505"
+      fill="none"
+      stroke="#B2E8DF"
+      stroke-opacity="0.5"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+  </g>
+
+
+  <!--
+    ============================================================
+    REVEALED DESTINATION
+    ============================================================
+  -->
+
+  <path
+    d="M450 300 L450 270"
+    stroke="#F2D47D"
+    stroke-opacity="0.58"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+  <circle
+    cx="450"
+    cy="255"
+    r="18"
+    fill="#F5D77C"
+    fill-opacity="0.1"
+  />
+
+  <circle
+    cx="450"
+    cy="255"
+    r="7"
+    fill="#FFE9A2"
+  />
+
+  <!-- Small discovery lights -->
+
+  <circle cx="280" cy="205" r="4" fill="#D8C7A0" fill-opacity="0.62" />
+  <circle cx="620" cy="190" r="4" fill="#E2CF91" fill-opacity="0.58" />
+  <circle cx="755" cy="320" r="3" fill="#D4C3A1" fill-opacity="0.5" />
+
+  <!-- Footer -->
+
+  <text
+    x="450"
+    y="575"
+    text-anchor="middle"
+    fill="#E0C68A"
+    fill-opacity="0.52"
+    font-size="18"
+    letter-spacing="4"
+  >
+    THE WAY WAS PROVIDED
+  </text>
+
+</svg>

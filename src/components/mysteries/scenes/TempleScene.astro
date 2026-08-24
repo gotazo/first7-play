@@ -3,170 +3,145 @@
   class="investigation-scene w-full"
   aria-label="Temple archive scene"
 >
-  <text
-    x="450"
-    y="115"
-    text-anchor="middle"
-    fill="rgba(214,179,106,0.38)"
-    font-size="18"
-    letter-spacing="6"
-  >
+  <!-- Temple Archive: colored direct-fill version.
+       Interactive nodes and hit areas are preserved:
+       altar, veil, lampstand, ark. -->
+
+  <text x="450" y="115" text-anchor="middle"
+    fill="#D6B36A" fill-opacity="0.68" font-size="18" letter-spacing="6">
     TEMPLE ARCHIVE
   </text>
 
-  <rect
-    x="60"
-    y="60"
-    width="780"
-    height="480"
-    rx="24"
-    fill="rgba(255,255,255,0.01)"
-    stroke="rgba(214,179,106,0.18)"
-    stroke-width="3"
-  />
+  <rect x="60" y="60" width="780" height="480" rx="24"
+    fill="#3B2A24" fill-opacity="0.24"
+    stroke="#B78A52" stroke-opacity="0.4" stroke-width="3" />
 
-  <line
-    x1="450"
-    y1="60"
-    x2="450"
-    y2="540"
-    stroke="rgba(214,179,106,0.05)"
-    stroke-width="2"
-  />
+  <rect x="78" y="78" width="744" height="444" rx="18"
+    fill="#5A4030" fill-opacity="0.12" />
 
-  <line
-    x1="60"
-    y1="300"
-    x2="840"
-    y2="300"
-    stroke="rgba(214,179,106,0.05)"
-    stroke-width="2"
-  />
+  <line x1="450" y1="60" x2="450" y2="540"
+    stroke="#A98255" stroke-opacity="0.13" stroke-width="2" />
+  <line x1="60" y1="300" x2="840" y2="300"
+    stroke="#A98255" stroke-opacity="0.13" stroke-width="2" />
 
-  <rect
-    x="250"
-    y="140"
-    width="400"
-    height="320"
-    rx="18"
-    fill="rgba(214,179,106,0.03)"
-    stroke="rgba(214,179,106,0.18)"
-    stroke-width="2"
-  />
+  <rect x="250" y="140" width="400" height="320" rx="18"
+    fill="#6A4A32" fill-opacity="0.14"
+    stroke="#C19A60" stroke-opacity="0.3" stroke-width="2" />
 
-  <g
-    class="investigation-node"
-    data-node="altar"
-  >
+  <circle cx="450" cy="285" r="155" fill="#E8C96D" fill-opacity="0.025" />
+  <circle cx="450" cy="285" r="90" fill="#FFE6A0" fill-opacity="0.025" />
+
+  <!-- ALTAR -->
+  <g class="investigation-node" data-node="altar">
     <circle class="node-hit-area" cx="450" cy="420" r="64" />
 
-    <circle
-      cx="450"
-      cy="420"
-      r="42"
-      fill="rgba(214,179,106,0.08)"
-      stroke="rgba(214,179,106,0.8)"
-      stroke-width="3"
-    />
+    <ellipse cx="450" cy="449" rx="54" ry="12"
+      fill="#2C211C" fill-opacity="0.55" />
 
-    <path
-      d="M430 420 L470 420 M450 400 L450 440"
-      stroke="rgba(214,179,106,1)"
-      stroke-width="4"
-      stroke-linecap="round"
-    />
+    <rect x="410" y="410" width="80" height="40" rx="5"
+      fill="#8C5A34" stroke="#D0A263" stroke-width="3" />
+
+    <rect x="402" y="401" width="96" height="15" rx="5"
+      fill="#B97A3E" stroke="#E0B66D" stroke-width="2" />
+
+    <circle cx="450" cy="420" r="18"
+      fill="#E6B84F" fill-opacity="0.35" />
+
+    <path d="M430 420 L470 420 M450 400 L450 440"
+      stroke="#F4D67E" stroke-width="4" stroke-linecap="round" />
+
+    <path d="M450 407
+      C441 416 446 423 450 426
+      C455 421 458 415 450 407 Z"
+      fill="#FFE18A" fill-opacity="0.9" />
   </g>
 
-  <g
-    class="investigation-node"
-    data-node="veil"
-  >
+  <!-- VEIL -->
+  <g class="investigation-node" data-node="veil">
     <rect class="node-hit-area" x="388" y="148" width="124" height="164" rx="18" />
 
-    <rect
-      x="410"
-      y="170"
-      width="80"
-      height="120"
-      rx="10"
-      fill="rgba(214,179,106,0.06)"
-      stroke="rgba(214,179,106,0.7)"
-      stroke-width="3"
-    />
+    <rect x="410" y="170" width="80" height="120" rx="10"
+      fill="#382B43" fill-opacity="0.45" />
 
-    <line
-      x1="450"
-      y1="170"
-      x2="450"
-      y2="290"
-      stroke="rgba(214,179,106,1)"
-      stroke-width="3"
-    />
+    <rect x="410" y="170" width="80" height="120" rx="10"
+      fill="#70567D" fill-opacity="0.72"
+      stroke="#C7A8C9" stroke-width="3" />
+
+    <path d="M424 176 V284 M438 176 V284 M462 176 V284 M476 176 V284"
+      stroke="#D9BCD4" stroke-opacity="0.34"
+      stroke-width="3" stroke-linecap="round" />
+
+    <line x1="450" y1="170" x2="450" y2="290"
+      stroke="#F0D48A" stroke-opacity="0.72" stroke-width="3" />
+
+    <path d="M414 174 H486 M414 286 H486"
+      stroke="#D8B05B" stroke-opacity="0.62"
+      stroke-width="2" stroke-linecap="round" />
   </g>
 
-  <g
-    class="investigation-node"
-    data-node="lampstand"
-  >
+  <!-- LAMPSTAND -->
+  <g class="investigation-node" data-node="lampstand">
     <circle class="node-hit-area" cx="320" cy="260" r="56" />
 
-    <circle
-      cx="320"
-      cy="260"
-      r="30"
-      fill="rgba(214,179,106,0.08)"
-      stroke="rgba(214,179,106,0.7)"
-      stroke-width="3"
-    />
+    <circle cx="320" cy="264" r="32"
+      fill="#4B351F" fill-opacity="0.45" />
 
-    <path
-      d="M300 250 Q320 220 340 250"
-      stroke="rgba(214,179,106,1)"
-      stroke-width="3"
-      fill="none"
-    />
+    <circle cx="320" cy="260" r="30"
+      fill="#B9822F" stroke="#E7C267" stroke-width="3" />
+
+    <path d="M300 250 Q320 220 340 250"
+      fill="none" stroke="#F0D078" stroke-width="4" stroke-linecap="round" />
+
+    <path d="M320 225 V295"
+      stroke="#D8A847" stroke-width="5" stroke-linecap="round" />
+
+    <path d="M303 248
+      C297 239 303 232 308 227
+      C307 237 315 239 312 247
+      C310 253 306 253 303 248 Z"
+      fill="#FFE18A" />
+
+    <path d="M328 248
+      C322 239 328 232 333 227
+      C332 237 340 239 337 247
+      C335 253 331 253 328 248 Z"
+      fill="#FFD86A" />
   </g>
 
-  <g
-    class="investigation-node"
-    data-node="ark"
-  >
+  <!-- ARK -->
+  <g class="investigation-node" data-node="ark">
     <rect class="node-hit-area" x="536" y="186" width="138" height="128" rx="18" />
 
-    <rect
-      x="560"
-      y="220"
-      width="90"
-      height="70"
-      rx="12"
-      fill="rgba(214,179,106,0.08)"
-      stroke="rgba(214,179,106,0.7)"
-      stroke-width="3"
-    />
+    <rect x="560" y="220" width="90" height="70" rx="12"
+      fill="#39261A" fill-opacity="0.42" />
 
-    <circle
-      cx="585"
-      cy="210"
-      r="8"
-      fill="rgba(214,179,106,1)"
-    />
+    <rect x="560" y="220" width="90" height="70" rx="12"
+      fill="#805026" stroke="#D8A844" stroke-width="3" />
 
-    <circle
-      cx="625"
-      cy="210"
-      r="8"
-      fill="rgba(214,179,106,1)"
-    />
+    <rect x="565" y="226" width="80" height="12" rx="4"
+      fill="#C28B32" fill-opacity="0.86" />
+
+    <rect x="568" y="274" width="74" height="10" rx="3"
+      fill="#4E301C" fill-opacity="0.7" />
+
+    <circle cx="585" cy="210" r="8"
+      fill="#D7A83D" stroke="#F0D17A" stroke-width="2" />
+    <circle cx="625" cy="210" r="8"
+      fill="#D7A83D" stroke="#F0D17A" stroke-width="2" />
+
+    <circle cx="585" cy="210" r="3" fill="#FFF0AD" />
+    <circle cx="625" cy="210" r="3" fill="#FFF0AD" />
   </g>
 
-  <text
-    x="450"
-    y="500"
-    text-anchor="middle"
-    fill="rgba(214,179,106,0.08)"
-    font-size="20"
-    letter-spacing="4"
-  >
+  <!-- Temple floor -->
+  <path d="M110 475 H790"
+    stroke="#A67B4B" stroke-opacity="0.22" stroke-width="3" />
+  <path d="M180 500 H720"
+    stroke="#8B6845" stroke-opacity="0.16" stroke-width="2" />
+
+  <text x="450" y="500" text-anchor="middle"
+    fill="#D6B36A" fill-opacity="0.24"
+    font-size="20" letter-spacing="4">
     THE VEIL CONCEALED THE COVENANT
   </text>
 </svg>

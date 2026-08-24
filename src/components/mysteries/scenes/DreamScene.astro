@@ -3,33 +3,128 @@
   class="investigation-scene w-full"
   aria-label="Dream constellation scene"
 >
+  <!--
+    ============================================================
+    DREAM CONSTELLATION
+    ============================================================
+
+    Interactive nodes:
+      stars
+      moon
+      ladder
+      scroll
+
+    Design rules:
+      - Direct SVG fill colors only
+      - No gradients
+      - No external images
+      - No animation
+      - Existing node IDs and hit areas preserved
+  -->
+
+  <!-- Scene title -->
+
   <text
     x="450"
     y="95"
     text-anchor="middle"
-    fill="rgba(214,179,106,0.34)"
+    fill="#D6B36A"
+    fill-opacity="0.64"
     font-size="18"
     letter-spacing="6"
   >
     DREAM CONSTELLATION
   </text>
 
+
+  <!--
+    ============================================================
+    DREAM SKY
+    ============================================================
+  -->
+
   <circle
     cx="690"
     cy="150"
     r="54"
-    fill="rgba(214,179,106,0.04)"
-    stroke="rgba(214,179,106,0.16)"
+    fill="#6F73B8"
+    fill-opacity="0.14"
+    stroke="#B9A9E8"
+    stroke-opacity="0.45"
     stroke-width="2"
   />
 
+  <!-- Crescent moon -->
+
   <path
-    d="M704 110 C670 130 667 174 702 196 C664 196 632 168 632 132 C632 101 653 76 684 68 C675 82 678 101 704 110 Z"
-    fill="rgba(214,179,106,0.16)"
+    d="M704 110
+       C670 130 667 174 702 196
+       C664 196 632 168 632 132
+       C632 101 653 76 684 68
+       C675 82 678 101 704 110 Z"
+    fill="#E7D48A"
+    fill-opacity="0.82"
   />
 
+  <!-- Moon inner shadow -->
+
+  <path
+    d="M684 79
+       C659 92 646 112 646 135
+       C646 158 660 178 682 187
+       C659 181 643 164 637 143
+       C629 114 647 86 674 73
+       C678 71 682 70 686 69
+       C681 73 678 76 674 81
+       C678 80 681 79 684 79 Z"
+    fill="#8E6DA8"
+    fill-opacity="0.35"
+  />
+
+  <!-- Small sky lights -->
+
+  <circle
+    cx="760"
+    cy="104"
+    r="4"
+    fill="#C8E7FF"
+    fill-opacity="0.72"
+  />
+
+  <circle
+    cx="785"
+    cy="188"
+    r="3"
+    fill="#E9D99B"
+    fill-opacity="0.7"
+  />
+
+  <circle
+    cx="735"
+    cy="235"
+    r="4"
+    fill="#B8D9F5"
+    fill-opacity="0.62"
+  />
+
+  <circle
+    cx="170"
+    cy="125"
+    r="3"
+    fill="#D9C8F2"
+    fill-opacity="0.58"
+  />
+
+
+  <!--
+    ============================================================
+    CONSTELLATION LINES
+    ============================================================
+  -->
+
   <g
-    stroke="rgba(214,179,106,0.14)"
+    stroke="#8FA6D6"
+    stroke-opacity="0.34"
     stroke-width="2"
   >
     <line x1="225" y1="190" x2="340" y2="145" />
@@ -38,61 +133,282 @@
     <line x1="570" y1="170" x2="650" y2="260" />
   </g>
 
+
+  <!--
+    ============================================================
+    STARS
+    ============================================================
+  -->
+
   <g
     class="investigation-node"
     data-node="stars"
   >
-    <rect class="node-hit-area" x="194" y="113" width="488" height="176" rx="28" />
+    <rect
+      class="node-hit-area"
+      x="194"
+      y="113"
+      width="488"
+      height="176"
+      rx="28"
+    />
 
-    <circle cx="225" cy="190" r="9" fill="rgba(214,179,106,0.82)" />
-    <circle cx="340" cy="145" r="8" fill="rgba(214,179,106,0.7)" />
-    <circle cx="465" cy="210" r="10" fill="rgba(214,179,106,0.78)" />
-    <circle cx="570" cy="170" r="7" fill="rgba(214,179,106,0.65)" />
-    <circle cx="650" cy="260" r="8" fill="rgba(214,179,106,0.7)" />
+    <!-- Star 1 -->
+
+    <circle
+      cx="225"
+      cy="190"
+      r="12"
+      fill="#F0C95A"
+      fill-opacity="0.16"
+    />
+
+    <circle
+      cx="225"
+      cy="190"
+      r="6"
+      fill="#FFF0A8"
+    />
+
+    <!-- Star 2 -->
+
+    <circle
+      cx="340"
+      cy="145"
+      r="11"
+      fill="#8ED8F2"
+      fill-opacity="0.16"
+    />
+
+    <circle
+      cx="340"
+      cy="145"
+      r="5"
+      fill="#C7F0FF"
+    />
+
+    <!-- Star 3 -->
+
+    <circle
+      cx="465"
+      cy="210"
+      r="13"
+      fill="#E4B95B"
+      fill-opacity="0.18"
+    />
+
+    <circle
+      cx="465"
+      cy="210"
+      r="7"
+      fill="#FFE7A0"
+    />
+
+    <!-- Star 4 -->
+
+    <circle
+      cx="570"
+      cy="170"
+      r="10"
+      fill="#9BC6E8"
+      fill-opacity="0.18"
+    />
+
+    <circle
+      cx="570"
+      cy="170"
+      r="4"
+      fill="#D7F2FF"
+    />
+
+    <!-- Star 5 -->
+
+    <circle
+      cx="650"
+      cy="260"
+      r="11"
+      fill="#D5B56A"
+      fill-opacity="0.17"
+    />
+
+    <circle
+      cx="650"
+      cy="260"
+      r="6"
+      fill="#FFE6A0"
+    />
+
+    <!-- Tiny cross-lights -->
+
+    <path
+      d="M225 178 V202 M213 190 H237"
+      stroke="#FFF1B5"
+      stroke-opacity="0.45"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M465 196 V224 M451 210 H479"
+      stroke="#FFEAB0"
+      stroke-opacity="0.42"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
   </g>
+
+
+  <!--
+    ============================================================
+    MOON
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="moon"
   >
-    <circle class="node-hit-area" cx="690" cy="150" r="86" />
+    <circle
+      class="node-hit-area"
+      cx="690"
+      cy="150"
+      r="86"
+    />
 
     <circle
       cx="690"
       cy="150"
       r="66"
-      fill="transparent"
-      stroke="rgba(214,179,106,0.45)"
+      fill="#7C78B5"
+      fill-opacity="0.12"
+      stroke="#C9BCEB"
+      stroke-opacity="0.5"
       stroke-width="2"
     />
+
+    <circle
+      cx="682"
+      cy="134"
+      r="5"
+      fill="#FFF0B0"
+      fill-opacity="0.55"
+    />
+
+    <circle
+      cx="708"
+      cy="170"
+      r="4"
+      fill="#D5C9F0"
+      fill-opacity="0.48"
+    />
   </g>
+
+
+  <!--
+    ============================================================
+    LADDER
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="ladder"
   >
-    <rect class="node-hit-area" x="340" y="210" width="250" height="315" rx="30" />
+    <rect
+      class="node-hit-area"
+      x="340"
+      y="210"
+      width="250"
+      height="315"
+      rx="30"
+    />
+
+    <!-- Soft ladder glow -->
 
     <path
       d="M360 500 L485 225 M445 505 L570 230"
-      stroke="rgba(214,179,106,0.72)"
+      stroke="#8FA8D8"
+      stroke-opacity="0.16"
+      stroke-width="11"
+      stroke-linecap="round"
+    />
+
+    <!-- Left and right rails -->
+
+    <path
+      d="M360 500 L485 225 M445 505 L570 230"
+      stroke="#C89B58"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+
+    <!-- Rail highlights -->
+
+    <path
+      d="M369 493 L490 235 M454 498 L566 240"
+      stroke="#E6C477"
+      stroke-opacity="0.48"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <!-- Rungs -->
+
+    <path
+      d="M393 430 L482 430
+         M416 380 L505 380
+         M438 330 L527 330
+         M461 280 L550 280"
+      stroke="#DDB568"
       stroke-width="4"
       stroke-linecap="round"
     />
 
+    <!-- Rung shadows -->
+
     <path
-      d="M393 430 L482 430 M416 380 L505 380 M438 330 L527 330 M461 280 L550 280"
-      stroke="rgba(214,179,106,0.5)"
+      d="M397 435 L486 435
+         M420 385 L509 385
+         M442 335 L531 335
+         M465 285 L554 285"
+      stroke="#63452D"
+      stroke-opacity="0.6"
       stroke-width="3"
       stroke-linecap="round"
     />
+
+    <!-- Small upward light -->
+
+    <circle
+      cx="485"
+      cy="225"
+      r="6"
+      fill="#F6DA88"
+      fill-opacity="0.78"
+    />
   </g>
+
+
+  <!--
+    ============================================================
+    SCROLL
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="scroll"
   >
-    <rect class="node-hit-area" x="150" y="375" width="190" height="116" rx="18" />
+    <rect
+      class="node-hit-area"
+      x="150"
+      y="375"
+      width="190"
+      height="116"
+      rx="18"
+    />
+
+    <!-- Scroll shadow -->
 
     <rect
       x="170"
@@ -100,27 +416,90 @@
       width="150"
       height="74"
       rx="12"
-      fill="rgba(214,179,106,0.045)"
-      stroke="rgba(214,179,106,0.55)"
+      fill="#4A3022"
+      fill-opacity="0.5"
+    />
+
+    <!-- Scroll body -->
+
+    <rect
+      x="174"
+      y="392"
+      width="142"
+      height="74"
+      rx="10"
+      fill="#B98A4B"
+      stroke="#DDBB73"
       stroke-width="3"
     />
 
+    <!-- Parchment center -->
+
+    <rect
+      x="184"
+      y="400"
+      width="122"
+      height="56"
+      rx="6"
+      fill="#D9C18B"
+      fill-opacity="0.72"
+    />
+
+    <!-- Scroll ends -->
+
+    <circle
+      cx="180"
+      cy="429"
+      r="13"
+      fill="#8A5C2D"
+      stroke="#D7B36A"
+      stroke-width="3"
+    />
+
+    <circle
+      cx="310"
+      cy="429"
+      r="13"
+      fill="#8A5C2D"
+      stroke="#D7B36A"
+      stroke-width="3"
+    />
+
+    <!-- Writing -->
+
     <path
-      d="M195 420 H295 M195 442 H268"
-      stroke="rgba(214,179,106,0.34)"
+      d="M195 420 H295
+         M195 442 H268"
+      stroke="#76553B"
+      stroke-opacity="0.72"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <!-- Parchment highlight -->
+
+    <path
+      d="M192 406 H298"
+      stroke="#F5E4B4"
+      stroke-opacity="0.62"
       stroke-width="3"
       stroke-linecap="round"
     />
   </g>
 
+
+  <!-- Scene footer -->
+
   <text
     x="450"
     y="548"
     text-anchor="middle"
-    fill="rgba(214,179,106,0.08)"
+    fill="#B9A8DC"
+    fill-opacity="0.28"
     font-size="18"
     letter-spacing="4"
   >
     THE HEAVENS HELD THE DREAM
   </text>
+
 </svg>

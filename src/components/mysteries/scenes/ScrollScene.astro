@@ -3,67 +3,250 @@
   class="investigation-scene w-full"
   aria-label="Scroll decoder scene"
 >
+  <!--
+    ============================================================
+    DAMAGED SCROLL
+    ============================================================
+
+    Interactive nodes:
+      seal
+      scroll
+      flame
+      eye
+
+    Design rules:
+      - Direct SVG fill colors only
+      - No gradients
+      - No external images
+      - No animation
+      - Existing node IDs and hit areas preserved
+  -->
+
+  <!-- Scene title -->
+
   <text
     x="450"
     y="95"
     text-anchor="middle"
-    fill="rgba(214,179,106,0.34)"
+    fill="#D6B36A"
+    fill-opacity="0.66"
     font-size="18"
     letter-spacing="6"
   >
     DAMAGED SCROLL
   </text>
 
+
+  <!--
+    ============================================================
+    MAIN PARCHMENT
+    ============================================================
+  -->
+
+  <!-- Dark parchment shadow -->
+
   <path
-    d="M190 145 C260 118 338 145 420 130 C518 112 616 132 710 145 L690 465 C610 490 520 460 440 478 C340 500 265 468 190 455 Z"
-    fill="rgba(214,179,106,0.035)"
-    stroke="rgba(214,179,106,0.18)"
+    d="M190 145
+       C260 118 338 145 420 130
+       C518 112 616 132 710 145
+       L690 465
+       C610 490 520 460 440 478
+       C340 500 265 468 190 455 Z"
+    fill="#4A3022"
+    fill-opacity="0.38"
+  />
+
+  <!-- Aged parchment -->
+
+  <path
+    d="M190 145
+       C260 118 338 145 420 130
+       C518 112 616 132 710 145
+       L690 465
+       C610 490 520 460 440 478
+       C340 500 265 468 190 455 Z"
+    fill="#B88D55"
+    fill-opacity="0.72"
+    stroke="#D6B477"
     stroke-width="3"
   />
 
+  <!-- Lighter parchment center -->
+
   <path
-    d="M245 205 H620 M238 250 H675 M270 295 H600 M230 340 H660 M285 385 H610"
-    stroke="rgba(214,179,106,0.11)"
+    d="M210 160
+       C285 140 350 160 425 146
+       C515 130 605 146 690 158
+       L672 448
+       C600 466 520 444 442 461
+       C350 478 280 450 210 440 Z"
+    fill="#D4B77B"
+    fill-opacity="0.38"
+  />
+
+  <!-- Aged darker edge -->
+
+  <path
+    d="M198 151
+       C270 128 340 151 422 137
+       C518 119 612 137 702 149"
+    fill="none"
+    stroke="#765033"
+    stroke-opacity="0.62"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+
+  <!-- Writing lines -->
+
+  <path
+    d="M245 205 H620
+       M238 250 H675
+       M270 295 H600
+       M230 340 H660
+       M285 385 H610"
+    stroke="#725339"
+    stroke-opacity="0.52"
     stroke-width="5"
     stroke-linecap="round"
   />
 
+  <!-- Short broken writing marks -->
+
   <path
-    d="M520 150 C500 210 545 245 520 306 C502 350 525 390 500 468"
-    fill="none"
-    stroke="rgba(214,179,106,0.08)"
+    d="M255 218 H335
+       M365 218 H438
+       M468 218 H570
+       M250 263 H330
+       M360 263 H455
+       M490 263 H650
+       M290 308 H390
+       M420 308 H520
+       M270 353 H365
+       M400 353 H500
+       M535 353 H630
+       M300 398 H405
+       M435 398 H575"
+    stroke="#5F4633"
+    stroke-opacity="0.42"
     stroke-width="3"
+    stroke-linecap="round"
+  />
+
+  <!-- Damaged vertical fold -->
+
+  <path
+    d="M520 150
+       C500 210 545 245 520 306
+       C502 350 525 390 500 468"
+    fill="none"
+    stroke="#674936"
+    stroke-opacity="0.38"
+    stroke-width="4"
     stroke-dasharray="12 14"
   />
+
+  <!-- Fold highlight -->
+
+  <path
+    d="M527 158
+       C514 215 554 247 528 306
+       C514 351 537 390 510 456"
+    fill="none"
+    stroke="#E2C990"
+    stroke-opacity="0.35"
+    stroke-width="3"
+    stroke-dasharray="10 16"
+  />
+
+
+  <!--
+    ============================================================
+    SEAL
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="seal"
   >
-    <circle class="node-hit-area" cx="690" cy="212" r="64" />
+    <circle
+      class="node-hit-area"
+      cx="690"
+      cy="212"
+      r="64"
+    />
+
+    <!-- Seal shadow -->
+
+    <circle
+      cx="690"
+      cy="216"
+      r="45"
+      fill="#4B1E24"
+      fill-opacity="0.65"
+    />
+
+    <!-- Wax seal -->
+
+    <circle
+      cx="690"
+      cy="208"
+      r="42"
+      fill="#9E3440"
+      stroke="#D96A68"
+      stroke-width="3"
+    />
+
+    <!-- Wax highlight -->
+
+    <circle
+      cx="679"
+      cy="197"
+      r="18"
+      fill="#C64D50"
+      fill-opacity="0.62"
+    />
+
+    <!-- Seal symbol -->
+
+    <path
+      d="M670 212 H710 M690 192 V232"
+      stroke="#F2A07B"
+      stroke-opacity="0.88"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
 
     <circle
       cx="690"
       cy="212"
-      r="42"
-      fill="rgba(214,179,106,0.08)"
-      stroke="rgba(214,179,106,0.72)"
-      stroke-width="3"
-    />
-
-    <path
-      d="M670 212 H710 M690 192 V232"
-      stroke="rgba(214,179,106,0.74)"
-      stroke-width="4"
-      stroke-linecap="round"
+      r="7"
+      fill="#7A2632"
     />
   </g>
+
+
+  <!--
+    ============================================================
+    SCROLL ROLL
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="scroll"
   >
-    <rect class="node-hit-area" x="142" y="142" width="114" height="306" rx="34" />
+    <rect
+      class="node-hit-area"
+      x="142"
+      y="142"
+      width="114"
+      height="306"
+      rx="34"
+    />
+
+    <!-- Roll shadow -->
 
     <rect
       x="160"
@@ -71,74 +254,231 @@
       width="78"
       height="270"
       rx="28"
-      fill="rgba(214,179,106,0.045)"
-      stroke="rgba(214,179,106,0.62)"
+      fill="#4B3023"
+      fill-opacity="0.42"
+    />
+
+    <!-- Scroll roll -->
+
+    <rect
+      x="160"
+      y="160"
+      width="78"
+      height="270"
+      rx="28"
+      fill="#A97843"
+      stroke="#D8B77A"
       stroke-width="3"
     />
+
+    <!-- Roll light -->
+
+    <rect
+      x="171"
+      y="170"
+      width="24"
+      height="250"
+      rx="12"
+      fill="#D8BC83"
+      fill-opacity="0.62"
+    />
+
+    <!-- Roll shadow -->
+
+    <rect
+      x="213"
+      y="170"
+      width="14"
+      height="250"
+      rx="7"
+      fill="#68452D"
+      fill-opacity="0.5"
+    />
+
+    <!-- Central seam -->
 
     <line
       x1="198"
       y1="178"
       x2="198"
       y2="410"
-      stroke="rgba(214,179,106,0.38)"
+      stroke="#704D32"
       stroke-width="3"
     />
+
+    <!-- Small parchment marks -->
+
+    <circle
+      cx="198"
+      cy="195"
+      r="5"
+      fill="#E6CF98"
+      fill-opacity="0.58"
+    />
+
+    <circle
+      cx="198"
+      cy="395"
+      r="5"
+      fill="#E6CF98"
+      fill-opacity="0.48"
+    />
   </g>
+
+
+  <!--
+    ============================================================
+    FLAME
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="flame"
   >
-    <rect class="node-hit-area" x="356" y="268" width="124" height="172" rx="26" />
+    <rect
+      class="node-hit-area"
+      x="356"
+      y="268"
+      width="124"
+      height="172"
+      rx="26"
+    />
+
+    <!-- Outer flame -->
 
     <path
-      d="M404 402 C358 360 392 316 424 282 C421 328 468 340 456 392 C449 424 424 438 404 402 Z"
-      fill="rgba(214,179,106,0.08)"
-      stroke="rgba(214,179,106,0.74)"
+      d="M404 402
+         C358 360 392 316 424 282
+         C421 328 468 340 456 392
+         C449 424 424 438 404 402 Z"
+      fill="#D85A32"
+      fill-opacity="0.84"
+      stroke="#F2A04A"
       stroke-width="3"
     />
 
+    <!-- Orange inner flame -->
+
     <path
-      d="M420 394 C402 374 420 350 434 332 C434 360 452 366 444 392"
+      d="M414 397
+         C394 373 415 347 432 324
+         C432 354 453 365 445 391
+         C440 407 426 413 414 397 Z"
+      fill="#F29A38"
+      fill-opacity="0.9"
+    />
+
+    <!-- Yellow core -->
+
+    <path
+      d="M423 394
+         C415 379 427 362 436 349
+         C436 368 447 375 442 391
+         C438 400 429 403 423 394 Z"
+      fill="#FFE08A"
+      fill-opacity="0.92"
+    />
+
+    <!-- Flame highlight -->
+
+    <path
+      d="M425 344
+         C418 359 415 372 421 383"
       fill="none"
-      stroke="rgba(214,179,106,0.52)"
+      stroke="#FFF0B0"
+      stroke-opacity="0.72"
       stroke-width="3"
       stroke-linecap="round"
     />
   </g>
 
+
+  <!--
+    ============================================================
+    EYE
+    ============================================================
+  -->
+
   <g
     class="investigation-node"
     data-node="eye"
   >
-    <rect class="node-hit-area" x="586" y="356" width="188" height="100" rx="34" />
+    <rect
+      class="node-hit-area"
+      x="586"
+      y="356"
+      width="188"
+      height="100"
+      rx="34"
+    />
+
+    <!-- Eye outer shadow -->
 
     <path
-      d="M610 405 C650 365 710 365 750 405 C710 445 650 445 610 405 Z"
-      fill="rgba(214,179,106,0.045)"
-      stroke="rgba(214,179,106,0.62)"
+      d="M610 405
+         C650 365 710 365 750 405
+         C710 445 650 445 610 405 Z"
+      fill="#29484B"
+      fill-opacity="0.48"
+    />
+
+    <!-- Eye shape -->
+
+    <path
+      d="M610 405
+         C650 365 710 365 750 405
+         C710 445 650 445 610 405 Z"
+      fill="#C5D9C7"
+      fill-opacity="0.72"
+      stroke="#8FB8A5"
       stroke-width="3"
     />
+
+    <!-- Iris -->
 
     <circle
       cx="680"
       cy="405"
       r="17"
-      fill="rgba(214,179,106,0.12)"
-      stroke="rgba(214,179,106,0.64)"
+      fill="#4B8C8A"
+      stroke="#B7E1D2"
       stroke-width="3"
     />
+
+    <!-- Pupil -->
+
+    <circle
+      cx="680"
+      cy="405"
+      r="8"
+      fill="#173D45"
+    />
+
+    <!-- Eye highlight -->
+
+    <circle
+      cx="674"
+      cy="399"
+      r="4"
+      fill="#E7FFF2"
+      fill-opacity="0.88"
+    />
   </g>
+
+
+  <!-- Scene footer -->
 
   <text
     x="450"
     y="525"
     text-anchor="middle"
-    fill="rgba(214,179,106,0.08)"
+    fill="#D6B36A"
+    fill-opacity="0.28"
     font-size="18"
     letter-spacing="4"
   >
     THE WRITING WAITED BENEATH THE SEAL
   </text>
+
 </svg>

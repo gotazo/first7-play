@@ -1,0 +1,350 @@
+---
+/*
+  JerichoAfterScene.astro
+
+  Completed-state artwork for the Jericho Investigation.
+  This is intentionally a separate SVG composition rather than
+  an animation of the original wall.
+
+  Visual direction:
+  - cracked / fallen warm sandstone
+  - scattered stones
+  - subtle dust
+  - Ark still visible
+  - recovered fragment glow
+*/
+---
+
+<svg
+  viewBox="0 0 900 600"
+  class="investigation-scene w-full"
+  aria-label="Jericho walls fallen after the investigation was solved"
+>
+  <defs>
+    <linearGradient
+      id="fallen-wall-stone"
+      x1="0%"
+      y1="0%"
+      x2="0%"
+      y2="100%"
+    >
+      <stop offset="0%" stop-color="#C2A16D" />
+      <stop offset="55%" stop-color="#94734E" />
+      <stop offset="100%" stop-color="#5A4430" />
+    </linearGradient>
+
+    <linearGradient
+      id="fallen-stone-light"
+      x1="0%"
+      y1="0%"
+      x2="100%"
+      y2="100%"
+    >
+      <stop offset="0%" stop-color="#D0B27A" />
+      <stop offset="100%" stop-color="#765638" />
+    </linearGradient>
+
+    <linearGradient
+      id="fallen-ark"
+      x1="0%"
+      y1="0%"
+      x2="0%"
+      y2="100%"
+    >
+      <stop offset="0%" stop-color="#E1B85C" />
+      <stop offset="20%" stop-color="#9A6428" />
+      <stop offset="100%" stop-color="#4C2F1B" />
+    </linearGradient>
+
+    <radialGradient id="fragment-glow">
+      <stop offset="0%" stop-color="#F4D98A" stop-opacity="0.85" />
+      <stop offset="45%" stop-color="#D6B36A" stop-opacity="0.28" />
+      <stop offset="100%" stop-color="#D6B36A" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient
+      id="dust-gradient"
+      x1="0%"
+      y1="0%"
+      x2="0%"
+      y2="100%"
+    >
+      <stop offset="0%" stop-color="#C6A878" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#8D6D4B" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text
+    x="450"
+    y="68"
+    text-anchor="middle"
+    fill="rgba(214,179,106,0.55)"
+    font-size="18"
+    letter-spacing="6"
+  >
+    JERICHO REVEALED
+  </text>
+
+  <!-- Broken wall fragments in the background -->
+  <g aria-hidden="true">
+    <!-- Left fallen section -->
+    <path
+      d="M125 365 L150 300 L205 314 L224 279 L276 292 L296 340 L272 385 L215 377 L181 398 Z"
+      fill="url(#fallen-wall-stone)"
+      stroke="#6B4F36"
+      stroke-width="3"
+    />
+
+    <path
+      d="M155 326 L201 337 L190 370
+         M220 305 L238 340 L226 372
+         M265 315 L250 351"
+      fill="none"
+      stroke="#5A4430"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <!-- Center broken section -->
+    <path
+      d="M295 352 L318 278 L370 291 L391 252 L448 270
+         L469 321 L451 365 L405 349 L370 380 L325 372 Z"
+      fill="url(#fallen-wall-stone)"
+      stroke="#6B4F36"
+      stroke-width="3"
+    />
+
+    <path
+      d="M329 304 L362 319 L349 352
+         M388 276 L401 309 L388 343
+         M432 290 L420 321 L437 350"
+      fill="none"
+      stroke="#5A4430"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <!-- Right fallen section -->
+    <path
+      d="M610 370 L625 315 L672 300 L690 267 L744 282
+         L766 326 L801 338 L782 385 L731 373 L694 397 L648 382 Z"
+      fill="url(#fallen-wall-stone)"
+      stroke="#6B4F36"
+      stroke-width="3"
+    />
+
+    <path
+      d="M641 334 L675 346 L662 375
+         M700 295 L713 329 L701 360
+         M750 303 L738 339 L758 367"
+      fill="none"
+      stroke="#5A4430"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Remaining cracked wall face -->
+  <g aria-hidden="true">
+    <path
+      d="M195 405
+         L205 372
+         L244 362
+         L270 378
+         L310 363
+         L342 381
+         L385 370
+         L421 386
+         L460 369
+         L500 386
+         L537 371
+         L574 389
+         L617 372
+         L651 392
+         L705 378
+         L725 409
+         L706 447
+         L652 454
+         L610 441
+         L565 457
+         L515 444
+         L470 460
+         L420 447
+         L375 463
+         L325 448
+         L281 461
+         L236 446
+         L205 451 Z"
+      fill="url(#fallen-stone-light)"
+      stroke="#624A34"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+
+    <!-- Deep cracks -->
+    <g
+      fill="none"
+      stroke="#473426"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M274 371 L288 397 L279 421 L295 447" />
+      <path d="M386 376 L371 401 L383 425 L369 450" />
+      <path d="M498 377 L484 402 L497 424 L483 452" />
+      <path d="M603 382 L590 405 L604 426 L592 451" />
+      <path d="M660 391 L674 414 L661 438" />
+    </g>
+
+    <!-- Broken top edge highlights -->
+    <g
+      fill="none"
+      stroke="#D0B27A"
+      stroke-width="3"
+      stroke-linecap="round"
+    >
+      <path d="M208 372 L244 362 L270 378" />
+      <path d="M342 381 L385 370 L421 386" />
+      <path d="M500 386 L537 371 L574 389" />
+      <path d="M617 372 L651 392 L705 378" />
+    </g>
+  </g>
+
+  <!-- Fallen stones -->
+  <g aria-hidden="true">
+    <path
+      d="M115 480 L151 458 L190 470 L183 501 L145 512 L117 501 Z"
+      fill="url(#fallen-stone-light)"
+      stroke="#5A4430"
+      stroke-width="3"
+    />
+
+    <path
+      d="M207 500 L236 472 L271 482 L280 513 L249 530 L217 522 Z"
+      fill="url(#fallen-wall-stone)"
+      stroke="#5A4430"
+      stroke-width="3"
+    />
+
+    <path
+      d="M610 492 L642 464 L681 477 L690 509 L657 528 L622 520 Z"
+      fill="url(#fallen-stone-light)"
+      stroke="#5A4430"
+      stroke-width="3"
+    />
+
+    <path
+      d="M722 482 L753 459 L786 472 L792 503 L760 519 L731 510 Z"
+      fill="url(#fallen-wall-stone)"
+      stroke="#5A4430"
+      stroke-width="3"
+    />
+
+    <path
+      d="M330 494 L355 473 L384 481 L390 508 L363 523 L337 516 Z"
+      fill="#765638"
+      stroke="#5A4430"
+      stroke-width="3"
+    />
+  </g>
+
+  <!-- Ark remains visible among the ruins -->
+  <g aria-hidden="true">
+    <ellipse
+      cx="450"
+      cy="475"
+      rx="105"
+      ry="52"
+      fill="rgba(214,179,106,0.07)"
+    />
+
+    <rect
+      x="386"
+      y="435"
+      width="128"
+      height="58"
+      rx="8"
+      fill="url(#fallen-ark)"
+      stroke="#E2B24F"
+      stroke-width="3"
+    />
+
+    <rect
+      x="376"
+      y="423"
+      width="148"
+      height="20"
+      rx="7"
+      fill="#D5A342"
+      stroke="#F2CF70"
+      stroke-width="3"
+    />
+
+    <path
+      d="M397 424 C403 406 416 397 430 397
+         M503 424 C497 406 484 397 470 397"
+      fill="none"
+      stroke="#EBC76B"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Recovered fragment -->
+  <g aria-hidden="true">
+    <circle
+      cx="450"
+      cy="333"
+      r="75"
+      fill="url(#fragment-glow)"
+    />
+
+    <path
+      d="M438 316 L455 305 L470 319 L464 342 L445 349 L430 334 Z"
+      fill="#F0D79A"
+      stroke="#D6B36A"
+      stroke-width="3"
+    />
+
+    <path
+      d="M440 323 L459 318 M439 333 L454 329"
+      stroke="#8D6D42"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <text
+      x="450"
+      y="390"
+      text-anchor="middle"
+      fill="rgba(240,215,154,0.78)"
+      font-size="13"
+      letter-spacing="3"
+    >
+      FRAGMENT RECOVERED
+    </text>
+  </g>
+
+  <!-- Very subtle dust -->
+  <g
+    aria-hidden="true"
+    fill="url(#dust-gradient)"
+  >
+    <circle cx="180" cy="445" r="42" />
+    <circle cx="270" cy="452" r="35" />
+    <circle cx="630" cy="450" r="40" />
+    <circle cx="735" cy="443" r="34" />
+  </g>
+
+  <text
+    x="450"
+    y="565"
+    text-anchor="middle"
+    fill="rgba(214,179,106,0.34)"
+    font-size="16"
+    letter-spacing="4"
+  >
+    THE WALLS HAVE FALLEN
+  </text>
+</svg>

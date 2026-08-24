@@ -3,51 +3,217 @@
   class="investigation-scene w-full"
   aria-label="Wilderness passage scene"
 >
+  <!--
+    ============================================================
+    WILDERNESS PASSAGE
+    ============================================================
+
+    Interactive nodes:
+      pillar
+      manna
+      rock
+      river
+
+    Design rules:
+      - Direct SVG fill colors only
+      - No gradients
+      - No external images
+      - No animation
+      - Existing node IDs and hit areas preserved
+  -->
+
   <text
     x="450"
     y="95"
     text-anchor="middle"
-    fill="rgba(214,179,106,0.34)"
+    fill="#D6B36A"
+    fill-opacity="0.68"
     font-size="18"
     letter-spacing="6"
   >
     WILDERNESS PASSAGE
   </text>
 
+
+  <!--
+    ============================================================
+    DESERT PATH
+    ============================================================
+  -->
+
   <path
-    d="M80 500 C210 410 250 470 360 360 C470 250 530 320 650 210 C725 145 780 145 835 120"
+    d="M80 500
+       C210 410 250 470 360 360
+       C470 250 530 320 650 210
+       C725 145 780 145 835 120"
     fill="none"
-    stroke="rgba(214,179,106,0.18)"
-    stroke-width="8"
+    stroke="#8B6A42"
+    stroke-opacity="0.28"
+    stroke-width="12"
     stroke-linecap="round"
   />
 
   <path
-    d="M110 420 L250 230 L350 420 Z M275 420 L445 170 L620 420 Z M520 420 L690 250 L805 420 Z"
-    fill="rgba(214,179,106,0.035)"
-    stroke="rgba(214,179,106,0.16)"
+    d="M80 500
+       C210 410 250 470 360 360
+       C470 250 530 320 650 210
+       C725 145 780 145 835 120"
+    fill="none"
+    stroke="#C59A59"
+    stroke-opacity="0.42"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+
+
+  <!--
+    ============================================================
+    MOUNTAINS
+    ============================================================
+  -->
+
+  <path
+    d="M110 420 L250 230 L350 420 Z"
+    fill="#5D554B"
+    fill-opacity="0.68"
+    stroke="#A99A7D"
+    stroke-opacity="0.42"
     stroke-width="2"
   />
 
   <path
-    d="M95 510 C230 485 300 535 430 500 C560 465 610 505 760 470"
+    d="M275 420 L445 170 L620 420 Z"
+    fill="#6B5F52"
+    fill-opacity="0.72"
+    stroke="#B2A184"
+    stroke-opacity="0.45"
+    stroke-width="2"
+  />
+
+  <path
+    d="M520 420 L690 250 L805 420 Z"
+    fill="#514B45"
+    fill-opacity="0.7"
+    stroke="#9C907A"
+    stroke-opacity="0.4"
+    stroke-width="2"
+  />
+
+  <!-- Mountain highlights -->
+
+  <path
+    d="M250 230 L215 295 L250 278 L275 315"
+    fill="#D1C4A7"
+    fill-opacity="0.42"
+  />
+
+  <path
+    d="M445 170 L392 248 L438 225 L475 278"
+    fill="#D8C9A9"
+    fill-opacity="0.46"
+  />
+
+  <path
+    d="M690 250 L652 302 L690 286 L720 320"
+    fill="#C8B99A"
+    fill-opacity="0.38"
+  />
+
+
+  <!--
+    ============================================================
+    GROUND / WATER
+    ============================================================
+  -->
+
+  <path
+    d="M95 510
+       C230 485 300 535 430 500
+       C560 465 610 505 760 470"
     fill="none"
-    stroke="rgba(143,191,180,0.28)"
-    stroke-width="5"
+    stroke="#477E78"
+    stroke-opacity="0.34"
+    stroke-width="9"
     stroke-linecap="round"
   />
+
+  <path
+    d="M110 514
+       C235 492 305 528 430 506
+       C550 485 620 512 760 480"
+    fill="none"
+    stroke="#8FC2B5"
+    stroke-opacity="0.4"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+
+  <!--
+    ============================================================
+    PILLAR
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="pillar"
   >
-    <rect class="node-hit-area" x="148" y="128" width="110" height="224" rx="22" />
+    <rect
+      class="node-hit-area"
+      x="148"
+      y="128"
+      width="110"
+      height="224"
+      rx="22"
+    />
+
+    <!-- Pillar shadow -->
 
     <path
-      d="M185 170 C150 220 160 285 205 315 C245 280 255 215 220 170 C210 145 195 135 185 170 Z"
-      fill="rgba(214,179,106,0.08)"
-      stroke="rgba(214,179,106,0.72)"
+      d="M185 170
+         C150 220 160 285 205 315
+         C245 280 255 215 220 170
+         C210 145 195 135 185 170 Z"
+      fill="#4A3B32"
+      fill-opacity="0.5"
+    />
+
+    <!-- Pillar -->
+
+    <path
+      d="M185 170
+         C150 220 160 285 205 315
+         C245 280 255 215 220 170
+         C210 145 195 135 185 170 Z"
+      fill="#D7D0BC"
+      fill-opacity="0.72"
+      stroke="#E4C983"
       stroke-width="3"
+    />
+
+    <!-- Pillar warm side -->
+
+    <path
+      d="M202 155
+         C224 190 229 235 215 278
+         C212 292 208 304 202 315
+         C224 294 235 268 236 235
+         C238 202 226 174 202 155 Z"
+      fill="#AFA58F"
+      fill-opacity="0.62"
+    />
+
+    <!-- Pillar light -->
+
+    <path
+      d="M183 176
+         C170 208 171 246 184 271"
+      fill="none"
+      stroke="#FFF1B5"
+      stroke-opacity="0.48"
+      stroke-width="4"
+      stroke-linecap="round"
     />
 
     <line
@@ -55,83 +221,270 @@
       y1="170"
       x2="202"
       y2="330"
-      stroke="rgba(214,179,106,0.65)"
+      stroke="#8D806B"
+      stroke-opacity="0.7"
       stroke-width="3"
     />
   </g>
+
+
+  <!--
+    ============================================================
+    MANNA
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="manna"
   >
-    <circle class="node-hit-area" cx="365" cy="455" r="54" />
+    <circle
+      class="node-hit-area"
+      cx="365"
+      cy="455"
+      r="54"
+    />
+
+    <!-- Ground shadow -->
+
+    <ellipse
+      cx="365"
+      cy="466"
+      rx="40"
+      ry="12"
+      fill="#3B3027"
+      fill-opacity="0.42"
+    />
+
+    <!-- Manna cluster -->
 
     <circle
       cx="365"
       cy="455"
       r="24"
-      fill="rgba(214,179,106,0.07)"
-      stroke="rgba(214,179,106,0.68)"
+      fill="#D7C28C"
+      stroke="#F0DDA5"
       stroke-width="3"
     />
 
-    <circle cx="348" cy="441" r="5" fill="rgba(214,179,106,0.75)" />
-    <circle cx="371" cy="458" r="5" fill="rgba(214,179,106,0.75)" />
-    <circle cx="385" cy="441" r="4" fill="rgba(214,179,106,0.55)" />
+    <circle
+      cx="348"
+      cy="441"
+      r="7"
+      fill="#F2DFAD"
+    />
+
+    <circle
+      cx="371"
+      cy="458"
+      r="7"
+      fill="#C8AD70"
+    />
+
+    <circle
+      cx="385"
+      cy="441"
+      r="6"
+      fill="#E7D39D"
+    />
+
+    <circle
+      cx="356"
+      cy="464"
+      r="5"
+      fill="#B99A5C"
+    />
+
+    <circle
+      cx="378"
+      cy="427"
+      r="4"
+      fill="#F4E6BC"
+    />
   </g>
+
+
+  <!--
+    ============================================================
+    ROCK
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="rock"
   >
-    <rect class="node-hit-area" x="532" y="304" width="174" height="170" rx="20" />
+    <rect
+      class="node-hit-area"
+      x="532"
+      y="304"
+      width="174"
+      height="170"
+      rx="20"
+    />
+
+    <!-- Rock shadow -->
 
     <path
-      d="M555 365 L610 325 L670 355 L685 420 L630 452 L570 430 Z"
-      fill="rgba(214,179,106,0.06)"
-      stroke="rgba(214,179,106,0.7)"
+      d="M555 365
+         L610 325
+         L670 355
+         L685 420
+         L630 452
+         L570 430 Z"
+      fill="#3D3834"
+      fill-opacity="0.48"
+    />
+
+    <!-- Rock -->
+
+    <path
+      d="M555 365
+         L610 325
+         L670 355
+         L685 420
+         L630 452
+         L570 430 Z"
+      fill="#77736C"
+      stroke="#B6AA91"
       stroke-width="3"
     />
 
+    <!-- Rock light face -->
+
     <path
-      d="M610 326 L625 385 L570 430"
+      d="M610 325
+         L670 355
+         L625 385
+         L570 430
+         L570 365 Z"
+      fill="#928B80"
+      fill-opacity="0.7"
+    />
+
+    <!-- Rock dark face -->
+
+    <path
+      d="M625 385
+         L685 420
+         L630 452
+         L570 430 Z"
+      fill="#514C47"
+      fill-opacity="0.74"
+    />
+
+    <!-- Rock fissures -->
+
+    <path
+      d="M610 326
+         L625 385
+         L570 430"
       fill="none"
-      stroke="rgba(214,179,106,0.35)"
+      stroke="#4B4641"
+      stroke-opacity="0.72"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M625 385
+         L653 370
+         M625 385
+         L640 418"
+      fill="none"
+      stroke="#C4B79C"
+      stroke-opacity="0.48"
       stroke-width="2"
+      stroke-linecap="round"
     />
   </g>
+
+
+  <!--
+    ============================================================
+    RIVER
+    ============================================================
+  -->
 
   <g
     class="investigation-node"
     data-node="river"
   >
-    <rect class="node-hit-area" x="552" y="454" width="232" height="92" rx="28" />
+    <rect
+      class="node-hit-area"
+      x="552"
+      y="454"
+      width="232"
+      height="92"
+      rx="28"
+    />
+
+    <!-- River base -->
 
     <path
-      d="M575 502 C630 478 682 510 744 482"
+      d="M575 502
+         C630 478 682 510 744 482"
       fill="none"
-      stroke="rgba(143,191,180,0.7)"
-      stroke-width="8"
+      stroke="#286C70"
+      stroke-opacity="0.78"
+      stroke-width="13"
+      stroke-linecap="round"
+    />
+
+    <!-- River light -->
+
+    <path
+      d="M575 499
+         C630 477 682 507 744 480"
+      fill="none"
+      stroke="#7FC7C0"
+      stroke-opacity="0.78"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+
+    <!-- Second current -->
+
+    <path
+      d="M590 522
+         C645 498 695 530 760 505"
+      fill="none"
+      stroke="#3F8E8C"
+      stroke-opacity="0.62"
+      stroke-width="7"
       stroke-linecap="round"
     />
 
     <path
-      d="M590 522 C645 498 695 530 760 505"
+      d="M600 520
+         C648 501 695 526 750 506"
       fill="none"
-      stroke="rgba(143,191,180,0.35)"
-      stroke-width="4"
+      stroke="#A7DDD4"
+      stroke-opacity="0.42"
+      stroke-width="2"
       stroke-linecap="round"
     />
   </g>
+
+
+  <!-- Small desert markers -->
+
+  <circle cx="110" cy="455" r="4" fill="#D5B87A" fill-opacity="0.55" />
+  <circle cx="285" cy="390" r="3" fill="#C9AE75" fill-opacity="0.48" />
+  <circle cx="735" cy="395" r="4" fill="#D5B87A" fill-opacity="0.45" />
+
+  <!-- Footer -->
 
   <text
     x="450"
     y="548"
     text-anchor="middle"
-    fill="rgba(214,179,106,0.08)"
+    fill="#D6B36A"
+    fill-opacity="0.3"
     font-size="18"
     letter-spacing="4"
   >
     THE WAY WAS HELD IN SIGNS
   </text>
+
 </svg>

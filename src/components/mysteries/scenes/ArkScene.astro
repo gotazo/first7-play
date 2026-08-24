@@ -1,0 +1,581 @@
+<svg
+  viewBox="0 0 900 600"
+  class="investigation-scene w-full"
+  aria-label="Ark of the Covenant investigation scene"
+>
+  <!--
+    ============================================================
+    ARK OF THE COVENANT
+    ============================================================
+
+    Interactive nodes:
+      ark
+      testimony
+      mercy-seat
+      cherubim
+
+    IMPORTANT:
+      Keep these data-node values and hit areas unchanged.
+      This scene intentionally uses direct SVG fill colors only.
+      No gradients or external image assets are required.
+  -->
+
+  <!-- Scene title -->
+
+  <text
+    x="450"
+    y="82"
+    text-anchor="middle"
+    fill="#D6B36A"
+    fill-opacity="0.58"
+    font-size="18"
+    letter-spacing="6"
+  >
+    ARK OF THE COVENANT
+  </text>
+
+
+  <!-- Subtle sanctuary floor -->
+
+  <path
+    d="M120 490 H780"
+    stroke="#A98255"
+    stroke-opacity="0.24"
+    stroke-width="2"
+  />
+
+  <path
+    d="M180 520 H720"
+    stroke="#8B6845"
+    stroke-opacity="0.16"
+    stroke-width="2"
+  />
+
+  <path
+    d="M190 490 H710 V520 H190 Z"
+    fill="#4A3425"
+    fill-opacity="0.18"
+  />
+
+
+  <!--
+    ============================================================
+    SUBTLE CENTER LIGHT
+    ============================================================
+  -->
+
+  <circle
+    cx="450"
+    cy="300"
+    r="190"
+    fill="#F4D98A"
+    fill-opacity="0.025"
+  />
+
+  <circle
+    cx="450"
+    cy="300"
+    r="135"
+    fill="#F4D98A"
+    fill-opacity="0.022"
+  />
+
+
+  <!--
+    ============================================================
+    CHERUBIM
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="cherubim"
+  >
+    <!-- Large invisible/selectable hit area -->
+
+    <rect
+      class="node-hit-area"
+      x="170"
+      y="150"
+      width="560"
+      height="150"
+      rx="32"
+    />
+
+    <!-- Left outer wing -->
+
+    <path
+      d="M245 255
+         C210 230 205 190 225 160
+         C245 185 270 195 300 198
+         C280 215 270 240 275 270"
+      fill="#A96F28"
+      fill-opacity="0.72"
+      stroke="#F0C968"
+      stroke-width="3"
+      stroke-linejoin="round"
+    />
+
+    <!-- Left wing highlight -->
+
+    <path
+      d="M235 235
+         C222 211 224 184 231 172
+         C248 193 270 201 289 202"
+      fill="#E7B94F"
+      fill-opacity="0.35"
+    />
+
+    <!-- Right outer wing -->
+
+    <path
+      d="M655 255
+         C690 230 695 190 675 160
+         C655 185 630 195 600 198
+         C620 215 630 240 625 270"
+      fill="#A96F28"
+      fill-opacity="0.72"
+      stroke="#F0C968"
+      stroke-width="3"
+      stroke-linejoin="round"
+    />
+
+    <!-- Right wing highlight -->
+
+    <path
+      d="M665 235
+         C678 211 676 184 669 172
+         C652 193 630 201 611 202"
+      fill="#E7B94F"
+      fill-opacity="0.35"
+    />
+
+    <!-- Left inner wing -->
+
+    <path
+      d="M275 215
+         C310 185 345 175 385 195"
+      fill="none"
+      stroke="#E8BE58"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <!-- Right inner wing -->
+
+    <path
+      d="M625 215
+         C590 185 555 175 515 195"
+      fill="none"
+      stroke="#E8BE58"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <!-- Cherub heads -->
+
+    <circle
+      cx="300"
+      cy="205"
+      r="13"
+      fill="#C89232"
+      stroke="#F3D47B"
+      stroke-width="2"
+    />
+
+    <circle
+      cx="600"
+      cy="205"
+      r="13"
+      fill="#C89232"
+      stroke="#F3D47B"
+      stroke-width="2"
+    />
+
+    <!-- Head highlights -->
+
+    <circle
+      cx="296"
+      cy="201"
+      r="3"
+      fill="#FFE5A0"
+      fill-opacity="0.8"
+    />
+
+    <circle
+      cx="596"
+      cy="201"
+      r="3"
+      fill="#FFE5A0"
+      fill-opacity="0.8"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    MERCY SEAT
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="mercy-seat"
+  >
+    <rect
+      class="node-hit-area"
+      x="270"
+      y="265"
+      width="360"
+      height="100"
+      rx="24"
+    />
+
+    <!-- Main mercy seat -->
+
+    <rect
+      x="285"
+      y="280"
+      width="330"
+      height="55"
+      rx="10"
+      fill="#B97B25"
+      stroke="#F4D77F"
+      stroke-width="3"
+    />
+
+    <!-- Upper gold plane -->
+
+    <rect
+      x="292"
+      y="286"
+      width="316"
+      height="15"
+      rx="5"
+      fill="#E5B94F"
+      fill-opacity="0.8"
+    />
+
+    <!-- Lower warm shadow -->
+
+    <rect
+      x="292"
+      y="316"
+      width="316"
+      height="12"
+      rx="4"
+      fill="#70431D"
+      fill-opacity="0.65"
+    />
+
+    <!-- Inner detail -->
+
+    <rect
+      x="305"
+      y="295"
+      width="290"
+      height="25"
+      rx="6"
+      fill="#8D5A20"
+      fill-opacity="0.55"
+      stroke="#F1C964"
+      stroke-opacity="0.55"
+      stroke-width="2"
+    />
+
+    <!-- Mercy seat highlight -->
+
+    <path
+      d="M302 287 H598"
+      stroke="#FFE3A0"
+      stroke-opacity="0.7"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    ARK
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="ark"
+  >
+    <rect
+      class="node-hit-area"
+      x="300"
+      y="335"
+      width="300"
+      height="145"
+      rx="26"
+    />
+
+    <!-- Main ark body -->
+
+    <rect
+      x="320"
+      y="350"
+      width="260"
+      height="105"
+      rx="8"
+      fill="#78451F"
+      stroke="#D9A844"
+      stroke-width="4"
+    />
+
+    <!-- Upper wood plane -->
+
+    <rect
+      x="326"
+      y="356"
+      width="248"
+      height="30"
+      rx="5"
+      fill="#A96A2C"
+      fill-opacity="0.8"
+    />
+
+    <!-- Lower wood shadow -->
+
+    <rect
+      x="326"
+      y="423"
+      width="248"
+      height="25"
+      rx="5"
+      fill="#452A19"
+      fill-opacity="0.75"
+    />
+
+    <!-- Wood grain -->
+
+    <path
+      d="M340 375
+         C390 362 440 387 490 371
+         C520 362 542 370 560 378"
+      fill="none"
+      stroke="#D18A3C"
+      stroke-opacity="0.62"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M340 420
+         C390 408 438 431 486 416
+         C520 405 540 415 560 423"
+      fill="none"
+      stroke="#321D12"
+      stroke-opacity="0.8"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <!-- Gold border detail -->
+
+    <rect
+      x="335"
+      y="365"
+      width="230"
+      height="75"
+      rx="5"
+      fill="#5A351D"
+      fill-opacity="0.28"
+      stroke="#E3B34F"
+      stroke-opacity="0.78"
+      stroke-width="2"
+    />
+
+    <!-- Inner gold edge -->
+
+    <path
+      d="M340 370 H560"
+      stroke="#F0C75E"
+      stroke-opacity="0.55"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <!-- Left carrying ring -->
+
+    <circle
+      cx="315"
+      cy="385"
+      r="12"
+      fill="#7C4B21"
+      stroke="#E6B94E"
+      stroke-width="3"
+    />
+
+    <circle
+      cx="315"
+      cy="385"
+      r="5"
+      fill="#3E2618"
+    />
+
+    <!-- Right carrying ring -->
+
+    <circle
+      cx="585"
+      cy="385"
+      r="12"
+      fill="#7C4B21"
+      stroke="#E6B94E"
+      stroke-width="3"
+    />
+
+    <circle
+      cx="585"
+      cy="385"
+      r="5"
+      fill="#3E2618"
+    />
+
+    <!-- Staves -->
+
+    <line
+      x1="235"
+      y1="390"
+      x2="665"
+      y2="390"
+      stroke="#A86D30"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+
+    <line
+      x1="235"
+      y1="415"
+      x2="665"
+      y2="415"
+      stroke="#6A4022"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+
+    <!-- Staff highlights -->
+
+    <line
+      x1="245"
+      y1="387"
+      x2="655"
+      y2="387"
+      stroke="#D7A14A"
+      stroke-opacity="0.6"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    TESTIMONY
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="testimony"
+  >
+    <rect
+      class="node-hit-area"
+      x="335"
+      y="475"
+      width="230"
+      height="72"
+      rx="20"
+    />
+
+    <!-- Left tablet -->
+
+    <rect
+      x="370"
+      y="485"
+      width="65"
+      height="45"
+      rx="7"
+      fill="#B8AF91"
+      stroke="#D8CFAF"
+      stroke-width="2"
+    />
+
+    <!-- Left tablet light plane -->
+
+    <rect
+      x="375"
+      y="489"
+      width="55"
+      height="12"
+      rx="4"
+      fill="#E1D8BA"
+      fill-opacity="0.65"
+    />
+
+    <!-- Right tablet -->
+
+    <rect
+      x="465"
+      y="485"
+      width="65"
+      height="45"
+      rx="7"
+      fill="#B8AF91"
+      stroke="#D8CFAF"
+      stroke-width="2"
+    />
+
+    <!-- Right tablet light plane -->
+
+    <rect
+      x="470"
+      y="489"
+      width="55"
+      height="12"
+      rx="4"
+      fill="#E1D8BA"
+      fill-opacity="0.65"
+    />
+
+    <!-- Tablet markings -->
+
+    <path
+      d="M386 500 H418 M386 512 H413"
+      stroke="#675F4E"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M481 500 H513 M481 512 H508"
+      stroke="#675F4E"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!-- Scene footer -->
+
+  <text
+    x="450"
+    y="570"
+    text-anchor="middle"
+    fill="#D6B36A"
+    fill-opacity="0.24"
+    font-size="17"
+    letter-spacing="4"
+  >
+    THE TESTIMONY WAS KEPT WITHIN
+  </text>
+
+</svg>

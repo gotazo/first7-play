@@ -9,7 +9,13 @@ interface Node {
 interface Props {
   title: string;
   fragment: string;
-  scene?: "temple" | "wilderness" | "dream" | "scroll";
+  scene?:
+  | "temple"
+  | "wilderness"
+  | "dream"
+  | "scroll"
+  | "ark"
+  | "jericho";
   nodes: Node[];
   solution: string[];
 
@@ -21,6 +27,14 @@ import DreamScene from "./scenes/DreamScene.astro";
 import ScrollScene from "./scenes/ScrollScene.astro";
 import TempleScene from "./scenes/TempleScene.astro";
 import WildernessScene from "./scenes/WildernessScene.astro";
+import ArkScene from "./scenes/ArkScene.astro";
+import JerichoScene from "./scenes/JerichoScene.astro";
+import JerichoAfterScene from "./scenes/after/JerichoAfterScene.astro";
+import ArkAfterScene from "./scenes/after/ArkAfterScene.astro";
+import DreamAfterScene from "./scenes/after/DreamAfterScene.astro";
+import ScrollAfterScene from "./scenes/after/ScrollAfterScene.astro";
+import TempleAfterScene from "./scenes/after/TempleAfterScene.astro";
+import WildernessAfterScene from "./scenes/after/WildernessAfterScene.astro";
 
 const {
   title,
@@ -36,11 +50,25 @@ const sceneComponents = {
   temple: TempleScene,
   wilderness: WildernessScene,
   dream: DreamScene,
-  scroll: ScrollScene
+  scroll: ScrollScene,
+  ark: ArkScene,
+  jericho: JerichoScene
 };
 
 const SceneComponent =
   sceneComponents[scene] || TempleScene;
+
+const afterSceneComponents = {
+  jericho: JerichoAfterScene,
+  ark: ArkAfterScene,
+  dream: DreamAfterScene,
+  scroll: ScrollAfterScene,
+  temple: TempleAfterScene,
+  wilderness: WildernessAfterScene
+};
+
+const AfterSceneComponent =
+  afterSceneComponents[scene];
 ---
 
 <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_400px]">
@@ -115,7 +143,20 @@ const SceneComponent =
 
     <div class="order-2 overflow-hidden rounded-2xl border border-[rgba(214,179,106,0.08)] bg-[rgba(255,255,255,0.02)] p-2.5 sm:rounded-[28px] sm:p-5 md:p-8">
 
-      <SceneComponent />
+      <div id="before-scene">
+        <SceneComponent />
+      </div>
+
+      {
+        AfterSceneComponent && (
+          <div
+            id="after-scene"
+            class="hidden"
+          >
+            <AfterSceneComponent />
+          </div>
+        )
+      }
 
     </div>
 
@@ -234,6 +275,9 @@ const SceneComponent =
 </section>
 
 <style>
+  /* ============================================================
+     INVESTIGATION SCENE
+     ============================================================ */
 
   :global(.investigation-scene) {
     display: block;
@@ -242,50 +286,167 @@ const SceneComponent =
     min-height: 280px;
 
     filter:
-      drop-shadow(0 0 40px rgba(214,179,106,0.03));
+      drop-shadow(
+        0 0 40px
+        rgba(214,179,106,0.04)
+      );
   }
+
+
+  /* ============================================================
+     INTERACTIVE INVESTIGATION NODES
+     ============================================================ */
 
   :global(.investigation-node) {
     cursor: pointer;
-    transition: all 0.35s ease;
+
+    transition:
+      filter 0.25s ease,
+      opacity 0.25s ease,
+      transform 0.25s ease;
+
     transform-origin: center;
-    opacity: 0.82;
+
+    /* Keep investigation objects clearly visible. */
+    opacity: 1;
+
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    user-select: none;
   }
 
+
+  /*
+   * Invisible interaction surface.
+   *
+   * Each SVG scene can make this area larger than
+   * the visible artwork so clicking and touching is easy.
+   */
   :global(.investigation-node .node-hit-area) {
     fill: rgba(255, 255, 255, 0);
     pointer-events: all;
     stroke: transparent;
+    cursor: pointer;
   }
 
+
+  /* Desktop hover. */
   :global(.investigation-node:hover) {
     filter:
-      drop-shadow(0 0 12px rgba(214,179,106,0.45));
+      drop-shadow(
+        0 0 16px
+        rgba(214,179,106,0.58)
+      );
 
-    transform: scale(1.04);
-
+    transform: scale(1.025);
     opacity: 1;
   }
 
+
+  /* Keyboard accessibility. */
+  :global(.investigation-node:focus-visible) {
+    outline: none;
+
+    filter:
+      drop-shadow(
+        0 0 16px
+        rgba(214,179,106,0.65)
+      );
+  }
+
+
+  /* Currently selected node. */
   :global(.investigation-node.is-active) {
     filter:
-      drop-shadow(0 0 14px rgba(214,179,106,0.34));
+      drop-shadow(
+        0 0 18px
+        rgba(214,179,106,0.62)
+      );
 
     opacity: 1;
   }
+
 
   :global(.investigation-node.is-active *) {
     stroke-opacity: 1;
   }
 
+
+  /* Incorrect sequence fades before the attempt resets. */
   :global(.investigation-node.is-fading) {
     filter:
-      drop-shadow(0 0 4px rgba(214,179,106,0.12));
+      drop-shadow(
+        0 0 5px
+        rgba(214,179,106,0.14)
+      );
 
-    opacity: 0.46;
+    opacity: 0.30;
+
+    transition:
+      opacity 0.7s ease,
+      filter 0.7s ease;
   }
+
+
+  /*
+   * Brief first-load discovery animation.
+   * This teaches players that the scene contains
+   * interactive objects without leaving a permanent pulse.
+   */
+  :global(.investigation-node.is-discoverable) {
+    animation:
+      investigation-discover 1.8s ease-in-out;
+  }
+
+
+  @keyframes investigation-discover {
+
+    0% {
+      opacity: 0.72;
+
+      filter:
+        drop-shadow(
+          0 0 0
+          rgba(214,179,106,0)
+        );
+    }
+
+    35% {
+      opacity: 1;
+
+      filter:
+        drop-shadow(
+          0 0 18px
+          rgba(214,179,106,0.55)
+        );
+    }
+
+    70% {
+      opacity: 1;
+
+      filter:
+        drop-shadow(
+          0 0 9px
+          rgba(214,179,106,0.28)
+        );
+    }
+
+    100% {
+      opacity: 1;
+
+      filter:
+        drop-shadow(
+          0 0 0
+          rgba(214,179,106,0)
+        );
+    }
+
+  }
+
+
+  /* ============================================================
+     MOBILE
+     ============================================================ */
 
   @media (max-width: 640px) {
 
@@ -297,11 +458,12 @@ const SceneComponent =
       max-height: 54vh;
     }
 
+    /* Keep mobile investigation targets fully visible. */
     :global(.investigation-node) {
-      opacity: 0.95;
+      opacity: 1;
     }
-  }
 
+  }
 </style>
 
 <script
@@ -342,10 +504,107 @@ const SceneComponent =
   let isRecovered =
     false;
 
+  /*
+   * Restore a previously recovered investigation
+   * before the player interacts with the scene again.
+   */
+  const stored =
+    localStorage.getItem(
+      `fragment-${fragment}`
+    );
+
+  const beforeScene =
+    document.getElementById(
+      'before-scene'
+    );
+
+  const afterScene =
+    document.getElementById(
+      'after-scene'
+    );
+
+  if (stored === 'recovered') {
+
+    isRecovered = true;
+
+    if (beforeScene) {
+      beforeScene.classList.add(
+        'hidden'
+      );
+    }
+
+    if (afterScene) {
+      afterScene.classList.remove(
+        'hidden'
+      );
+    }
+
+    recoveryStatus.innerHTML = `
+      <div class="space-y-5">
+
+        <div>
+          Fragment recovered - ${fragment}
+        </div>
+
+        <div
+          class="inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-xs uppercase tracking-[0.22em] text-emerald-400"
+        >
+          Archive Seal Broken
+        </div>
+
+        <button
+          id="share-discovery"
+          class="inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
+          data-share-title="First7 Play Archive Discovery"
+          data-share-message="${escapeAttribute(`Recovered Archive Fragment:\n${fragment}\n\n'${archiveNote.textContent}'\n\n${title}\nFirst7 Play - transmitted from the recovered archive.`)}"
+        >
+          Share Discovery
+        </button>
+
+      </div>
+    `;
+
+    recoveryStatus.className =
+      'rounded-2xl border border-[rgba(214,179,106,0.22)] bg-[rgba(214,179,106,0.08)] px-5 py-4 text-sm text-[var(--color-primary)]';
+
+  }
+
   const svgNodes =
     document.querySelectorAll(
       '.investigation-node'
     );
+
+
+  /*
+   * Briefly reveal the interactive nature of the scene
+   * when the investigation first loads.
+   *
+   * The staggered timing makes the scene feel alive
+   * without distracting from the investigation.
+   */
+  window.requestAnimationFrame(() => {
+
+    svgNodes.forEach((node, index) => {
+
+      window.setTimeout(() => {
+
+        node.classList.add(
+          'is-discoverable'
+        );
+
+        window.setTimeout(() => {
+
+          node.classList.remove(
+            'is-discoverable'
+          );
+
+        }, 1800);
+
+      }, index * 90);
+
+    });
+
+  });
 
   function updateArchive(nodeId) {
 
@@ -533,7 +792,7 @@ const SceneComponent =
           </div>
 
           <div
-            class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[var(--color-primary)]"
+            class="inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-xs uppercase tracking-[0.22em] text-emerald-400"
           >
             Archive Seal Broken
           </div>
@@ -576,6 +835,36 @@ const SceneComponent =
         `fragment-${fragment}`,
         'recovered'
       );
+
+      /*
+       * Switch the visual investigation state.
+       *
+       * The puzzle mechanics remain unchanged:
+       * the completed state simply replaces the
+       * investigation scene with its solved-state scene.
+       */
+      const beforeScene =
+        document.getElementById(
+          'before-scene'
+        );
+
+      const afterScene =
+        document.getElementById(
+          'after-scene'
+        );
+
+      if (
+        beforeScene &&
+        afterScene
+      ) {
+        beforeScene.classList.add(
+          'hidden'
+        );
+
+        afterScene.classList.remove(
+          'hidden'
+        );
+      }
 
       return;
 
@@ -628,4 +917,3 @@ const SceneComponent =
     selector: '#share-discovery'
   });
 </script>
-

@@ -1,0 +1,690 @@
+<svg
+  viewBox="0 0 900 600"
+  class="investigation-scene w-full"
+  aria-label="Jericho investigation scene"
+>
+
+  <defs>
+    <linearGradient id="jericho-wall-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#B99A68" stop-opacity="0.34" />
+      <stop offset="55%" stop-color="#806445" stop-opacity="0.24" />
+      <stop offset="100%" stop-color="#4A3828" stop-opacity="0.34" />
+    </linearGradient>
+
+    <linearGradient id="jericho-robe-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B8794D" stop-opacity="0.88" />
+      <stop offset="100%" stop-color="#603A2A" stop-opacity="0.94" />
+    </linearGradient>
+
+    <linearGradient id="jericho-brass-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D477" />
+      <stop offset="45%" stop-color="#D79B32" />
+      <stop offset="100%" stop-color="#8B5A20" />
+    </linearGradient>
+
+    <linearGradient id="jericho-ark-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4A24A" stop-opacity="0.95" />
+      <stop offset="18%" stop-color="#8B5A25" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#4E301C" stop-opacity="0.98" />
+    </linearGradient>
+
+    <linearGradient id="jericho-circuit-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67D2D8" />
+      <stop offset="55%" stop-color="#3195A8" />
+      <stop offset="100%" stop-color="#185A70" />
+    </linearGradient>
+
+    <radialGradient id="jericho-shout-gradient">
+      <stop offset="0%" stop-color="#FFD27A" stop-opacity="0.72" />
+      <stop offset="45%" stop-color="#E58A35" stop-opacity="0.38" />
+      <stop offset="100%" stop-color="#A94D20" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <!--
+    ============================================================
+    JERICHO
+    ============================================================
+
+    Interactive nodes:
+
+      priests
+      trumpets
+      ark
+      seven-circuits
+      shout
+
+    These data-node values must match the investigation content.
+
+    The SVG is visual only.
+    The investigation engine controls:
+      - node selection
+      - sequence checking
+      - feedback
+      - solution
+      - fragment recovery
+  -->
+
+
+  <!--
+    ============================================================
+    SCENE TITLE
+    ============================================================
+  -->
+
+  <text
+    x="450"
+    y="72"
+    text-anchor="middle"
+    fill="rgba(214,179,106,0.34)"
+    font-size="18"
+    letter-spacing="6"
+  >
+    THE WALLS OF JERICHO
+  </text>
+
+
+  <!--
+    ============================================================
+    DISTANT HORIZON
+    ============================================================
+  -->
+
+  <path
+    d="M90 455
+       C170 420 230 430 300 445
+       C390 465 465 430 545 445
+       C640 465 720 425 810 445"
+    fill="none"
+    stroke="rgba(214,179,106,0.08)"
+    stroke-width="3"
+  />
+
+  <path
+    d="M110 475 H790"
+    stroke="rgba(214,179,106,0.07)"
+    stroke-width="2"
+  />
+
+
+  <!--
+    ============================================================
+    JERICHO WALLS
+    ============================================================
+  -->
+
+  <g
+    aria-hidden="true"
+  >
+
+    <!-- Outer wall -->
+
+    <path
+      d="M170 190
+         H730
+         V390
+         H170
+         Z"
+      fill="url(#jericho-wall-gradient)"
+      stroke="#B99A68"
+      stroke-width="4"
+    />
+
+    <!-- Inner wall line -->
+
+    <path
+      d="M190 215
+         H710
+         V370
+         H190
+         Z"
+      fill="none"
+      stroke="#806445"
+      stroke-width="2"
+    />
+
+    <!-- Wall blocks -->
+
+    <path
+      d="M170 240 H730
+         M170 290 H730
+         M170 340 H730"
+      stroke="#806445"
+      stroke-width="2"
+    />
+
+    <path
+      d="M230 190 V240
+         M350 190 V240
+         M470 190 V240
+         M590 190 V240
+         M690 190 V240"
+      stroke="#806445"
+      stroke-width="2"
+    />
+
+    <path
+      d="M200 240 V290
+         M290 240 V290
+         M410 240 V290
+         M530 240 V290
+         M650 240 V290"
+      stroke="#806445"
+      stroke-width="2"
+    />
+
+    <path
+      d="M230 290 V340
+         M350 290 V340
+         M470 290 V340
+         M590 290 V340
+         M700 290 V340"
+      stroke="#806445"
+      stroke-width="2"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    PRIESTS
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="priests"
+  >
+
+    <!--
+      Hit area intentionally surrounds the visible priests.
+    -->
+
+    <rect
+      class="node-hit-area"
+      x="105"
+      y="340"
+      width="180"
+      height="150"
+      rx="28"
+    />
+
+    <!-- Priest 1 -->
+
+    <circle
+      cx="155"
+      cy="370"
+      r="14"
+      fill="url(#jericho-robe-gradient)"
+      stroke="#C08A5A"
+      stroke-width="2"
+    />
+
+    <path
+      d="M155 385 V435"
+      stroke="#C08A5A"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M130 405 L155 395 L180 405"
+      fill="none"
+      stroke="#8A573C"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M140 435 L155 460 L170 435"
+      fill="none"
+      stroke="#8A573C"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+
+    <!-- Priest 2 -->
+
+    <circle
+      cx="215"
+      cy="370"
+      r="14"
+      fill="#8B5A3C"
+      stroke="#B8784D"
+      stroke-width="2"
+    />
+
+    <path
+      d="M215 385 V435"
+      stroke="#B8784D"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M190 405 L215 395 L240 405"
+      fill="none"
+      stroke="#6B4432"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M200 435 L215 460 L230 435"
+      fill="none"
+      stroke="#6B4432"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    TRUMPETS
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="trumpets"
+  >
+
+    <rect
+      class="node-hit-area"
+      x="80"
+      y="125"
+      width="180"
+      height="170"
+      rx="30"
+    />
+
+    <!-- Trumpet 1 -->
+
+    <path
+      d="M120 190
+         L210 160"
+      stroke="url(#jericho-brass-gradient)"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M205 150
+         L235 160
+         L205 175
+         Z"
+      fill="#D79B32"
+      stroke="#F5D477"
+      stroke-width="2"
+    />
+
+    <!-- Trumpet 2 -->
+
+    <path
+      d="M115 235
+         L205 205"
+      stroke="#C27D24"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M200 195
+         L230 205
+         L200 220
+         Z"
+      fill="#B86E20"
+      stroke="#E6B94E"
+      stroke-width="2"
+    />
+
+    <!-- Subtle sound lines -->
+
+    <path
+      d="M235 145
+         C260 155 270 170 276 188"
+      fill="none"
+      stroke="#E6B94E"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M230 195
+         C252 205 263 218 270 235"
+      fill="none"
+      stroke="#C98A2E"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    ARK
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="ark"
+  >
+
+    <!--
+      The Ark itself spans approximately x=315–585.
+      The carrying staves extend to x=255–645.
+
+      This hit area follows the entire visible Ark assembly
+      while remaining centered over the artwork.
+    -->
+
+    <rect
+      class="node-hit-area"
+      x="245"
+      y="385"
+      width="410"
+      height="105"
+      rx="28"
+    />
+
+    <!-- Carrying staves -->
+
+    <line
+      x1="255"
+      y1="445"
+      x2="645"
+      y2="445"
+      stroke="#7A4A22"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+
+    <line
+      x1="255"
+      y1="470"
+      x2="645"
+      y2="470"
+      stroke="#A86D2F"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+
+    <!-- Ark body -->
+
+    <rect
+      x="330"
+      y="415"
+      width="240"
+      height="90"
+      rx="8"
+      fill="url(#jericho-ark-gradient)"
+      stroke="#E2B24F"
+      stroke-width="4"
+    />
+
+    <!-- Ark lid -->
+
+    <rect
+      x="315"
+      y="400"
+      width="270"
+      height="25"
+      rx="6"
+      fill="#D5A342"
+      stroke="#F2CF70"
+      stroke-width="3"
+    />
+
+    <!-- Carrying rings -->
+
+    <circle
+      cx="325"
+      cy="450"
+      r="10"
+      fill="#9A6128"
+      stroke="#D59A35"
+      stroke-width="2"
+    />
+
+    <circle
+      cx="575"
+      cy="450"
+      r="10"
+      fill="#9A6128"
+      stroke="#D59A35"
+      stroke-width="2"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    SEVEN CIRCUITS
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="seven-circuits"
+  >
+
+    <rect
+      class="node-hit-area"
+      x="690"
+      y="255"
+      width="145"
+      height="230"
+      rx="28"
+    />
+
+    <!-- Seven subtle circular paths -->
+
+    <ellipse
+      cx="762"
+      cy="365"
+      rx="50"
+      ry="95"
+      fill="none"
+      stroke="#3195A8"
+      stroke-width="2"
+    />
+
+    <ellipse
+      cx="762"
+      cy="365"
+      rx="42"
+      ry="80"
+      fill="none"
+      stroke="#287D91"
+      stroke-width="2"
+    />
+
+    <ellipse
+      cx="762"
+      cy="365"
+      rx="34"
+      ry="65"
+      fill="none"
+      stroke="#1F6578"
+      stroke-width="2"
+    />
+
+    <!-- Seven markers -->
+
+    <circle
+      cx="762"
+      cy="270"
+      r="5"
+      fill="#67D2D8"
+    />
+
+    <circle
+      cx="795"
+      cy="295"
+      r="5"
+      fill="#54BCC9"
+    />
+
+    <circle
+      cx="810"
+      cy="340"
+      r="5"
+      fill="#4AAEBE"
+    />
+
+    <circle
+      cx="800"
+      cy="390"
+      r="5"
+      fill="#409FAF"
+    />
+
+    <circle
+      cx="775"
+      cy="435"
+      r="5"
+      fill="#3995A7"
+    />
+
+    <circle
+      cx="735"
+      cy="425"
+      r="5"
+      fill="#348A9D"
+    />
+
+    <circle
+      cx="715"
+      cy="380"
+      r="5"
+      fill="#2E7F92"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    SHOUT
+    ============================================================
+  -->
+
+  <g
+    class="investigation-node"
+    data-node="shout"
+  >
+
+    <!--
+      The visible shout artwork extends upward to y=72
+      and outward approximately from x=385 to x=605.
+
+      The previous hit area started too low and was too wide.
+      This one follows the actual sound-wave artwork.
+    -->
+
+    <rect
+      class="node-hit-area"
+      x="375"
+      y="65"
+      width="245"
+      height="135"
+      rx="30"
+    />
+
+    <!-- Central pulse -->
+
+    <circle
+      cx="495"
+      cy="170"
+      r="22"
+      fill="url(#jericho-shout-gradient)"
+      stroke="#E58A35"
+      stroke-width="2"
+    />
+
+    <!-- Sound waves -->
+
+    <path
+      d="M450 170
+         C420 145 420 115 450 95"
+      fill="none"
+      stroke="#C96D2B"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M540 170
+         C570 145 570 115 540 95"
+      fill="none"
+      stroke="#C96D2B"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M425 170
+         C385 135 385 100 420 72"
+      fill="none"
+      stroke="#A94D20"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <path
+      d="M565 170
+         C605 135 605 100 570 72"
+      fill="none"
+      stroke="#A94D20"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!--
+    ============================================================
+    SUBTLE SCENE GLOW
+    ============================================================
+  -->
+
+  <circle
+    cx="450"
+    cy="300"
+    r="220"
+    fill="rgba(214,179,106,0.008)"
+  />
+
+  <circle
+    cx="450"
+    cy="300"
+    r="150"
+    fill="rgba(214,179,106,0.008)"
+  />
+
+
+  <!--
+    ============================================================
+    FOOTER
+    ============================================================
+  -->
+
+  <text
+    x="450"
+    y="570"
+    text-anchor="middle"
+    fill="rgba(214,179,106,0.08)"
+    font-size="17"
+    letter-spacing="4"
+  >
+    SEVEN DAYS · SEVEN CIRCUITS · ONE SHOUT
+  </text>
+
+</svg>
