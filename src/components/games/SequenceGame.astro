@@ -1,75 +1,128 @@
 ---
 interface Puzzle {
-
-  title: string
-
-  fragment?: string
-
-  sequence?: string[]
-
-  hints?: string[]
-
+  title: string;
+  fragment?: string;
+  sequence?: string[];
+  hints?: string[];
   scripture: {
-
-    reference: string
-
-    verse: string
-  }
-
+    reference: string;
+    verse: string;
+  };
 }
 
 interface Props {
-
-  puzzles: Puzzle[]
-
-  gameId: string
+  puzzles: Puzzle[];
+  gameId: string;
 }
 
 const {
   puzzles,
   gameId
-} = Astro.props as Props
+} = Astro.props as Props;
 
 /*
- For Sprint 1
- we use the first puzzle only.
- Later we can support multi-stage.
+  Sprint 1:
+  one page = one puzzle.
 */
 
-const puzzle = puzzles[0]
+const puzzle = puzzles[0];
 
-const shuffled =
-  [...(puzzle.sequence || [])]
-    .sort(() => Math.random() - 0.5)
+const sequence = puzzle.sequence || [];
+
+const shuffled = [...sequence]
+  .sort(() => Math.random() - 0.5);
 ---
 
 <div class="sequence-wrapper">
 
+  <!-- INTRO -->
+
   <div class="sequence-header">
+
+    <p class="sequence-label">
+      Sequence
+    </p>
 
     <h2 class="sequence-title">
       {puzzle.title}
     </h2>
 
+    <p class="sequence-description">
+      Place the events, people, ideas, or passages
+      in the correct biblical order.
+    </p>
+
     {
-      puzzle.hints && (
+      puzzle.hints && puzzle.hints.length > 0 && (
+        <div class="hint-box">
+          <div class="hint-label">
+            Hints
+          </div>
 
-        <ul class="hint-list">
-
-          {
-            puzzle.hints.map((hint) => (
-
-              <li>{hint}</li>
-
-            ))
-          }
-
-        </ul>
-
+          <ul class="hint-list">
+            {
+              puzzle.hints.map((hint) => (
+                <li>{hint}</li>
+              ))
+            }
+          </ul>
+        </div>
       )
     }
 
   </div>
+
+
+  <!-- STATUS -->
+
+  <div class="sequence-status">
+
+    <div
+      id="sequence-count"
+      class="status-pill"
+      aria-live="polite"
+    >
+      0 / {sequence.length} placed
+    </div>
+
+    <div
+      id="sequence-state"
+      class="status-pill"
+      aria-live="polite"
+    >
+      Ready
+    </div>
+
+  </div>
+
+
+  <!-- PROGRESS -->
+
+  <div
+    id="sequence-progress"
+    class="progress-track"
+    role="progressbar"
+    aria-label="Sequence puzzle progress"
+    aria-valuemin="0"
+    aria-valuemax={sequence.length}
+    aria-valuenow="0"
+  >
+    <div
+      id="sequence-progress-fill"
+      class="progress-fill"
+      style="width: 0%"
+    ></div>
+  </div>
+
+
+  <!-- INSTRUCTION -->
+
+  <p class="sequence-instruction">
+    Tap the items in the order you believe is correct.
+  </p>
+
+
+  <!-- BOARD -->
 
   <div
     id="sequence-board"
@@ -77,13 +130,23 @@ const shuffled =
   >
 
     {
-      shuffled.map((item) => (
+      shuffled.map((item, index) => (
 
         <button
+          type="button"
           class="sequence-card"
           data-value={item}
+          aria-pressed="false"
         >
-          {item}
+
+          <span class="sequence-number">
+            {index + 1}
+          </span>
+
+          <span class="sequence-card-content">
+            {item}
+          </span>
+
         </button>
 
       ))
@@ -91,17 +154,23 @@ const shuffled =
 
   </div>
 
+
+  <!-- CONTROLS -->
+
   <div class="sequence-controls">
 
     <button
       id="submit-btn"
-      class="game-btn"
+      type="button"
+      class="game-btn primary"
+      disabled
     >
-      Submit
+      Check Sequence
     </button>
 
     <button
       id="reset-btn"
+      type="button"
       class="game-btn secondary"
     >
       Reset
@@ -109,26 +178,57 @@ const shuffled =
 
   </div>
 
+
+  <!-- FEEDBACK -->
+
   <div
     id="message"
     class="message"
+    aria-live="polite"
+    aria-atomic="true"
   ></div>
+
+
+  <!-- REWARD -->
 
   <div
     id="reward-box"
     class="reward-box hidden"
   >
 
-    <div class="reward-label">
-      Scripture Reward
+    <div class="reward-heading">
+
+      <span
+        class="reward-check"
+        aria-hidden="true"
+      >
+        ✓
+      </span>
+
+      <div>
+
+        <div class="reward-label">
+          Sequence Restored
+        </div>
+
+        <div class="reward-title">
+          Scripture Revealed
+        </div>
+
+      </div>
+
     </div>
 
     <h3>
       {puzzle.scripture.reference}
     </h3>
 
-    <p>
-      {puzzle.scripture.verse}
+    <blockquote>
+      “{puzzle.scripture.verse}”
+    </blockquote>
+
+    <p class="reward-note">
+      Discovery unlocked.
     </p>
 
     <button
@@ -136,7 +236,7 @@ const shuffled =
       class="share-discovery-btn"
       type="button"
       data-share-title="First7 Play Sacred Order"
-      data-share-message={`Sacred Order Restored:\n${(puzzle.sequence || []).join(' -> ')}\n\n${puzzle.scripture.reference}\n"${puzzle.scripture.verse}"\n\nFirst7 Play - transmitted from the recovered archive.`}
+      data-share-message={`Sacred Order Restored:\n${sequence.join(' -> ')}\n\n${puzzle.scripture.reference}\n"${puzzle.scripture.verse}"\n\nFirst7 Play - transmitted from the recovered archive.`}
     >
       Share Discovery
     </button>
@@ -145,634 +245,1201 @@ const shuffled =
 
 </div>
 
-<script define:vars={{
-  answer: puzzle.sequence,
-  fragment: puzzle.fragment,
-  gameId
-}}>
+
+<script
+  define:vars={{
+    answer: sequence,
+    fragment: puzzle.fragment,
+    gameId
+  }}
+>
 
   const board =
     document.getElementById(
-      "sequence-board"
-    )
+      'sequence-board'
+    );
 
   const cards = [
     ...document.querySelectorAll(
-      ".sequence-card"
+      '.sequence-card'
     )
-  ]
+  ];
 
   const submitBtn =
     document.getElementById(
-      "submit-btn"
-    )
+      'submit-btn'
+    );
 
   const resetBtn =
     document.getElementById(
-      "reset-btn"
-    )
+      'reset-btn'
+    );
 
   const message =
     document.getElementById(
-      "message"
-    )
+      'message'
+    );
 
   const rewardBox =
     document.getElementById(
-      "reward-box"
-    )
+      'reward-box'
+    );
 
-  let selected = []
+  const sequenceCount =
+    document.getElementById(
+      'sequence-count'
+    );
+
+  const sequenceState =
+    document.getElementById(
+      'sequence-state'
+    );
+
+  const progress =
+    document.getElementById(
+      'sequence-progress'
+    );
+
+  const progressFill =
+    document.getElementById(
+      'sequence-progress-fill'
+    );
+
+
+  let selected = [];
+
 
   /*
-   LOCAL SAVE SYSTEM
+    ============================================================
+    STORAGE
+    ============================================================
   */
 
   const STORAGE_KEY =
-    "first7-progress"
+    'first7-progress';
 
   const FRAGMENTS_KEY =
-    "first7-fragments"
+    'first7-fragments';
+
 
   function loadProgress() {
 
-    const raw =
-      localStorage.getItem(
-        STORAGE_KEY
-      )
+    try {
 
-    if (!raw) {
+      const raw =
+        localStorage.getItem(
+          STORAGE_KEY
+        );
+
+      if (!raw) {
+
+        return {
+          completed: []
+        };
+
+      }
+
+      const parsed =
+        JSON.parse(raw);
+
+      if (
+        !parsed ||
+        !Array.isArray(
+          parsed.completed
+        )
+      ) {
+
+        return {
+          completed: []
+        };
+
+      }
+
+      return parsed;
+
+    } catch {
 
       return {
         completed: []
-      }
+      };
+
     }
 
-    return JSON.parse(raw)
   }
+
 
   function saveProgress(data) {
 
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(data)
-    )
+    );
+
   }
+
 
   function markComplete(id) {
 
-    const progress =
-      loadProgress()
+    const progressData =
+      loadProgress();
 
     if (
-      !progress.completed.includes(id)
+      !progressData.completed.includes(
+        id
+      )
     ) {
 
-      progress.completed.push(id)
+      progressData.completed.push(id);
 
-      saveProgress(progress)
+      saveProgress(
+        progressData
+      );
+
     }
+
   }
+
+
+  function isComplete(id) {
+
+    return loadProgress()
+      .completed
+      .includes(id);
+
+  }
+
 
   function unlockFragment(fragment) {
 
-    if (!fragment) return
+    if (!fragment) return;
 
-    let fragments = []
+    let fragments = [];
 
     try {
 
       const raw =
         localStorage.getItem(
           FRAGMENTS_KEY
-        )
+        );
 
       fragments =
-        raw ? JSON.parse(raw) : []
+        raw ? JSON.parse(raw) : [];
 
-      if (!Array.isArray(fragments)) {
-        fragments = []
+      if (
+        !Array.isArray(fragments)
+      ) {
+
+        fragments = [];
+
       }
 
     } catch {
 
-      fragments = []
+      fragments = [];
 
     }
 
     if (
-      fragments.includes(fragment)
-    ) return
+      fragments.includes(
+        fragment
+      )
+    ) return;
 
-    fragments.push(fragment)
+    fragments.push(
+      fragment
+    );
 
     localStorage.setItem(
       FRAGMENTS_KEY,
-      JSON.stringify(fragments)
-    )
+      JSON.stringify(
+        fragments
+      )
+    );
+
   }
 
+
   /*
-   CARD CLICK
+    ============================================================
+    UI
+    ============================================================
   */
 
-  cards.forEach((card) => {
+  function updateUI() {
 
-    card.addEventListener(
-      "click",
-      () => {
+    const total =
+      answer.length;
 
-        if (
-          card.classList.contains(
-            "used"
-          )
-        ) return
+    const count =
+      selected.length;
 
-        card.classList.add(
-          "used"
-        )
+    const percentage =
+      total > 0
+        ? (count / total) * 100
+        : 0;
 
-        card.classList.add(
-          "selected"
-        )
+    sequenceCount.textContent =
+      `${count} / ${total} placed`;
 
-        selected.push(
-          card.dataset.value
-        )
-      }
-    )
-  })
+    if (progress) {
+
+      progress.setAttribute(
+        'aria-valuenow',
+        String(count)
+      );
+
+    }
+
+    if (progressFill) {
+
+      progressFill.style.width =
+        `${percentage}%`;
+
+    }
+
+    if (submitBtn) {
+
+      submitBtn.disabled =
+        count !== total;
+
+    }
+
+    if (
+      count === 0
+    ) {
+
+      sequenceState.textContent =
+        'Ready';
+
+    } else if (
+      count < total
+    ) {
+
+      sequenceState.textContent =
+        'Building sequence';
+
+    } else {
+
+      sequenceState.textContent =
+        'Ready to check';
+
+    }
+
+  }
+
 
   /*
-   SUBMIT
+    ============================================================
+    SELECTION
+    ============================================================
+  */
+
+  function clearSelection() {
+
+    selected = [];
+
+    cards.forEach(
+      (card) => {
+
+        if (
+          card.disabled
+        ) return;
+
+        card.classList.remove(
+          'selected'
+        );
+
+        card.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        const number =
+          card.querySelector(
+            '.sequence-number'
+          );
+
+        if (number) {
+
+          number.textContent =
+            '';
+
+        }
+
+      }
+    );
+
+    updateUI();
+
+  }
+
+
+  function selectCard(card) {
+
+    if (
+      card.disabled
+    ) return;
+
+    const value =
+      card.dataset.value;
+
+    if (!value) return;
+
+    /*
+      Prevent duplicate selection.
+    */
+
+    if (
+      selected.includes(
+        value
+      )
+    ) return;
+
+    if (
+      selected.length >=
+      answer.length
+    ) return;
+
+    selected.push(
+      value
+    );
+
+    card.classList.add(
+      'selected'
+    );
+
+    card.setAttribute(
+      'aria-pressed',
+      'true'
+    );
+
+    const number =
+      card.querySelector(
+        '.sequence-number'
+      );
+
+    if (number) {
+
+      number.textContent =
+        String(
+          selected.length
+        );
+
+    }
+
+    message.textContent =
+      '';
+
+    message.className =
+      'message';
+
+    updateUI();
+
+  }
+
+
+  /*
+    ============================================================
+    CORRECT STATE
+    ============================================================
+  */
+
+  function showSuccess() {
+
+    cards.forEach(
+      (card) => {
+
+        card.disabled = true;
+
+        card.classList.remove(
+          'selected'
+        );
+
+        card.classList.add(
+          'correct'
+        );
+
+        card.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        const number =
+          card.querySelector(
+            '.sequence-number'
+          );
+
+        if (number) {
+
+          number.textContent =
+            '✓';
+
+        }
+
+      }
+    );
+
+    message.textContent =
+      '✓ Correct sequence!';
+
+    message.className =
+      'message success';
+
+    sequenceState.textContent =
+      'Completed';
+
+    /*
+      The player has earned the reward.
+    */
+
+    rewardBox?.classList.remove(
+      'hidden'
+    );
+
+    markComplete(
+      gameId
+    );
+
+    unlockFragment(
+      fragment
+    );
+
+    updateUI();
+
+  }
+
+
+  /*
+    ============================================================
+    WRONG STATE
+    ============================================================
+  */
+
+  function showWrong() {
+
+    message.textContent =
+      'Not quite — try another order.';
+
+    message.className =
+      'message error';
+
+    sequenceState.textContent =
+      'Try again';
+
+  }
+
+
+  /*
+    ============================================================
+    COMPLETION RESTORE
+    ============================================================
+  */
+
+  function restoreCompletedState() {
+
+    if (
+      !isComplete(
+        gameId
+      )
+    ) return;
+
+    cards.forEach(
+      (card) => {
+
+        card.disabled = true;
+
+        card.classList.add(
+          'correct'
+        );
+
+        const number =
+          card.querySelector(
+            '.sequence-number'
+          );
+
+        if (number) {
+
+          number.textContent =
+            '✓';
+
+        }
+
+      }
+    );
+
+    selected = [
+      ...answer
+    ];
+
+    message.textContent =
+      '✓ Sequence already restored.';
+
+    message.className =
+      'message success';
+
+    sequenceState.textContent =
+      'Completed';
+
+    rewardBox?.classList.remove(
+      'hidden'
+    );
+
+    unlockFragment(
+      fragment
+    );
+
+    updateUI();
+
+  }
+
+
+  /*
+    ============================================================
+    CARD CLICK
+    ============================================================
+  */
+
+  cards.forEach(
+    (card) => {
+
+      card.addEventListener(
+        'click',
+        () => {
+
+          selectCard(
+            card
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  /*
+    ============================================================
+    SUBMIT
+    ============================================================
   */
 
   submitBtn?.addEventListener(
-    "click",
+    'click',
     () => {
 
-      const correct =
+      if (
+        selected.length !==
+        answer.length
+      ) return;
 
-        JSON.stringify(selected)
-        === JSON.stringify(answer)
+      const correct =
+        JSON.stringify(
+          selected
+        ) ===
+        JSON.stringify(
+          answer
+        );
 
       if (correct) {
 
-        message.textContent =
-          "Correct sequence!"
-
-        message.classList.add(
-          "success"
-        )
-
-        rewardBox?.classList.remove(
-          "hidden"
-        )
-
-        board?.classList.add(
-          "success-glow"
-        )
-
-        markComplete(gameId)
-
-        unlockFragment(fragment)
+        showSuccess();
 
       } else {
 
-        message.textContent =
-          "Wrong order. Try again."
+        showWrong();
 
-        message.classList.remove(
-          "success"
-        )
-
-        board?.classList.add(
-          "shake"
-        )
-
-        setTimeout(() => {
-
-          board?.classList.remove(
-            "shake"
-          )
-
-        }, 500)
       }
+
     }
-  )
+  );
+
 
   /*
-   RESET
+    ============================================================
+    RESET
+    ============================================================
   */
 
   resetBtn?.addEventListener(
-    "click",
+    'click',
     () => {
 
-      selected = []
+      if (
+        isComplete(
+          gameId
+        )
+      ) {
 
-      message.textContent = ""
+        message.textContent =
+          'This discovery is already restored.';
+
+        message.className =
+          'message success';
+
+        return;
+
+      }
 
       rewardBox?.classList.add(
-        "hidden"
-      )
+        'hidden'
+      );
 
-      cards.forEach((card) => {
+      message.textContent =
+        '';
 
-        card.classList.remove(
-          "used",
-          "selected"
-        )
-      })
+      message.className =
+        'message';
+
+      sequenceState.textContent =
+        'Ready';
+
+      clearSelection();
+
     }
-  )
+  );
+
+
+  updateUI();
+
+  restoreCompletedState();
 
 </script>
 
+
 <script>
-  import { bindDiscoveryShareButtons } from '../../lib/shareDiscovery';
+
+  import {
+    bindDiscoveryShareButtons
+  } from '../../lib/shareDiscovery';
 
   bindDiscoveryShareButtons({
     selector: '#share-discovery'
   });
+
 </script>
+
 
 <style>
 
-.sequence-wrapper {
-
-  max-width: 760px;
-
-  margin: 0 auto;
-
-  padding-inline: 0.25rem;
-}
-
-.sequence-header {
-
-  margin-bottom: 1.25rem;
-}
-
-.sequence-title {
-
-  font-size: clamp(1.35rem, 5vw, 1.75rem);
-
-  font-weight: 700;
-
-  line-height: 1.15;
-}
-
-.hint-list {
-
-  margin-top: 0.75rem;
-
-  padding-left: 1.2rem;
-
-  color: var(--color-muted);
-
-  font-size: 0.9rem;
-
-  line-height: 1.55;
-}
-
-.sequence-board {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 0.65rem;
-}
-
-.sequence-card {
-
-  min-height: 3.4rem;
-
-  padding: 0.75rem;
-
-  border: 1px solid rgba(255,255,255,0.08);
-
-  border-radius: 0.85rem;
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color: white;
-
-  font-size: 0.9rem;
-
-  line-height: 1.25;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease,
-    border-color 0.15s ease;
-}
-
-.sequence-card:hover {
-
-  transform: translateY(-2px);
-
-  border-color:
-    rgba(214,179,106,0.4);
-}
-
-.sequence-card.selected {
-
-  opacity: 0.45;
-
-  transform: scale(0.96);
-}
-
-.sequence-controls {
-
-  display: flex;
-
-  gap: 0.65rem;
-
-  margin-top: 1.25rem;
-}
-
-.game-btn {
-
-  padding:
-    0.72rem 1rem;
-
-  border-radius: 0.8rem;
-
-  border: none;
-
-  cursor: pointer;
-
-  font-weight: 600;
-
-  background:
-    rgba(214,179,106,0.12);
-
-  color:
-    var(--color-primary);
-
-  transition:
-    transform 0.15s ease,
-    background 0.15s ease;
-}
-
-.game-btn:hover {
-
-  transform: translateY(-1px);
-
-  background:
-    rgba(214,179,106,0.2);
-}
-
-.secondary {
-
-  background:
-    rgba(255,255,255,0.06);
-
-  color: white;
-}
-
-.message {
-
-  margin-top: 1rem;
-
-  font-weight: 600;
-
-  min-height: 1.5rem;
-}
-
-.success {
-
-  color:
-    rgb(74 222 128);
-}
-
-.reward-box {
-
-  margin-top: 1.25rem;
-
-  padding: 1rem;
-
-  border-radius: 1rem;
-
-  background:
-    rgba(214,179,106,0.08);
-
-  border:
-    1px solid rgba(214,179,106,0.2);
-
-  animation:
-    fadeUp 0.4s ease;
-}
-
-.share-discovery-btn {
-
-  margin-top: 1.25rem;
-
-  padding:
-    0.7rem 1rem;
-
-  border-radius: 0.8rem;
-
-  border:
-    1px solid rgba(214,179,106,0.12);
-
-  background:
-    rgba(255,255,255,0.02);
-
-  color:
-    var(--color-muted);
-
-  cursor: pointer;
-
-  font-size: 0.72rem;
-
-  letter-spacing: 0.16em;
-
-  text-transform: uppercase;
-
-  transition:
-    border-color 0.2s ease,
-    color 0.2s ease,
-    background 0.2s ease;
-}
-
-.share-discovery-btn:hover {
-
-  border-color:
-    rgba(214,179,106,0.24);
-
-  background:
-    rgba(214,179,106,0.06);
-
-  color:
-    var(--color-primary);
-}
-
-.reward-label {
-
-  font-size: 0.8rem;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.12em;
-
-  color:
-    var(--color-primary);
-
-  margin-bottom: 0.5rem;
-}
-
-.hidden {
-
-  display: none;
-}
-
-.shake {
-
-  animation:
-    shake 0.4s ease;
-}
-
-.success-glow {
-
-  animation:
-    glow 0.6s ease;
-}
-
-@keyframes shake {
-
-  0% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-5px);
-  }
-
-  50% {
-    transform: translateX(5px);
-  }
-
-  75% {
-    transform: translateX(-5px);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes glow {
-
-  0% {
-
-    box-shadow:
-      0 0 0 rgba(214,179,106,0);
-  }
-
-  50% {
-
-    box-shadow:
-      0 0 24px rgba(214,179,106,0.28);
-  }
-
-  100% {
-
-    box-shadow:
-      0 0 0 rgba(214,179,106,0);
-  }
-}
-
-@keyframes fadeUp {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      translateY(10px);
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translateY(0);
-  }
-}
-
-@media (min-width: 640px) {
-
   .sequence-wrapper {
-
-    padding-inline: 0;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-inline: 0.25rem;
   }
+
 
   .sequence-header {
-
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
+
+
+  .sequence-label {
+    margin: 0 0 0.5rem;
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+
+  .sequence-title {
+    margin: 0;
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+
+  .sequence-description {
+    margin-top: 0.8rem;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+
+  .hint-box {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(214,179,106,0.12);
+    border-radius: 0.9rem;
+    background: rgba(214,179,106,0.04);
+  }
+
+
+  .hint-label {
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
 
   .hint-list {
-
-    margin-top: 1rem;
-
-    font-size: 1rem;
+    margin-top: 0.55rem;
+    padding-left: 1.2rem;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
   }
+
+
+  .sequence-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+
+  .status-pill {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+
+  .progress-track {
+    height: 0.5rem;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+  }
+
+
+  .progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-primary);
+    transition: width 0.25s ease;
+  }
+
+
+  .sequence-instruction {
+    margin-top: 1rem;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
 
   .sequence-board {
-
+    display: grid;
     grid-template-columns:
-      repeat(auto-fit, minmax(140px, 1fr));
-
-    gap: 1rem;
+      repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-top: 1rem;
   }
+
 
   .sequence-card {
-
-    min-height: 4rem;
-
-    padding: 1rem;
-
-    border-radius: 1rem;
-
-    font-size: 1rem;
+    position: relative;
+    display: flex;
+    min-height: 3.7rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0.85rem;
+    background: rgba(255,255,255,0.04);
+    color: white;
+    font-size: 0.9rem;
+    line-height: 1.25;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
   }
+
+
+  .sequence-card:hover {
+    transform: translateY(-2px);
+    border-color:
+      rgba(214,179,106,0.4);
+  }
+
+
+  .sequence-card.selected {
+    border-color:
+      var(--color-primary);
+    background:
+      rgba(214,179,106,0.12);
+    color:
+      var(--color-primary);
+  }
+
+
+  .sequence-card.correct {
+    border-color:
+      var(--color-success);
+    background:
+      rgba(34,197,94,0.10);
+    color:
+      var(--color-success);
+    opacity: 0.72;
+    cursor: default;
+  }
+
+
+  .sequence-card:disabled {
+    cursor: default;
+  }
+
+
+  .sequence-number {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.45rem;
+    display: inline-flex;
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+  }
+
+
+  .sequence-card.selected .sequence-number {
+    background:
+      rgba(214,179,106,0.18);
+    color:
+      var(--color-primary);
+  }
+
+
+  .sequence-card.correct .sequence-number {
+    color:
+      var(--color-success);
+  }
+
+
+  .sequence-card-content {
+    padding-inline: 0.35rem;
+  }
+
 
   .sequence-controls {
-
-    gap: 1rem;
-
-    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
   }
+
 
   .game-btn {
-
     padding:
-      0.9rem 1.25rem;
-
-    border-radius: 0.9rem;
+      0.72rem 1rem;
+    border-radius:
+      0.8rem;
+    border:
+      1px solid rgba(214,179,106,0.18);
+    cursor:
+      pointer;
+    font-weight:
+      600;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
   }
+
+
+  .game-btn:hover:not(:disabled) {
+    transform:
+      translateY(-1px);
+  }
+
+
+  .game-btn:disabled {
+    opacity:
+      0.4;
+    cursor:
+      not-allowed;
+  }
+
+
+  .game-btn.primary {
+    background:
+      rgba(214,179,106,0.10);
+    color:
+      var(--color-primary);
+  }
+
+
+  .game-btn.primary:hover:not(:disabled) {
+    background:
+      rgba(214,179,106,0.16);
+  }
+
+
+  .game-btn.secondary {
+    background:
+      rgba(255,255,255,0.06);
+    color:
+      white;
+    border-color:
+      var(--color-border);
+  }
+
 
   .message {
-
-    margin-top: 1.5rem;
+    min-height:
+      1.5rem;
+    margin-top:
+      1rem;
+    font-size:
+      0.9rem;
+    font-weight:
+      500;
   }
+
+
+  .message.success {
+    color:
+      var(--color-success);
+  }
+
+
+  .message.error {
+    color:
+      var(--color-danger);
+  }
+
 
   .reward-box {
-
-    margin-top: 2rem;
-
-    padding: 1.5rem;
-
-    border-radius: 1.25rem;
+    margin-top:
+      1.25rem;
+    padding:
+      1.1rem;
+    border:
+      1px solid rgba(34,197,94,0.22);
+    border-radius:
+      1rem;
+    background:
+      rgba(34,197,94,0.06);
   }
-}
+
+
+  .reward-heading {
+    display:
+      flex;
+    align-items:
+      center;
+    gap:
+      0.7rem;
+  }
+
+
+  .reward-check {
+    display:
+      inline-flex;
+    width:
+      2rem;
+    height:
+      2rem;
+    align-items:
+      center;
+    justify-content:
+      center;
+    border:
+      1px solid var(--color-success);
+    border-radius:
+      999px;
+    background:
+      rgba(34,197,94,0.10);
+    color:
+      var(--color-success);
+    font-weight:
+      700;
+  }
+
+
+  .reward-label {
+    color:
+      var(--color-success);
+    font-size:
+      0.72rem;
+    letter-spacing:
+      0.14em;
+    text-transform:
+      uppercase;
+  }
+
+
+  .reward-title {
+    margin-top:
+      0.2rem;
+    color:
+      var(--color-text);
+    font-weight:
+      600;
+  }
+
+
+  .reward-box h3 {
+    margin-top:
+      1rem;
+    color:
+      var(--color-primary);
+    font-size:
+      0.95rem;
+    font-weight:
+      600;
+  }
+
+
+  .reward-box blockquote {
+    margin-top:
+      0.65rem;
+    color:
+      var(--color-muted);
+    font-size:
+      0.9rem;
+    line-height:
+      1.7;
+  }
+
+
+  .reward-note {
+    margin-top:
+      0.75rem;
+    color:
+      var(--color-muted);
+    font-size:
+      0.78rem;
+  }
+
+
+  .share-discovery-btn {
+    margin-top:
+      1rem;
+    padding:
+      0.7rem 1rem;
+    border:
+      1px solid rgba(214,179,106,0.12);
+    border-radius:
+      0.8rem;
+    background:
+      rgba(255,255,255,0.02);
+    color:
+      var(--color-muted);
+    cursor:
+      pointer;
+    font-size:
+      0.72rem;
+    letter-spacing:
+      0.16em;
+    text-transform:
+      uppercase;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+
+
+  .share-discovery-btn:hover {
+    border-color:
+      rgba(214,179,106,0.24);
+    background:
+      rgba(214,179,106,0.06);
+    color:
+      var(--color-primary);
+  }
+
+
+  .hidden {
+    display:
+      none;
+  }
+
+
+  @media (min-width: 640px) {
+
+    .sequence-wrapper {
+      padding-inline:
+        0;
+    }
+
+
+    .sequence-header {
+      margin-bottom:
+        2rem;
+    }
+
+
+    .sequence-description {
+      font-size:
+        1rem;
+    }
+
+
+    .hint-list {
+      font-size:
+        1rem;
+    }
+
+
+    .sequence-board {
+      grid-template-columns:
+        repeat(auto-fit, minmax(140px, 1fr));
+      gap:
+        1rem;
+      margin-top:
+        1.25rem;
+    }
+
+
+    .sequence-card {
+      min-height:
+        4.4rem;
+      padding:
+        1rem;
+      border-radius:
+        1rem;
+      font-size:
+        1rem;
+    }
+
+
+    .sequence-controls {
+      gap:
+        1rem;
+      margin-top:
+        1.5rem;
+    }
+
+
+    .game-btn {
+      padding:
+        0.9rem 1.25rem;
+      border-radius:
+        0.9rem;
+    }
+
+
+    .message {
+      margin-top:
+        1.5rem;
+    }
+
+
+    .reward-box {
+      margin-top:
+        2rem;
+      padding:
+        1.5rem;
+      border-radius:
+        1.25rem;
+    }
+
+  }
 
 </style>

@@ -62,66 +62,79 @@ const rightItems =
 
   <!-- STATUS -->
 
-  <div
-    class="flex flex-wrap items-center gap-2 sm:gap-4"
-  >
+  <div class="space-y-3">
+
+    <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+
+      <div
+        id="matches-count"
+        class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm"
+        aria-live="polite"
+      >
+        0 / {puzzle.pairs.length} matched
+      </div>
+
+    </div>
+
+    <!-- PROGRESS -->
 
     <div
-      id="matches-count"
-      class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm"
+      class="h-2 w-full overflow-hidden rounded-full bg-[rgba(255,255,255,0.06)]"
+      role="progressbar"
+      aria-label="Matching puzzle progress"
+      aria-valuemin="0"
+      aria-valuemax={puzzle.pairs.length}
+      aria-valuenow="0"
+      id="matches-progress"
     >
-      0 / {puzzle.pairs.length} matched
+      <div
+        id="matches-progress-fill"
+        class="h-full rounded-full bg-[var(--color-primary)] transition-all duration-300"
+        style="width: 0%"
+      ></div>
     </div>
 
   </div>
 
   <!-- GAME -->
 
-  <div
-    class="grid grid-cols-2 gap-3 md:gap-6"
-  >
+  <div class="grid grid-cols-2 gap-3 md:gap-6">
 
     <!-- LEFT -->
 
-    <div
-      class="space-y-2.5 sm:space-y-4"
-    >
+    <div class="space-y-2.5 sm:space-y-4">
 
-      {
-        leftItems.map((item) => (
+      {leftItems.map((item) => (
 
-          <button
-            type="button"
-            class="left-card card flex min-h-[52px] w-full items-center p-3 text-left text-sm leading-snug transition duration-200 hover:border-white/20 hover:bg-[var(--color-surface-light)] sm:min-h-[64px] sm:p-5 sm:text-base"
-            data-value={item}
-          >
-            {item}
-          </button>
+        <button
+          type="button"
+          class="left-card card flex min-h-[52px] w-full items-center p-3 text-left text-sm leading-snug transition duration-200 hover:border-white/20 hover:bg-[var(--color-surface-light)] sm:min-h-[64px] sm:p-5 sm:text-base"
+          data-value={item}
+          aria-pressed="false"
+        >
+          <span class="card-content">{item}</span>
+        </button>
 
-        ))
-      }
+      ))}
 
     </div>
 
     <!-- RIGHT -->
 
-    <div
-      class="space-y-2.5 sm:space-y-4"
-    >
+    <div class="space-y-2.5 sm:space-y-4">
 
-      {
-        rightItems.map((item) => (
+      {rightItems.map((item) => (
 
-          <button
-            type="button"
-            class="right-card card flex min-h-[52px] w-full items-center p-3 text-left text-sm leading-snug transition duration-200 hover:border-white/20 hover:bg-[var(--color-surface-light)] sm:min-h-[64px] sm:p-5 sm:text-base"
-            data-value={item}
-          >
-            {item}
-          </button>
+        <button
+          type="button"
+          class="right-card card flex min-h-[52px] w-full items-center p-3 text-left text-sm leading-snug transition duration-200 hover:border-white/20 hover:bg-[var(--color-surface-light)] sm:min-h-[64px] sm:p-5 sm:text-base"
+          data-value={item}
+          aria-pressed="false"
+        >
+          <span class="card-content">{item}</span>
+        </button>
 
-        ))
-      }
+      ))}
 
     </div>
 
@@ -131,10 +144,13 @@ const rightItems =
 
   <div
     id="feedback"
-    class="min-h-[24px] text-sm"
+    class="min-h-[28px] text-sm"
+    aria-live="polite"
+    aria-atomic="true"
   ></div>
 
 </div>
+
 
 <script is:inline define:vars={{ puzzle }}>
 
@@ -162,8 +178,25 @@ const rightItems =
       'matches-count'
     );
 
+  const progress =
+    document.getElementById(
+      'matches-progress'
+    );
+
+  const progressFill =
+    document.getElementById(
+      'matches-progress-fill'
+    );
+
   const FRAGMENTS_KEY =
     'first7-fragments';
+
+
+  /*
+    ============================================================
+    FRAGMENT REWARD
+    ============================================================
+  */
 
   function unlockFragment(fragment) {
 
@@ -204,12 +237,50 @@ const rightItems =
 
   }
 
+
+  /*
+    ============================================================
+    PROGRESS
+    ============================================================
+  */
+
   function updateUI() {
 
+    const total =
+      puzzle.pairs.length;
+
+    const percentage =
+      total > 0
+        ? (matchedCount / total) * 100
+        : 0;
+
     matchesCount.textContent =
-      `${matchedCount} / ${puzzle.pairs.length} matched`;
+      `${matchedCount} / ${total} matched`;
+
+    if (progress) {
+
+      progress.setAttribute(
+        'aria-valuenow',
+        String(matchedCount)
+      );
+
+    }
+
+    if (progressFill) {
+
+      progressFill.style.width =
+        `${percentage}%`;
+
+    }
 
   }
+
+
+  /*
+    ============================================================
+    SELECTION
+    ============================================================
+  */
 
   function clearLeftSelection() {
 
@@ -221,9 +292,219 @@ const rightItems =
         'text-[var(--color-primary)]'
       );
 
+      card.setAttribute(
+        'aria-pressed',
+        'false'
+      );
+
     });
 
   }
+
+
+  function selectLeftCard(card) {
+
+    clearLeftSelection();
+
+    selectedLeft =
+      card.dataset.value;
+
+    card.classList.add(
+      'border-[var(--color-primary)]',
+      'bg-[rgba(214,179,106,0.12)]',
+      'text-[var(--color-primary)]'
+    );
+
+    card.setAttribute(
+      'aria-pressed',
+      'true'
+    );
+
+  }
+
+
+  /*
+    ============================================================
+    SUCCESS STATE
+    ============================================================
+  */
+
+  function markAsMatched(leftCard, rightCard) {
+
+    const successClasses = [
+      'border-[var(--color-success)]',
+      'bg-[rgba(34,197,94,0.10)]',
+      'text-[var(--color-success)]'
+    ];
+
+    successClasses.forEach((className) => {
+
+      leftCard.classList.add(
+        className
+      );
+
+      rightCard.classList.add(
+        className
+      );
+
+    });
+
+    leftCard.classList.add(
+      'opacity-60',
+      'pointer-events-none'
+    );
+
+    rightCard.classList.add(
+      'opacity-60',
+      'pointer-events-none'
+    );
+
+    leftCard.disabled = true;
+    rightCard.disabled = true;
+
+    leftCard.setAttribute(
+      'aria-pressed',
+      'false'
+    );
+
+    rightCard.setAttribute(
+      'aria-pressed',
+      'false'
+    );
+
+    /*
+      Add a small visual check without
+      changing the actual puzzle text.
+    */
+
+    const leftContent =
+      leftCard.querySelector(
+        '.card-content'
+      );
+
+    const rightContent =
+      rightCard.querySelector(
+        '.card-content'
+      );
+
+    if (leftContent) {
+
+      leftContent.innerHTML =
+        `<span class="mr-2 text-[var(--color-success)]" aria-hidden="true">✓</span>${leftContent.textContent}`;
+
+    }
+
+    if (rightContent) {
+
+      rightContent.innerHTML =
+        `<span class="mr-2 text-[var(--color-success)]" aria-hidden="true">✓</span>${rightContent.textContent}`;
+
+    }
+
+  }
+
+
+  /*
+    ============================================================
+    WRONG MATCH
+    ============================================================
+  */
+
+  function showWrongMatch() {
+
+    feedback.textContent =
+      'Not quite — try another connection.';
+
+    feedback.className =
+      'min-h-[28px] text-sm text-[var(--color-danger)]';
+
+  }
+
+
+  /*
+    ============================================================
+    COMPLETION REWARD
+    ============================================================
+  */
+
+  function showCompletionReward() {
+
+    unlockFragment(
+      puzzle.fragment
+    );
+
+    feedback.innerHTML = `
+
+      <div
+        class="space-y-4"
+      >
+
+        <div
+          class="flex items-center gap-2 text-[var(--color-success)]"
+        >
+          <span
+            class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[var(--color-success)] bg-[rgba(34,197,94,0.10)]"
+            aria-hidden="true"
+          >
+            ✓
+          </span>
+
+          <span>
+            All matches completed.
+          </span>
+        </div>
+
+        <div
+          class="card border-[rgba(34,197,94,0.22)] bg-[rgba(34,197,94,0.06)] p-5"
+        >
+
+          <div
+            class="text-xs uppercase tracking-[0.18em] text-[var(--color-success)]"
+          >
+            Scripture Revealed
+          </div>
+
+          <blockquote
+            class="mt-3 text-sm leading-7 text-[var(--color-muted)]"
+          >
+            “${puzzle.scripture.verse}”
+          </blockquote>
+
+          <div
+            class="mt-3 text-sm text-[var(--color-primary)]"
+          >
+            ${puzzle.scripture.reference}
+          </div>
+
+          <div
+            class="mt-4 text-xs text-[var(--color-muted)]"
+          >
+            Discovery unlocked.
+          </div>
+
+          <button
+            type="button"
+            class="share-discovery-btn mt-5 inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
+            data-share-title="First7 Play Recovered Meaning"
+            data-share-message="${escapeAttribute(`Recovered Meaning:\n${puzzle.scripture.reference}\n'${puzzle.scripture.verse}'\n\nFirst7 Play - transmitted from the recovered archive.`)}"
+          >
+            Share Discovery
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /*
+    ============================================================
+    ATTRIBUTE ESCAPING
+    ============================================================
+  */
 
   function escapeAttribute(value) {
 
@@ -235,6 +516,13 @@ const rightItems =
 
   }
 
+
+  /*
+    ============================================================
+    LEFT CARD EVENTS
+    ============================================================
+  */
+
   leftCards.forEach((card) => {
 
     card.addEventListener(
@@ -244,21 +532,25 @@ const rightItems =
         if (card.disabled)
           return;
 
-        clearLeftSelection();
+        selectLeftCard(card);
 
-        selectedLeft =
-          card.dataset.value;
+        feedback.textContent =
+          'Choose the matching answer.';
 
-        card.classList.add(
-          'border-[var(--color-primary)]',
-          'bg-[rgba(214,179,106,0.12)]',
-          'text-[var(--color-primary)]'
-        );
+        feedback.className =
+          'min-h-[28px] text-sm text-[var(--color-muted)]';
 
       }
     );
 
   });
+
+
+  /*
+    ============================================================
+    RIGHT CARD EVENTS
+    ============================================================
+  */
 
   rightCards.forEach((card) => {
 
@@ -277,8 +569,24 @@ const rightItems =
         const correctPair =
           puzzle.pairs.find(
             (pair) =>
-              pair.left === selectedLeft
+              pair.left ===
+              selectedLeft
           );
+
+        if (
+          !correctPair
+        ) {
+
+          selectedLeft = null;
+          clearLeftSelection();
+          return;
+
+        }
+
+
+        /*
+          CORRECT MATCH
+        */
 
         if (
           correctPair.right ===
@@ -287,12 +595,6 @@ const rightItems =
 
           matchedCount++;
 
-          feedback.textContent =
-            '✓ Correct Match';
-
-          feedback.className =
-            'text-sm text-[var(--color-success)]';
-
           const activeLeft =
             Array.from(leftCards).find(
               (c) =>
@@ -300,28 +602,34 @@ const rightItems =
                 selectedLeft
             );
 
-          activeLeft.disabled = true;
-          card.disabled = true;
+          if (activeLeft) {
 
-          activeLeft.classList.add(
-            'opacity-40',
-            'pointer-events-none'
-          );
+            markAsMatched(
+              activeLeft,
+              card
+            );
 
-          card.classList.add(
-            'opacity-40',
-            'pointer-events-none'
-          );
-
-        } else {
+          }
 
           feedback.textContent =
-            'Not a correct match.';
+            '✓ Correct Match';
 
           feedback.className =
-            'text-sm text-[var(--color-danger)]';
+            'min-h-[28px] text-sm font-medium text-[var(--color-success)]';
 
         }
+
+
+        /*
+          WRONG MATCH
+        */
+
+        else {
+
+          showWrongMatch();
+
+        }
+
 
         selectedLeft = null;
 
@@ -329,51 +637,17 @@ const rightItems =
 
         updateUI();
 
+
+        /*
+          COMPLETED
+        */
+
         if (
           matchedCount ===
           puzzle.pairs.length
         ) {
 
-          unlockFragment(
-            puzzle.fragment
-          );
-
-          feedback.innerHTML = `
-
-<div class="space-y-4">
-
-  <div class="text-[var(--color-success)]">
-    🎉 All matches completed.
-  </div>
-
-  <div class="card p-5 border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.06)]">
-
-    <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] mb-3">
-      Scripture Revealed
-    </div>
-
-    <blockquote class="text-sm leading-7 text-[var(--color-muted)]">
-      “${puzzle.scripture.verse}”
-    </blockquote>
-
-    <div class="mt-3 text-sm text-[var(--color-primary)]">
-      ${puzzle.scripture.reference}
-    </div>
-
-    <button
-      type="button"
-      class="share-discovery-btn mt-5 inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
-      data-share-title="First7 Play Recovered Meaning"
-      data-share-message="${escapeAttribute(`Recovered Meaning:\n${puzzle.scripture.reference}\n'${puzzle.scripture.verse}'\n\nFirst7 Play - transmitted from the recovered archive.`)}"
-    >
-      Share Discovery
-    </button>
-
-  </div>
-
-</div>
-
-`;
+          showCompletionReward();
 
         }
 
@@ -382,14 +656,20 @@ const rightItems =
 
   });
 
+
   updateUI();
 
 </script>
 
+
 <script>
-  import { bindDiscoveryShareButtons } from '../../lib/shareDiscovery';
+
+  import {
+    bindDiscoveryShareButtons
+  } from '../../lib/shareDiscovery';
 
   bindDiscoveryShareButtons({
     selector: '.share-discovery-btn'
   });
+
 </script>

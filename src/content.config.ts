@@ -101,19 +101,41 @@ const games = defineCollection({
         |
         */
 
-        groups: z.array(
+          groups: z.array(
 
           z.object({
 
             category: z.string(),
 
-            items: z.array(
-              z.string()
-            )
+        /*
+        | Hints revealed when the player
+        | needs help discovering this connection.
+        */
 
-          })
-
+        hints: z.array(
+        z.string()
         ).optional(),
+
+        /*
+      | Scripture revealed when this
+      | individual connection is solved.
+      */
+
+      scripture: z.object({
+
+      reference: z.string(),
+
+      verse: z.string()
+
+     }).optional(),
+
+       items: z.array(
+      z.string()
+      )
+
+      })
+
+    ).optional(),
 
         /*
         |--------------------------------------------------------------------------

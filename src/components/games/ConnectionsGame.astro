@@ -2,42 +2,39 @@
 interface Group {
   category: string;
   items: string[];
+  scripture?: {
+    reference: string;
+    verse: string;
+  };
 }
 
 interface Puzzle {
   title: string;
-
   fragment?: string;
-
   scripture: {
     reference: string;
     verse: string;
   };
-
   groups: Group[];
 }
 
 const puzzles =
   Astro.props.puzzles as Puzzle[];
 
-/*
-  For now:
-  one page = one puzzle
-*/
-
 const puzzle = puzzles[0];
 
 const groups =
   puzzle.groups || [];
 
-const allItems = groups
-  .flatMap((group) =>
-    group.items.map((item) => ({
-      item,
-      group: group.category
-    }))
-  )
-  .sort(() => Math.random() - 0.5);
+const allItems =
+  groups
+    .flatMap((group) =>
+      group.items.map((item) => ({
+        item,
+        group: group.category
+      }))
+    )
+    .sort(() => Math.random() - 0.5);
 ---
 
 <div class="space-y-6 sm:space-y-10">
@@ -62,39 +59,74 @@ const allItems = groups
       class="text-sm leading-6 text-[var(--color-muted)] sm:text-base sm:leading-7"
     >
       Find 4 connected words that belong together.
+      Select all four, then check your connection.
       Reveal every hidden scripture category.
     </p>
 
   </div>
 
+
+  <!-- PUZZLE PROGRESS -->
+
+  <div class="mb-5 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]">
+    <span id="puzzle-progress-label">
+      Puzzle 1 of {puzzles.length}
+    </span>
+  </div>
+
   <!-- STATUS -->
 
-  <div
-    class="flex flex-wrap items-center gap-2 sm:gap-4"
-  >
+  <div class="space-y-3">
 
-    <div
-      id="selection-count"
-      class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm"
-    >
-      0 / 4 selected
+    <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+
+      <div
+        id="selection-count"
+        class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm"
+        aria-live="polite"
+      >
+        0 / 4 selected
+      </div>
+
+      <div
+        id="groups-count"
+        class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm"
+        aria-live="polite"
+      >
+        0 / {groups.length} groups solved
+      </div>
+
     </div>
 
+
+    <!-- PROGRESS -->
+
     <div
-      id="groups-count"
-      class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] sm:px-4 sm:py-2 sm:text-sm"
+      id="connections-progress"
+      class="h-2 w-full overflow-hidden rounded-full bg-[rgba(255,255,255,0.06)]"
+      role="progressbar"
+      aria-label="Connections puzzle progress"
+      aria-valuemin="0"
+      aria-valuemax={groups.length}
+      aria-valuenow="0"
     >
-      0 / {groups.length} groups solved
+      <div
+        id="connections-progress-fill"
+        class="h-full rounded-full bg-[var(--color-primary)] transition-all duration-300"
+        style="width: 0%"
+      ></div>
     </div>
 
   </div>
 
-  <!-- SOLVED -->
+
+  <!-- SOLVED GROUPS -->
 
   <div
     id="solved-groups"
     class="space-y-3 sm:space-y-4"
   ></div>
+
 
   <!-- BOARD -->
 
@@ -111,8 +143,11 @@ const allItems = groups
           class="game-card card flex min-h-[clamp(54px,17vw,92px)] items-center justify-center px-1.5 py-2 text-center text-[clamp(0.66rem,2.75vw,1rem)] font-medium leading-tight transition duration-200 hover:border-white/20 hover:bg-[var(--color-surface-light)] sm:px-3 sm:py-4"
           data-item={item}
           data-group={group}
+          aria-pressed="false"
         >
-          {item}
+          <span class="card-content">
+            {item}
+          </span>
         </button>
 
       ))
@@ -120,65 +155,105 @@ const allItems = groups
 
   </div>
 
+
   <!-- ACTIONS -->
 
-  <div
-    class="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-4"
-  >
-
-    <button
-      id="shuffle-btn"
-      type="button"
-      class="rounded-xl border border-[var(--color-border)] px-3 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--color-muted)] transition duration-200 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)] sm:px-5 sm:py-3 sm:text-sm sm:normal-case sm:tracking-normal"
-    >
-      Shuffle
-    </button>
-
-    <button
-      id="clear-btn"
-      type="button"
-      class="rounded-xl border border-[var(--color-border)] px-3 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--color-muted)] transition duration-200 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)] sm:px-5 sm:py-3 sm:text-sm sm:normal-case sm:tracking-normal"
-    >
-      Deselect All
-    </button>
+  <div class="space-y-3">
 
     <button
       id="submit-btn"
       type="button"
-      class="rounded-xl border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--color-primary)] transition-all duration-300 hover:border-[rgba(214,179,106,0.32)] hover:bg-[rgba(214,179,106,0.12)] disabled:opacity-40 sm:px-5 sm:py-3 sm:text-sm sm:normal-case sm:tracking-normal"
+      class="w-full rounded-2xl border-2 border-[rgba(214,179,106,0.42)] bg-[rgba(214,179,106,0.12)] px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)] shadow-[0_0_0_1px_rgba(214,179,106,0.04)] transition-all duration-200 hover:border-[rgba(214,179,106,0.65)] hover:bg-[rgba(214,179,106,0.18)] disabled:cursor-not-allowed disabled:opacity-35 sm:py-4"
       disabled
     >
-      Submit
+      Check Connection
     </button>
 
+    <div class="grid grid-cols-2 gap-2 sm:flex sm:gap-4">
+
+      <button
+        id="shuffle-btn"
+        type="button"
+        class="w-full rounded-xl border border-[var(--color-border)] px-3 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--color-muted)] transition duration-200 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)] sm:w-auto sm:px-5 sm:py-3 sm:text-sm sm:normal-case sm:tracking-normal"
+      >
+        Shuffle
+      </button>
+
+      <button
+        id="hint-btn"
+        type="button"
+        class="w-full rounded-xl border border-[rgba(214,179,106,0.22)] bg-[rgba(214,179,106,0.04)] px-3 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--color-primary)] transition duration-200 hover:border-[rgba(214,179,106,0.38)] hover:bg-[rgba(214,179,106,0.08)] disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:px-5 sm:py-3 sm:text-sm sm:normal-case sm:tracking-normal"
+        disabled
+      >
+        💡 Hint
+      </button>
+
+      <button
+        id="clear-btn"
+        type="button"
+        class="w-full rounded-xl border border-[var(--color-border)] px-3 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--color-muted)] transition duration-200 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)] sm:w-auto sm:px-5 sm:py-3 sm:text-sm sm:normal-case sm:tracking-normal"
+      >
+        Deselect All
+      </button>
+
+    </div>
+
   </div>
+
 
   <!-- FEEDBACK -->
 
   <div
     id="feedback"
-    class="min-h-[24px] text-sm"
+    class="min-h-[28px] text-sm"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <div
+    id="hint-panel"
+    class="hidden rounded-2xl border border-[rgba(214,179,106,0.20)] bg-[rgba(214,179,106,0.05)] p-4 shadow-sm"
+    aria-live="polite"
+    aria-atomic="true"
   ></div>
 
 </div>
 
-<script is:inline define:vars={{ puzzle }}>
 
-  const selected = [];
+<script is:inline define:vars={{ puzzles }}>
+
+  let currentPuzzleIndex = 0;
+
+  let puzzle = puzzles[
+    currentPuzzleIndex
+  ];
+
+  let selected = [];
+
+  let hintLevel = 0;
+
+  let hintsUsed = 0;
 
   const solvedGroups =
     new Set();
 
+  const puzzleState = new Map();
+
+  /*
+    Each Connections game gets its own progression key.
+
+    This is important because the same engine is used by multiple
+    game files. Without the pathname, finishing Puzzle 1 in one
+    game could make a completely different game open on Puzzle 2.
+  */
+
+  const PUZZLE_STATE_KEY =
+    `first7-connections-progress:${window.location.pathname}`;
+
+
   const board =
     document.getElementById(
       'connections-board'
-    );
-
-  const cards =
-    Array.from(
-      document.querySelectorAll(
-        '.game-card'
-      )
     );
 
   const submitBtn =
@@ -196,6 +271,16 @@ const allItems = groups
       'shuffle-btn'
     );
 
+  const hintBtn =
+    document.getElementById(
+      'hint-btn'
+    );
+
+  const hintPanel =
+    document.getElementById(
+      'hint-panel'
+    );
+
   const feedback =
     document.getElementById(
       'feedback'
@@ -211,13 +296,119 @@ const allItems = groups
       'groups-count'
     );
 
+  const progress =
+    document.getElementById(
+      'connections-progress'
+    );
+
+  const progressFill =
+    document.getElementById(
+      'connections-progress-fill'
+    );
+
   const solvedGroupsContainer =
     document.getElementById(
       'solved-groups'
     );
 
+  const puzzleProgressLabel =
+    document.getElementById(
+      'puzzle-progress-label'
+    );
+
   const FRAGMENTS_KEY =
     'first7-fragments';
+
+
+  /*
+    ============================================================
+    MULTI-PUZZLE STATE
+    ============================================================
+  */
+
+  function loadPuzzleProgress() {
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          PUZZLE_STATE_KEY
+        );
+
+      const saved =
+        raw ? JSON.parse(raw) : {};
+
+      if (
+        saved &&
+        Number.isInteger(
+          saved.currentPuzzleIndex
+        ) &&
+        saved.currentPuzzleIndex >= 0 &&
+        saved.currentPuzzleIndex < puzzles.length
+      ) {
+
+        currentPuzzleIndex =
+          saved.currentPuzzleIndex;
+
+      }
+
+      return saved;
+
+    } catch {
+
+      return {};
+
+    }
+
+  }
+
+
+  function savePuzzleProgress() {
+
+    try {
+
+      const completed =
+        puzzleState.size > 0
+          ? Object.fromEntries(
+              puzzleState
+            )
+          : {};
+
+      localStorage.setItem(
+        PUZZLE_STATE_KEY,
+        JSON.stringify({
+          currentPuzzleIndex,
+          completed
+        })
+      );
+
+    } catch {}
+
+  }
+
+
+  /*
+    ============================================================
+    CARD LOOKUP
+    ============================================================
+  */
+
+  function getCards() {
+
+    return Array.from(
+      document.querySelectorAll(
+        '#connections-board .game-card'
+      )
+    );
+
+  }
+
+
+  /*
+    ============================================================
+    FRAGMENT REWARD
+    ============================================================
+  */
 
   function unlockFragment(fragment) {
 
@@ -235,8 +426,12 @@ const allItems = groups
       fragments =
         raw ? JSON.parse(raw) : [];
 
-      if (!Array.isArray(fragments)) {
+      if (
+        !Array.isArray(fragments)
+      ) {
+
         fragments = [];
+
       }
 
     } catch {
@@ -249,33 +444,418 @@ const allItems = groups
       fragments.includes(fragment)
     ) return;
 
-    fragments.push(fragment);
+    fragments.push(
+      fragment
+    );
 
     localStorage.setItem(
       FRAGMENTS_KEY,
-      JSON.stringify(fragments)
+      JSON.stringify(
+        fragments
+      )
     );
 
   }
 
+
+  /*
+    ============================================================
+    HINT SYSTEM
+    ============================================================
+  */
+
+  function getSelectedGroup() {
+
+    if (selected.length === 0) {
+      return null;
+    }
+
+    const firstSelectedItem =
+      selected[0];
+
+    return (
+      puzzle.groups.find(
+        (group) =>
+          group.items.includes(
+            firstSelectedItem
+          )
+      ) || null
+    );
+
+  }
+
+
+  function resetHintState() {
+
+    hintLevel = 0;
+
+    if (hintPanel) {
+      hintPanel.classList.add('hidden');
+      hintPanel.innerHTML = '';
+    }
+
+    if (hintBtn) {
+      hintBtn.disabled = true;
+      hintBtn.textContent = '💡 Hint';
+    }
+
+  }
+
+
+  function updateHintAvailability() {
+
+    if (!hintBtn) return;
+
+    const group =
+      getSelectedGroup();
+
+    const hints =
+      group?.hints || [];
+
+    if (
+      !group ||
+      solvedGroups.has(group.category) ||
+      hints.length === 0
+    ) {
+
+      hintBtn.disabled = true;
+
+      hintBtn.textContent =
+        hints.length === 0
+          ? '💡 No Hint'
+          : '💡 Hint';
+
+      return;
+
+    }
+
+    if (hintLevel >= hints.length) {
+
+      hintBtn.disabled = true;
+      hintBtn.textContent = '💡 All Hints Used';
+
+      return;
+
+    }
+
+    hintBtn.disabled = false;
+    hintBtn.textContent =
+      `💡 Hint ${hintLevel + 1}`;
+
+  }
+
+
+  function showNextHint() {
+
+    const group =
+      getSelectedGroup();
+
+    if (!group) {
+
+      feedback.textContent =
+        'Select at least one word first, then use the hint.';
+
+      feedback.className =
+        'min-h-[28px] text-sm text-[var(--color-muted)]';
+
+      return;
+
+    }
+
+    const hints =
+      group.hints || [];
+
+    if (hintLevel >= hints.length) {
+      updateHintAvailability();
+      return;
+    }
+
+    hintLevel++;
+    hintsUsed++;
+
+    hintPanel.innerHTML = `
+
+      <div
+        class="text-[10px] uppercase tracking-[0.18em] text-[var(--color-primary)]"
+      >
+        Hint ${hintLevel}
+      </div>
+
+      <p
+        class="mt-2 text-sm leading-7 text-[var(--color-muted)]"
+      >
+        ${hints[hintLevel - 1]}
+      </p>
+
+    `;
+
+    hintPanel.classList.remove('hidden');
+
+    updateHintAvailability();
+
+  }
+
+
+  /*
+    ============================================================
+    RENDER CURRENT PUZZLE
+    ============================================================
+  */
+
+  function renderPuzzle() {
+
+    puzzle =
+      puzzles[
+        currentPuzzleIndex
+      ];
+
+    selected = [];
+
+    hintLevel = 0;
+
+    solvedGroups.clear();
+
+    resetHintState();
+
+    board.innerHTML = "";
+
+    solvedGroupsContainer.innerHTML =
+      "";
+
+    feedback.textContent = "";
+
+    feedback.className =
+      "min-h-[28px] text-sm";
+
+
+    const allItems =
+      puzzle.groups
+        .flatMap(
+          (group) =>
+            group.items.map(
+              (item) => ({
+                item,
+                group:
+                  group.category
+              })
+            )
+        )
+        .sort(
+          () =>
+            Math.random() - 0.5
+        );
+
+
+    allItems.forEach(
+      ({ item, group }) => {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+        button.type = "button";
+
+        button.className =
+          "game-card card flex min-h-[clamp(54px,17vw,92px)] items-center justify-center px-1.5 py-2 text-center text-[clamp(0.66rem,2.75vw,1rem)] font-medium leading-tight transition duration-200 hover:border-white/20 hover:bg-[var(--color-surface-light)] sm:px-3 sm:py-4";
+
+        button.dataset.item =
+          item;
+
+        button.dataset.group =
+          group;
+
+        button.setAttribute(
+          "aria-pressed",
+          "false"
+        );
+
+        const span =
+          document.createElement(
+            "span"
+          );
+
+        span.className =
+          "card-content";
+
+        span.textContent =
+          item;
+
+        button.appendChild(
+          span
+        );
+
+        board.appendChild(
+          button
+        );
+
+      }
+    );
+
+
+    puzzleProgressLabel.textContent =
+      `Puzzle ${currentPuzzleIndex + 1} of ${puzzles.length}`;
+
+    updateUI();
+
+  }
+
+
+  /*
+    ============================================================
+    UI
+    ============================================================
+  */
+
   function updateUI() {
+
+    const totalGroups =
+      puzzle.groups.length;
+
+    const percentage =
+      totalGroups > 0
+        ? (
+            solvedGroups.size /
+            totalGroups
+          ) * 100
+        : 0;
 
     selectionCount.textContent =
       `${selected.length} / 4 selected`;
 
     groupsCount.textContent =
-      `${solvedGroups.size} / ${(puzzle.groups || []).length} groups solved`;
+      `${solvedGroups.size} / ${totalGroups} groups solved`;
 
     submitBtn.disabled =
       selected.length !== 4;
 
+
+    /*
+      Make the action state obvious.
+    */
+
+    if (
+      selected.length === 4
+    ) {
+
+      submitBtn.classList.add(
+        'border-[var(--color-primary)]',
+        'bg-[rgba(214,179,106,0.18)]'
+      );
+
+      submitBtn.classList.remove(
+        'opacity-35'
+      );
+
+    } else {
+
+      submitBtn.classList.remove(
+        'border-[var(--color-primary)]',
+        'bg-[rgba(214,179,106,0.18)]'
+      );
+
+    }
+
+
+    if (progress) {
+
+      progress.setAttribute(
+        'aria-valuenow',
+        String(
+          solvedGroups.size
+        )
+      );
+
+    }
+
+    if (progressFill) {
+
+      progressFill.style.width =
+        `${percentage}%`;
+
+    }
+
   }
 
-  function clearSelection() {
 
-    selected.length = 0;
+  /*
+    ============================================================
+    SELECTION
+    ============================================================
+  */
 
-    cards.forEach((card) => {
+  function clearSelection(
+    clearMessage = true
+  ) {
+
+    selected = [];
+
+    getCards().forEach(
+      (card) => {
+
+        if (
+          card.disabled
+        ) return;
+
+        card.classList.remove(
+          'border-[var(--color-primary)]',
+          'bg-[rgba(214,179,106,0.12)]',
+          'text-[var(--color-primary)]'
+        );
+
+        card.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+      }
+    );
+
+    if (clearMessage) {
+
+      feedback.textContent =
+        '';
+
+      feedback.className =
+        'min-h-[28px] text-sm';
+
+    }
+
+    updateUI();
+
+  }
+
+
+  function selectCard(card) {
+
+    if (
+      card.disabled
+    ) return;
+
+    const item =
+      card.dataset.item;
+
+    if (!item) return;
+
+
+    /*
+      Clicking an already selected
+      card deselects it.
+    */
+
+    const existingIndex =
+      selected.indexOf(
+        item
+      );
+
+    if (
+      existingIndex !== -1
+    ) {
+
+      selected.splice(
+        existingIndex,
+        1
+      );
 
       card.classList.remove(
         'border-[var(--color-primary)]',
@@ -283,39 +863,395 @@ const allItems = groups
         'text-[var(--color-primary)]'
       );
 
-    });
+      card.setAttribute(
+        'aria-pressed',
+        'false'
+      );
 
-    feedback.textContent = '';
+      resetHintState();
+
+      updateUI();
+
+      return;
+
+    }
+
+
+    /*
+      Never allow more than four.
+    */
+
+    if (
+      selected.length >= 4
+    ) {
+
+      feedback.textContent =
+        'You can select only four words.';
+
+      feedback.className =
+        'min-h-[28px] text-sm text-[var(--color-muted)]';
+
+      return;
+
+    }
+
+
+    selected.push(
+      item
+    );
+
+    card.classList.add(
+      'border-[var(--color-primary)]',
+      'bg-[rgba(214,179,106,0.12)]',
+      'text-[var(--color-primary)]'
+    );
+
+    card.setAttribute(
+      'aria-pressed',
+      'true'
+    );
+
+    feedback.textContent =
+      selected.length === 4
+        ? 'Four selected — check your connection.'
+        : '';
+
+    feedback.className =
+      selected.length === 4
+        ? 'min-h-[28px] text-sm text-[var(--color-primary)]'
+        : 'min-h-[28px] text-sm';
 
     updateUI();
 
+    updateHintAvailability();
+
   }
+
+
+  /*
+    ============================================================
+    SOLVED GROUP
+    ============================================================
+  */
+
+  function markGroupSolved(
+    selectedCards,
+    solvedGroup,
+    discoveredItems,
+    groupScripture
+  ) {
+
+    selectedCards.forEach(
+      (card) => {
+
+        card.classList.remove(
+          'border-[var(--color-primary)]',
+          'bg-[rgba(214,179,106,0.12)]',
+          'text-[var(--color-primary)]'
+        );
+
+        card.classList.add(
+          'border-[var(--color-success)]',
+          'bg-[rgba(34,197,94,0.10)]',
+          'text-[var(--color-success)]',
+          'opacity-60',
+          'pointer-events-none'
+        );
+
+        card.disabled = true;
+
+        card.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        const content =
+          card.querySelector(
+            '.card-content'
+          );
+
+        if (content) {
+
+          content.innerHTML =
+            `<span class="mr-2 text-[var(--color-success)]" aria-hidden="true">✓</span>${content.textContent}`;
+
+        }
+
+      }
+    );
+
+
+    const solvedCard =
+      document.createElement(
+        'div'
+      );
+
+    solvedCard.className =
+      'card border-[rgba(34,197,94,0.22)] bg-[rgba(34,197,94,0.06)] p-5';
+
+    const scriptureBlock =
+      groupScripture?.reference && groupScripture?.verse
+        ? `
+          <div
+            class="mt-4 rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(214,179,106,0.04)] p-4"
+          >
+
+            <div
+              class="text-[10px] uppercase tracking-[0.18em] text-[var(--color-primary)]"
+            >
+              Scripture Connection
+            </div>
+
+            <blockquote
+              class="mt-2 text-sm leading-7 text-[var(--color-muted)]"
+            >
+              “${groupScripture.verse}”
+            </blockquote>
+
+            <div
+              class="mt-2 text-sm font-medium text-[var(--color-primary)]"
+            >
+              ${groupScripture.reference}
+            </div>
+
+          </div>
+        `
+        : '';
+
+    solvedCard.innerHTML = `
+
+      <div class="space-y-3">
+
+        <div
+          class="flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-[var(--color-success)]"
+        >
+
+          <span
+            class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[var(--color-success)] bg-[rgba(34,197,94,0.10)]"
+            aria-hidden="true"
+          >
+            ✓
+          </span>
+
+          <span>
+            ${solvedGroup}
+          </span>
+
+        </div>
+
+        <div
+          class="flex flex-wrap gap-2 text-sm text-[var(--color-text)]"
+        >
+
+          ${discoveredItems
+            .map(
+              (item) =>
+                `<span class="rounded-full border border-[rgba(34,197,94,0.16)] bg-[rgba(34,197,94,0.06)] px-2.5 py-1">${item}</span>`
+            )
+            .join('')}
+
+        </div>
+
+        ${scriptureBlock}
+
+      </div>
+
+    `;
+
+    solvedGroupsContainer.appendChild(
+      solvedCard
+    );
+
+  }
+
+
+  /*
+    ============================================================
+    COMPLETE PUZZLE
+    ============================================================
+  */
+
+  function showCompletionReward() {
+
+    unlockFragment(
+      puzzle.fragment
+    );
+
+    puzzleState.set(
+      currentPuzzleIndex,
+      true
+    );
+
+    savePuzzleProgress();
+
+    feedback.innerHTML = `
+
+      <div class="space-y-4">
+
+        <div
+          class="flex items-center gap-2 text-[var(--color-success)]"
+        >
+
+          <span
+            class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[var(--color-success)] bg-[rgba(34,197,94,0.10)]"
+            aria-hidden="true"
+          >
+            ✓
+          </span>
+
+          <span>
+            All scripture groups discovered.
+          </span>
+
+        </div>
+
+        <div
+          class="card border-[rgba(34,197,94,0.22)] bg-[rgba(34,197,94,0.06)] p-5"
+        >
+
+          <div
+            class="text-xs uppercase tracking-[0.18em] text-[var(--color-success)]"
+          >
+            Scripture Revealed
+          </div>
+
+          <blockquote
+            class="mt-3 text-sm leading-7 text-[var(--color-muted)]"
+          >
+            “${puzzle.scripture.verse}”
+          </blockquote>
+
+          <div
+            class="mt-3 text-sm text-[var(--color-primary)]"
+          >
+            ${puzzle.scripture.reference}
+          </div>
+
+          <div
+            class="mt-4 text-xs text-[var(--color-muted)]"
+          >
+            Discovery unlocked.
+          </div>
+
+          ${
+            hintsUsed > 0
+              ? `
+                <div class="mt-2 text-xs text-[var(--color-muted)]">
+                  ${hintsUsed} hint${hintsUsed === 1 ? '' : 's'} used.
+                </div>
+              `
+              : ''
+          }
+
+          <button
+            type="button"
+            class="share-discovery-btn mt-5 inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
+            data-share-title="First7 Play Scripture Connection"
+            data-share-message="${escapeAttribute(`Recovered Scripture Connection:\n${puzzle.scripture.reference}\n'${puzzle.scripture.verse}'\n\nFirst7 Play - transmitted from the recovered archive.`)}"
+          >
+            Share Discovery
+          </button>
+
+        </div>
+
+        ${
+          currentPuzzleIndex < puzzles.length - 1
+            ? `
+              <div class="pt-2">
+                <button
+                  type="button"
+                  id="next-puzzle-btn"
+                  class="w-full rounded-2xl border-2 border-[rgba(214,179,106,0.42)] bg-[rgba(214,179,106,0.12)] px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)] transition-all duration-200 hover:border-[rgba(214,179,106,0.65)] hover:bg-[rgba(214,179,106,0.18)] sm:py-4"
+                >
+                  Next Puzzle →
+                </button>
+              </div>
+            `
+            : `
+              <div class="pt-2 text-sm font-medium text-[var(--color-success)]">
+                🎉 All puzzles completed.
+              </div>
+            `
+        }
+
+      </div>
+
+    `;
+
+    /*
+      Share button is inserted dynamically,
+      so bind it after rendering.
+    */
+
+    const nextPuzzleBtn =
+      document.getElementById(
+        'next-puzzle-btn'
+      );
+
+    if (nextPuzzleBtn) {
+      nextPuzzleBtn.addEventListener(
+        'click',
+        () => {
+
+          if (
+            currentPuzzleIndex >=
+            puzzles.length - 1
+          ) return;
+
+          currentPuzzleIndex++;
+
+          savePuzzleProgress();
+
+          renderPuzzle();
+
+        }
+      );
+    }
+
+    if (
+      window.bindDiscoveryShareButtons
+    ) {
+
+      window.bindDiscoveryShareButtons({
+        selector:
+          '.share-discovery-btn'
+      });
+
+    }
+
+  }
+
+
+  /*
+    ============================================================
+    SHUFFLE
+    ============================================================
+  */
 
   function shuffleRemainingCards() {
 
     clearSelection();
 
-    const boardCards =
-      Array.from(
-        board.querySelectorAll(
-          '.game-card'
-        )
-      );
+    const cards =
+      getCards();
 
     const remaining =
-      boardCards.filter(
-        (card) => !card.disabled
+      cards.filter(
+        (card) =>
+          !card.disabled
       );
 
     for (
-      let index = remaining.length - 1;
+      let index =
+        remaining.length - 1;
       index > 0;
       index--
     ) {
 
       const swapIndex =
         Math.floor(
-          Math.random() * (index + 1)
+          Math.random() *
+          (index + 1)
         );
 
       [
@@ -331,96 +1267,170 @@ const allItems = groups
     const fragment =
       document.createDocumentFragment();
 
-    boardCards.forEach((card) => {
-
-      fragment.appendChild(
-        card.disabled
-          ? card
-          : remaining.shift()
+    const solved =
+      cards.filter(
+        (card) =>
+          card.disabled
       );
 
-    });
+    solved.forEach(
+      (card) =>
+        fragment.appendChild(
+          card
+        )
+    );
 
-    board.appendChild(fragment);
+    remaining.forEach(
+      (card) =>
+        fragment.appendChild(
+          card
+        )
+    );
+
+    board.appendChild(
+      fragment
+    );
 
   }
+
+
+  /*
+    ============================================================
+    ESCAPE
+    ============================================================
+  */
 
   function escapeAttribute(value) {
 
     return String(value)
-      .replaceAll('&', '&amp;')
-      .replaceAll('"', '&quot;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;');
+      .replaceAll(
+        '&',
+        '&amp;'
+      )
+      .replaceAll(
+        '"',
+        '&quot;'
+      )
+      .replaceAll(
+        '<',
+        '&lt;'
+      )
+      .replaceAll(
+        '>',
+        '&gt;'
+      );
 
   }
 
-  cards.forEach((card) => {
 
-    card.addEventListener('click', () => {
+  /*
+    ============================================================
+    CARD EVENTS
+    ============================================================
+  */
 
-      if (card.disabled) return;
+  board.addEventListener(
+    'click',
+    (event) => {
 
-      const item =
-        card.dataset.item;
-
-      const index =
-        selected.indexOf(item);
-
-      if (index > -1) {
-
-        selected.splice(index, 1);
-
-        card.classList.remove(
-          'border-[var(--color-primary)]',
-          'bg-[rgba(214,179,106,0.12)]',
-          'text-[var(--color-primary)]'
+      const target =
+        event.target.closest(
+          '.game-card'
         );
 
-      } else {
+      if (!target) return;
 
-        if (selected.length >= 4)
-          return;
+      selectCard(
+        target
+      );
 
-        selected.push(item);
+    }
+  );
 
-        card.classList.add(
-          'border-[var(--color-primary)]',
-          'bg-[rgba(214,179,106,0.12)]',
-          'text-[var(--color-primary)]'
-        );
 
-      }
-
-      updateUI();
-
-    });
-
-  });
+  /*
+    ============================================================
+    ACTION BUTTONS
+    ============================================================
+  */
 
   clearBtn.addEventListener(
     'click',
-    clearSelection
+    () => {
+
+      clearSelection();
+
+    }
   );
+
 
   shuffleBtn.addEventListener(
     'click',
-    shuffleRemainingCards
+    () => {
+
+      shuffleRemainingCards();
+
+    }
   );
+
+
+  hintBtn.addEventListener(
+    'click',
+    () => {
+
+      showNextHint();
+
+    }
+  );
+
+
+  /*
+    ============================================================
+    SUBMIT
+    ============================================================
+  */
 
   submitBtn.addEventListener(
     'click',
     () => {
 
+      /*
+        Safety check.
+      */
+
+      if (
+        selected.length !== 4
+      ) {
+
+        feedback.textContent =
+          'Select four words first.';
+
+        feedback.className =
+          'min-h-[28px] text-sm text-[var(--color-muted)]';
+
+        updateUI();
+
+        return;
+
+      }
+
+
       const selectedCards =
-        Array.from(cards).filter(
+        getCards().filter(
           (card) =>
             selected.includes(
               card.dataset.item
             )
         );
 
-      const groups = [
+
+      /*
+        Find the category
+        represented by the four
+        selected cards.
+      */
+
+      const categories = [
         ...new Set(
           selectedCards.map(
             (card) =>
@@ -429,10 +1439,33 @@ const allItems = groups
         )
       ];
 
-      if (groups.length === 1) {
+
+      /*
+        CORRECT
+      */
+
+      if (
+        categories.length === 1
+      ) {
 
         const solvedGroup =
-          groups[0];
+          categories[0];
+
+        /*
+          Don't solve a category twice.
+        */
+
+        if (
+          solvedGroups.has(
+            solvedGroup
+          )
+        ) {
+
+          clearSelection();
+
+          return;
+
+        }
 
         const discoveredItems =
           [...selected];
@@ -441,129 +1474,100 @@ const allItems = groups
           solvedGroup
         );
 
+        const solvedGroupData =
+          puzzle.groups.find(
+            (group) =>
+              group.category === solvedGroup
+          );
+
+        markGroupSolved(
+          selectedCards,
+          solvedGroup,
+          discoveredItems,
+          solvedGroupData?.scripture
+        );
+
+        selected = [];
+
+        resetHintState();
+
         feedback.textContent =
           `✓ Correct — ${solvedGroup}`;
 
         feedback.className =
-          'text-sm text-[var(--color-success)]';
-
-        const solvedCard =
-          document.createElement('div');
-
-        solvedCard.className =
-          'card p-5 border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.06)]';
-
-        solvedCard.innerHTML = `
-
-<div class="space-y-4">
-
-  <div>
-
-    <div class="text-sm uppercase tracking-[0.18em] text-[var(--color-primary)] mb-3">
-      ${solvedGroup}
-    </div>
-
-    <div class="flex flex-wrap gap-2 text-sm text-[var(--color-text)]">
-      ${discoveredItems.join(', ')}
-    </div>
-
-    <button
-      type="button"
-      class="share-discovery-btn mt-5 inline-flex items-center rounded-xl border border-[rgba(214,179,106,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.24)] hover:text-[var(--color-primary)]"
-      data-share-title="First7 Play Scripture Connection"
-      data-share-message="${escapeAttribute(`Recovered Scripture Connection:\n'${solvedGroup}: ${discoveredItems.join(' / ')}'\n\nFirst7 Play - transmitted from the recovered archive.`)}"
-    >
-      Share Discovery
-    </button>
-
-  </div>
-
-</div>
-
-`;
-
-        solvedGroupsContainer
-          .appendChild(
-            solvedCard
-          );
-
-        selectedCards.forEach(
-          (card) => {
-
-            card.disabled = true;
-
-            card.classList.add(
-              'opacity-40',
-              'pointer-events-none'
-            );
-
-          }
-        );
-
-        clearSelection();
+          'min-h-[28px] text-sm font-medium text-[var(--color-success)]';
 
         updateUI();
 
+
+        /*
+          FINAL REWARD
+        */
+
         if (
           solvedGroups.size ===
-          (puzzle.groups || []).length
+          puzzle.groups.length
         ) {
 
-          unlockFragment(
-            puzzle.fragment
-          );
-
-          feedback.innerHTML = `
-
-<div class="space-y-4">
-
-  <div class="text-[var(--color-success)]">
-    🎉 All scripture groups discovered.
-  </div>
-
-  <div class="card p-5 border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.06)]">
-
-    <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] mb-3">
-      Scripture Revealed
-    </div>
-
-    <blockquote class="text-sm leading-7 text-[var(--color-muted)]">
-      “${puzzle.scripture.verse}”
-    </blockquote>
-
-    <div class="mt-3 text-sm text-[var(--color-primary)]">
-      ${puzzle.scripture.reference}
-    </div>
-
-  </div>
-
-</div>
-
-`;
+          showCompletionReward();
 
         }
 
-      } else {
-
-        feedback.textContent =
-          'Not quite. Those words do not belong together.';
-
-        feedback.className =
-          'text-sm text-[var(--color-danger)]';
+        return;
 
       }
+
+
+      /*
+        WRONG
+      */
+
+      feedback.textContent =
+        'Not quite — those words do not belong together.';
+
+      feedback.className =
+        'min-h-[28px] text-sm text-[var(--color-danger)]';
 
     }
   );
 
-  updateUI();
+
+  /*
+    Restore the last active puzzle index,
+    then render that puzzle in the browser.
+  */
+
+  const savedProgress =
+    loadPuzzleProgress();
+
+  if (
+    savedProgress &&
+    Number.isInteger(
+      savedProgress.currentPuzzleIndex
+    ) &&
+    savedProgress.currentPuzzleIndex >= 0 &&
+    savedProgress.currentPuzzleIndex < puzzles.length
+  ) {
+
+    currentPuzzleIndex =
+      savedProgress.currentPuzzleIndex;
+
+  }
+
+  renderPuzzle();
 
 </script>
 
+
 <script>
-  import { bindDiscoveryShareButtons } from '../../lib/shareDiscovery';
+
+  import {
+    bindDiscoveryShareButtons
+  } from '../../lib/shareDiscovery';
 
   bindDiscoveryShareButtons({
-    selector: '.share-discovery-btn'
+    selector:
+      '.share-discovery-btn'
   });
+
 </script>
