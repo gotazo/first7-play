@@ -1,213 +1,437 @@
 ---
 type Variant =
-  | "light"
-  | "wisdom"
-  | "fire"
-  | "vision"
-  | "wilderness"
-  | "kingdom"
-  | "water"
-  | "shepherd"
-  | "restoration"
-  | "covenant"
-  | "courage"
-  | "scroll"
-  | "dreams"
-  | "heaven"
-  | "gate"
-  | "provision"
-  | "identity"
-  | "prophecy"
-  | "warning"
-  | "strength"
-  | "abundance"
-  | "hope"
-  | "awakening"
-  | "generic";
+  | "light" | "wisdom" | "fire" | "vision" | "wilderness"
+  | "kingdom" | "water" | "shepherd" | "restoration" | "covenant"
+  | "courage" | "scroll" | "dreams" | "heaven" | "gate"
+  | "provision" | "identity" | "prophecy" | "warning" | "strength"
+  | "abundance" | "hope" | "awakening" | "generic";
 
 interface Props {
   variant?: Variant;
   label?: string;
 }
 
-const {
-  variant = "light",
-  label = `${variant} fragment`
-} = Astro.props;
+const { variant = "light", label = `${variant} fragment` } = Astro.props;
+
+const palette: Record<Variant, { main: string; glow: string; soft: string }> = {
+  light:       { main: "#f5d98a", glow: "#f7c95c", soft: "#fff4c9" },
+  wisdom:      { main: "#b9a7e8", glow: "#8e72d5", soft: "#eee8ff" },
+  fire:        { main: "#ff9b52", glow: "#ff5d3d", soft: "#ffd0a6" },
+  vision:      { main: "#8fc8ff", glow: "#5c8cff", soft: "#d9ecff" },
+  wilderness:  { main: "#c7a56a", glow: "#8f7040", soft: "#ead9b8" },
+  kingdom:     { main: "#e8c76b", glow: "#b77a2e", soft: "#fff0b1" },
+  water:       { main: "#6fc8d7", glow: "#348db2", soft: "#d5f5f7" },
+  shepherd:   { main: "#b7d58a", glow: "#638f59", soft: "#e5f2ce" },
+  restoration:{ main: "#8ed39d", glow: "#4f9f69", soft: "#dff5e4" },
+  covenant:   { main: "#d7a86e", glow: "#95602f", soft: "#f5dfc1" },
+  courage:    { main: "#e49a79", glow: "#a94f43", soft: "#f8d5c8" },
+  scroll:     { main: "#d9b477", glow: "#956c38", soft: "#f5e4c7" },
+  dreams:     { main: "#a995ef", glow: "#6554bd", soft: "#e8e3ff" },
+  heaven:     { main: "#8dc7f4", glow: "#557ec8", soft: "#deefff" },
+  gate:       { main: "#c6a77b", glow: "#73583d", soft: "#eadcc7" },
+  provision: { main: "#e2b66b", glow: "#a96e32", soft: "#f7e2b8" },
+  identity:  { main: "#d6b3e9", glow: "#885aa7", soft: "#f0def8" },
+  prophecy:  { main: "#e3c77d", glow: "#7560b5", soft: "#f3e9c4" },
+  warning:   { main: "#f0b46b", glow: "#b45c39", soft: "#ffe0b5" },
+  strength:  { main: "#aeb9c7", glow: "#596a7b", soft: "#e2e7ed" },
+  abundance: { main: "#e7c76f", glow: "#7e9d4e", soft: "#f4e9b7" },
+  hope:      { main: "#f2d889", glow: "#d08a45", soft: "#fff1bc" },
+  awakening: { main: "#f4c978", glow: "#e78b45", soft: "#ffe7b2" },
+  generic:   { main: "#c9b995", glow: "#776b56", soft: "#eee7d8" }
+};
+
+const colors = palette[variant];
 ---
 
 <svg
-  class={`fragment-symbol fragment-symbol-${variant}`}
-  viewBox="0 0 64 64"
+  class={`fragment-symbol fragment-${variant}`}
+  viewBox="0 0 120 120"
   role="img"
   aria-label={label}
-  fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <circle class="fragment-symbol-ring" cx="32" cy="32" r="25" />
-  <circle class="fragment-symbol-inner" cx="32" cy="32" r="15" />
+  <defs>
+    <radialGradient id={`bg-${variant}`}>
+      <stop offset="0" stop-color={colors.soft} stop-opacity=".18" />
+      <stop offset=".62" stop-color={colors.main} stop-opacity=".045" />
+      <stop offset="1" stop-color={colors.main} stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id={`metal-${variant}`} x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color={colors.soft} stop-opacity=".75" />
+      <stop offset=".45" stop-color={colors.main} stop-opacity=".5" />
+      <stop offset="1" stop-color={colors.glow} stop-opacity=".2" />
+    </linearGradient>
+    <filter id={`glow-${variant}`} x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+  </defs>
 
-  {
-    (variant === "light" || variant === "hope" || variant === "awakening") && (
-      <>
-        <path d="M32 14v10" />
-        <path d="M32 40v10" />
-        <path d="M14 32h10" />
-        <path d="M40 32h10" />
-        <path d="M24 24l16 16" />
-        <path d="M40 24L24 40" />
-        {variant === "awakening" && <path d="M21 47c5-5 17-5 22 0" />}
-        <circle cx="32" cy="32" r="4" />
-      </>
-    )
-  }
+  <!-- Shared ancient artifact frame -->
+  <circle class="halo" cx="60" cy="60" r="48" />
+  <circle class="outer" cx="60" cy="60" r="43" />
+  <circle class="inner" cx="60" cy="60" r="36" />
+  <path class="ticks" d="M60 12v7M60 101v7M12 60h7M101 60h7" />
+  <path class="ticks" d="m26 26 5 5m63 63 5 5m0-73-5 5m-63 63-5 5" />
+  <circle class="core" cx="60" cy="60" r="31" />
 
-  {
-    (variant === "wisdom" || variant === "scroll" || variant === "prophecy") && (
-      <>
-        <path d="M20 24c5-4 19-4 24 0v18c-5-4-19-4-24 0V24z" />
-        <path d="M32 22v20" />
-        <path d="M24 29h5" />
-        <path d="M35 29h5" />
-        <path d="M24 35h5" />
-        <path d="M35 35h5" />
-        {variant === "scroll" && <path d="M18 24c0-4 4-6 8-4" />}
-        {variant === "prophecy" && <path d="M32 14v5" />}
-      </>
-    )
-  }
+  <!-- LIGHT: lamp and rays -->
+  {variant === "light" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M48 65h24M51 70h18M55 76h10" />
+      <path d="M49 61c-5-7-3-16 4-20 9-5 19 2 19 11 0 4-2 7-5 9" />
+      <path d="M60 37V25M42 43l-8-8M78 43l8-8M38 56H27M82 56h11" />
+      <path d="M53 61h14" />
+    </g>
+  )}
 
-  {
-    (variant === "fire" || variant === "courage" || variant === "strength") && (
-      <>
-        <path d="M33 49c8-4 11-10 9-16-1-5-5-8-8-13-1 6-8 9-7 17" />
-        <path d="M31 49c-7-3-10-8-9-14 1-5 5-8 7-13 1 7 9 10 7 19" />
-        <path d="M32 45c3-2 5-5 4-9-1-2-2-4-4-6-2 4-6 7-4 12 1 2 2 3 4 3z" />
-        {variant === "strength" && <path d="M22 50h20" />}
-      </>
-    )
-  }
+  <!-- WISDOM: open book and lamp -->
+  {variant === "wisdom" && (
+    <g class="art">
+      <path d="M28 42c10-5 21-4 32 2 11-6 22-7 32-2v38c-10-5-21-4-32 2-11-6-22-7-32-2z" />
+      <path d="M60 44v38M37 52h15M37 60h15M68 52h15M68 60h15" />
+      <path d="M48 35c2-6 8-9 12-9s10 3 12 9" />
+      <path d="M60 27v-6" />
+    </g>
+  )}
 
-  {
-    (variant === "vision" || variant === "dreams") && (
-      <>
-        <path d="M14 32s7-11 18-11 18 11 18 11-7 11-18 11-18-11-18-11z" />
-        <circle cx="32" cy="32" r="6" />
-        <path d="M32 18v-5" />
-        <path d="M32 51v-5" />
-        {variant === "dreams" && <path d="M22 19c5-4 15-4 20 0" />}
-      </>
-    )
-  }
+  <!-- FIRE: altar and flame -->
+  {variant === "fire" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M32 72h56l-7 10H39z" />
+      <path d="M39 72l9-20h24l9 20" />
+      <path d="M60 61c-10-11 2-17 2-29 9 8 13 15 8 24 0 8-5 11-10 14-7-4-10-10-7-17 2-4 5-7 7-12" />
+      <path d="M48 72h24" />
+    </g>
+  )}
 
-  {
-    variant === "wilderness" && (
-      <>
-        <path d="M18 42c6-9 10-16 14-25 4 9 8 16 14 25H18z" />
-        <path d="M23 42c4-5 7-9 9-15 2 6 5 10 9 15" />
-        <path d="M17 48h30" />
-      </>
-    )
-  }
+  <!-- VISION: eye with star -->
+  {variant === "vision" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M24 60s14-22 36-22 36 22 36 22-14 22-36 22S24 60 24 60z" />
+      <circle cx="60" cy="60" r="11" />
+      <circle cx="60" cy="60" r="4" />
+      <path d="M60 28v-9M60 101v-9" />
+      <path d="m82 38 4-7 4 7 7 4-7 4-4 7-4-7-7-4z" />
+    </g>
+  )}
 
-  {
-    (variant === "kingdom" || variant === "heaven") && (
-      <>
-        <path d="M20 47V27l6 5 6-10 6 10 6-5v20H20z" />
-        <path d="M25 47V36h14v11" />
-        <path d="M20 27h24" />
-        {variant === "heaven" && <path d="M22 20c5-5 15-5 20 0" />}
-      </>
-    )
-  }
+  <!-- WILDERNESS: mountain, tent and pillar -->
+  {variant === "wilderness" && (
+    <g class="art">
+      <path d="M22 77 46 43l14 19 8-11 30 26z" />
+      <path d="m36 77 24-25 24 25" />
+      <path d="M42 77V62l18-13 18 13v15" />
+      <path d="M60 39v-17M55 27h10" />
+    </g>
+  )}
 
-  {
-    (variant === "water" || variant === "provision" || variant === "abundance") && (
-      <>
-        <path d="M32 16c7 8 12 15 12 22a12 12 0 0 1-24 0c0-7 5-14 12-22z" />
-        <path d="M24 39c4 3 12 3 16 0" />
-        <path d="M27 45c3 2 7 2 10 0" />
-        {variant === "provision" && <path d="M21 24c5 2 17 2 22 0" />}
-        {variant === "abundance" && <path d="M20 31c7 3 17 3 24 0" />}
-      </>
-    )
-  }
+  <!-- KINGDOM: throne and crown -->
+  {variant === "kingdom" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M36 78V47l10 9 14-21 14 21 10-9v31z" />
+      <path d="M44 78V63h32v15M32 82h56" />
+      <path d="m43 36 7 7 10-15 10 15 7-7" />
+      <path d="M43 36h34" />
+    </g>
+  )}
 
-  {
-    variant === "shepherd" && (
-      <>
-        <path d="M34 49V20a7 7 0 1 1 7 7" />
-        <path d="M26 49V29" />
-        <path d="M22 36c4-4 12-4 16 0" />
-        <path d="M22 43c4-3 12-3 16 0" />
-      </>
-    )
-  }
+  <!-- WATER: river and fountain -->
+  {variant === "water" && (
+    <g class="art">
+      <path d="M35 35c8 9 12 15 12 22 0 8-5 13-12 13" />
+      <path d="M85 35c-8 9-12 15-12 22 0 8 5 13 12 13" />
+      <path d="M47 51c5 5 21 5 26 0" />
+      <path d="M44 63c7 5 25 5 32 0" />
+      <path d="M60 31v-9M55 26l5-7 5 7" />
+      <path d="M30 78c8 5 16 5 24 0M66 78c8 5 16 5 24 0" />
+    </g>
+  )}
 
-  {
-    (variant === "restoration" || variant === "identity") && (
-      <>
-        <path d="M18 36c5 9 17 12 26 5" />
-        <path d="M44 41h-9" />
-        <path d="M44 41v-9" />
-        <path d="M46 28c-5-9-17-12-26-5" />
-        <path d="M20 23h9" />
-        <path d="M20 23v9" />
-        {variant === "identity" && <circle cx="32" cy="32" r="5" />}
-      </>
-    )
-  }
+  <!-- SHEPHERD: crook and sheep -->
+  {variant === "shepherd" && (
+    <g class="art">
+      <path d="M67 82V36c0-10 9-15 15-9 5 5 1 14-7 14" />
+      <path d="M34 70c-5-8 1-17 10-17 3-8 16-9 20-1 9-1 13 10 7 17-8 8-29 9-37 1z" />
+      <circle cx="38" cy="62" r="2" />
+      <path d="M30 76h45" />
+    </g>
+  )}
 
-  {
-    (variant === "covenant" || variant === "gate" || variant === "warning" || variant === "generic") && (
-      <>
-        <path d="M18 40c3-9 8-15 14-15s11 6 14 15" />
-        <path d="M21 41c4-6 8-9 11-9s7 3 11 9" />
-        <path d="M24 42c3-3 6-5 8-5s5 2 8 5" />
-        <path d="M32 20v-5" />
-        {variant === "gate" && <path d="M24 47V29h16v18" />}
-        {variant === "warning" && <path d="M32 25v10" />}
-        {variant === "warning" && <path d="M32 42h.1" />}
-      </>
-    )
-  }
+  <!-- RESTORATION: broken vessel restored with branch -->
+  {variant === "restoration" && (
+    <g class="art">
+      <path d="M39 39h42M43 39l3 42h28l3-42" />
+      <path d="M48 51 60 59 72 49" />
+      <path d="M60 59V29" />
+      <path d="M60 35c-10-8-17 0-19-6M60 35c10-8 17 0 19-6" />
+      <path d="M38 47h8M74 47h8" />
+    </g>
+  )}
+
+  <!-- COVENANT: tablets and rainbow arc -->
+  {variant === "covenant" && (
+    <g class="art">
+      <path d="M38 39h18l4 6v33H38zM64 39h18l-4 6v33H60V45z" />
+      <path d="M44 51h10M44 58h10M44 65h10M66 51h10M66 58h10M66 65h10" />
+      <path d="M27 37c14-16 52-16 66 0" />
+      <path d="M34 32c12-10 40-10 52 0" />
+    </g>
+  )}
+
+  <!-- COURAGE: shield and sword -->
+  {variant === "courage" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M37 37h46v23c0 15-10 24-23 29-13-5-23-14-23-29z" />
+      <path d="M60 42v37M42 60h36" />
+      <path d="m82 30 9 9-27 27-9-9zM55 66l-7 7" />
+    </g>
+  )}
+
+  <!-- SCROLL: rolled parchment -->
+  {variant === "scroll" && (
+    <g class="art">
+      <path d="M39 30h37c6 0 9 5 5 9l-6 5v37H40c-6 0-9-6-5-10l5-4V35c0-3-1-5-1-5z" />
+      <path d="M40 43h29M40 51h24M40 59h29M40 67h20" />
+      <path d="M39 30c-8 0-10 10-2 14 3 2 7 1 9-1" />
+      <path d="M76 76c8 0 10-10 2-14" />
+    </g>
+  )}
+
+  <!-- DREAMS: moon, stars, cloud -->
+  {variant === "dreams" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M72 30c-13 0-23 10-23 23s10 23 23 23c5 0 10-2 14-5-4 1-8-1-11-4-7-7-7-18 0-25 3-3 7-5 11-5-4-4-9-7-14-7z" />
+      <path d="M31 67c-7-5-4-15 5-15 2-8 14-9 18-2 9-2 15 8 9 15-6 7-25 7-32 2z" />
+      <circle cx="38" cy="33" r="2" />
+      <circle cx="28" cy="45" r="1.5" />
+      <circle cx="88" cy="45" r="2" />
+    </g>
+  )}
+
+  <!-- HEAVEN: throne above clouds -->
+  {variant === "heaven" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M42 43V30l9 7 9-15 9 15 9-7v13" />
+      <path d="M49 43v18h22V43M43 61h34" />
+      <path d="M27 70c5-8 15-8 20-1 7-10 22-10 29 0 5-7 15-7 20 1" />
+      <circle cx="60" cy="20" r="2" />
+    </g>
+  )}
+
+  <!-- GATE: ancient city gate -->
+  {variant === "gate" && (
+    <g class="art">
+      <path d="M27 82V40l11-13h44l11 13v42z" />
+      <path d="M43 82V51c0-13 34-13 34 0v31" />
+      <path d="M43 51h34M60 51v31" />
+      <path d="M31 42h58" />
+      <path d="M36 35h48" />
+    </g>
+  )}
+
+  <!-- PROVISION: bread and grain basket -->
+  {variant === "provision" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M31 55c3-12 12-18 25-18s22 6 25 18" />
+      <path d="M31 55h50l-5 25H36z" />
+      <path d="M39 55c0-8 6-13 12-13s12 5 12 13" />
+      <path d="M43 68h34M47 75h26" />
+      <path d="M39 34c-4-10 5-15 9-5M52 32c-3-11 8-14 11-4M64 35c0-9 9-11 11-3" />
+    </g>
+  )}
+
+  <!-- IDENTITY: person within a seal -->
+  {variant === "identity" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <circle cx="60" cy="43" r="9" />
+      <path d="M42 78c1-14 9-23 18-23s17 9 18 23" />
+      <path d="M29 35c8-9 19-13 31-13s23 4 31 13" />
+      <path d="M29 85c8 8 19 13 31 13s23-5 31-13" />
+    </g>
+  )}
+
+  <!-- PROPHECY: scroll, eye, star -->
+  {variant === "prophecy" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M32 39h48v43H37c-7 0-9-8-4-12l4-3V43c0-2-2-4-5-4z" />
+      <path d="M42 52h25M42 60h20M42 68h25" />
+      <path d="M68 32s-7-9-16 0c9 9 16 0 16 0z" />
+      <circle cx="60" cy="32" r="3" />
+      <path d="m85 22 3 6 6 3-6 3-3 6-3-6-6-3 6-3z" />
+    </g>
+  )}
+
+  <!-- WARNING: trumpet and watchtower -->
+  {variant === "warning" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M36 43h29l21-10v26L65 49H36z" />
+      <path d="M36 43v16M30 43h6v16h-6z" />
+      <path d="M65 43v16M86 34v25" />
+      <path d="M53 64v18M43 82h20" />
+      <path d="M43 28h20M53 22v6" />
+    </g>
+  )}
+
+  <!-- STRENGTH: strong tower -->
+  {variant === "strength" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M34 82V39l8-10h36l8 10v43z" />
+      <path d="M34 39h52M42 29v53M78 29v53" />
+      <path d="M48 52h24v30H48z" />
+      <path d="M60 52v30M48 62h24M48 72h24" />
+      <path d="M28 87h64" />
+    </g>
+  )}
+
+  <!-- ABUNDANCE: overflowing basket -->
+  {variant === "abundance" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M29 53c5-10 17-15 31-15s26 5 31 15" />
+      <path d="M31 53h58l-7 28H38z" />
+      <path d="M43 50c-5-8 3-14 7-6M54 48c-4-10 7-14 11-5M67 50c-1-9 10-11 13-3" />
+      <path d="M42 62h36M40 71h40" />
+      <path d="M37 36c3-9 11-12 15-4M61 33c5-8 14-6 16 2" />
+    </g>
+  )}
+
+  <!-- HOPE: sunrise -->
+  {variant === "hope" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M28 72h64" />
+      <path d="M35 72c3-18 14-27 25-27s22 9 25 27" />
+      <path d="M60 45V28M44 48l-9-12M76 48l9-12M39 60H25M81 60h14" />
+      <path d="M45 80h30" />
+    </g>
+  )}
+
+  <!-- AWAKENING: dawn and opening eye -->
+  {variant === "awakening" && (
+    <g class="art" filter={`url(#glow-${variant})`}>
+      <path d="M26 68h68" />
+      <path d="M35 68c4-17 14-25 25-25s21 8 25 25" />
+      <path d="M39 43s8-12 21-12 21 12 21 12" />
+      <circle cx="60" cy="43" r="7" />
+      <path d="M60 29V19M45 33l-7-8M75 33l7-8" />
+    </g>
+  )}
+
+  <!-- GENERIC: recovered ancient fragment -->
+  {variant === "generic" && (
+    <g class="art">
+      <path d="M37 31h39l8 8v42H36c-7 0-10-8-5-13l6-5V37z" />
+      <path d="M43 48h27M43 56h21M43 64h27" />
+      <path d="m79 30 7-7 7 7-7 7z" />
+      <path d="M31 77h39" />
+    </g>
+  )}
 </svg>
 
 <style>
   .fragment-symbol {
-    height: 5rem;
-    width: 5rem;
-    color: rgba(214, 179, 106, 0.58);
-    filter: drop-shadow(0 0 0 rgba(214, 179, 106, 0));
-    opacity: 0.46;
+    width: 5.8rem;
+    height: 5.8rem;
+    overflow: visible;
+    color: var(--fragment-main);
+    opacity: .78;
     stroke: currentColor;
-    stroke-width: 1.65;
+    stroke-width: 1.55;
     stroke-linecap: round;
     stroke-linejoin: round;
+    filter: drop-shadow(0 5px 12px color-mix(in srgb, var(--fragment-glow) 18%, transparent));
     transition:
-      color 500ms ease,
-      filter 500ms ease,
-      opacity 500ms ease,
-      transform 500ms ease;
+      transform .5s ease,
+      opacity .5s ease,
+      filter .5s ease;
+    --fragment-main: #d6b36a;
+    --fragment-glow: #a77a37;
   }
 
-  .fragment-symbol-ring {
-    opacity: 0.42;
+  .fragment-symbol::before {
+    content: "";
   }
 
-  .fragment-symbol-inner {
-    opacity: 0.18;
-    stroke-dasharray: 2 7;
+  .halo {
+    fill: url(#bg-light);
+    opacity: .8;
   }
+
+  .outer {
+    stroke: var(--fragment-main);
+    stroke-width: 1.15;
+    stroke-dasharray: 2 6;
+    opacity: .35;
+  }
+
+  .inner {
+    stroke: var(--fragment-main);
+    stroke-width: .8;
+    opacity: .22;
+  }
+
+  .core {
+    fill: color-mix(in srgb, var(--fragment-main) 7%, transparent);
+    stroke: var(--fragment-main);
+    stroke-width: .7;
+    opacity: .35;
+  }
+
+  .ticks {
+    stroke: var(--fragment-main);
+    stroke-width: .85;
+    opacity: .45;
+  }
+
+  .art {
+    stroke: var(--fragment-main);
+  }
+
+  .fragment-fire { --fragment-main: #ff9b52; --fragment-glow: #ff5d3d; }
+  .fragment-light { --fragment-main: #f5d98a; --fragment-glow: #f7c95c; }
+  .fragment-wisdom { --fragment-main: #b9a7e8; --fragment-glow: #8e72d5; }
+  .fragment-vision { --fragment-main: #8fc8ff; --fragment-glow: #5c8cff; }
+  .fragment-wilderness { --fragment-main: #c7a56a; --fragment-glow: #8f7040; }
+  .fragment-kingdom { --fragment-main: #e8c76b; --fragment-glow: #b77a2e; }
+  .fragment-water { --fragment-main: #6fc8d7; --fragment-glow: #348db2; }
+  .fragment-shepherd { --fragment-main: #b7d58a; --fragment-glow: #638f59; }
+  .fragment-restoration { --fragment-main: #8ed39d; --fragment-glow: #4f9f69; }
+  .fragment-covenant { --fragment-main: #d7a86e; --fragment-glow: #95602f; }
+  .fragment-courage { --fragment-main: #e49a79; --fragment-glow: #a94f43; }
+  .fragment-scroll { --fragment-main: #d9b477; --fragment-glow: #956c38; }
+  .fragment-dreams { --fragment-main: #a995ef; --fragment-glow: #6554bd; }
+  .fragment-heaven { --fragment-main: #8dc7f4; --fragment-glow: #557ec8; }
+  .fragment-gate { --fragment-main: #c6a77b; --fragment-glow: #73583d; }
+  .fragment-provision { --fragment-main: #e2b66b; --fragment-glow: #a96e32; }
+  .fragment-identity { --fragment-main: #d6b3e9; --fragment-glow: #885aa7; }
+  .fragment-prophecy { --fragment-main: #e3c77d; --fragment-glow: #7560b5; }
+  .fragment-warning { --fragment-main: #f0b46b; --fragment-glow: #b45c39; }
+  .fragment-strength { --fragment-main: #aeb9c7; --fragment-glow: #596a7b; }
+  .fragment-abundance { --fragment-main: #e7c76f; --fragment-glow: #7e9d4e; }
+  .fragment-hope { --fragment-main: #f2d889; --fragment-glow: #d08a45; }
+  .fragment-awakening { --fragment-main: #f4c978; --fragment-glow: #e78b45; }
+  .fragment-generic { --fragment-main: #c9b995; --fragment-glow: #776b56; }
 
   :global(.fragment-card:hover) .fragment-symbol {
-    opacity: 0.72;
-    transform: translateY(-2px);
+    opacity: 1;
+    transform: translateY(-4px) scale(1.035);
+    filter: drop-shadow(0 0 17px color-mix(in srgb, var(--fragment-glow) 38%, transparent));
   }
 
   :global(.fragment-card.is-unlocked) .fragment-symbol {
-    color: rgb(214, 179, 106);
-    filter: drop-shadow(0 0 14px rgba(214, 179, 106, 0.26));
     opacity: 1;
+    filter: drop-shadow(0 0 20px color-mix(in srgb, var(--fragment-main) 38%, transparent));
+  }
+
+  :global(.fragment-card.is-unlocked) .outer {
+    stroke-dasharray: 3 4;
+    animation: fragment-orbit 24s linear infinite;
+  }
+
+  @keyframes fragment-orbit {
+    to { transform: rotate(360deg); transform-origin: 60px 60px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.fragment-card.is-unlocked) .outer { animation: none; }
   }
 </style>

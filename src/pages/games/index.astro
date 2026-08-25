@@ -27,23 +27,28 @@ const engineMeta = {
   connections: {
     title: "Connections",
     description:
-      "Discover hidden relationships between scripture themes, symbols, teachings, and ideas.",
+      "Find hidden relationships between biblical words, themes, people, symbols, and Scripture.",
     href: "/games/connections",
-    badge: "Hidden Patterns"
+    badge: "Hidden Patterns",
+    icon: "✦"
   },
+
   sequence: {
     title: "Sequence",
     description:
-      "Arrange journeys, spiritual growth, scripture themes, and events into the correct order.",
+      "Arrange biblical journeys, events, themes, and spiritual progression into the correct order.",
     href: "/games/sequence",
-    badge: "Progression"
+    badge: "Progression",
+    icon: "→"
   },
+
   matching: {
     title: "Matching",
     description:
-      "Match scripture meanings, verses, symbols, and spiritual ideas.",
+      "Connect Scripture references, meanings, symbols, and biblical ideas through careful discovery.",
     href: "/games/matching",
-    badge: "Reflection"
+    badge: "Reflection",
+    icon: "◇"
   }
 };
 
@@ -53,57 +58,190 @@ const games =
   );
 
 const gamesByEngine =
-  engineOrder.map((engine) => ({
-    engine,
-    ...engineMeta[engine],
-    puzzles: games.filter((game) =>
-      game.data.engine === engine
-    )
-  })).filter((group) =>
-    group.puzzles.length > 0
-  );
+  engineOrder
+    .map((engine) => ({
+      engine,
+      ...engineMeta[engine],
+      puzzles: games.filter(
+        (game) =>
+          game.data.engine === engine
+      )
+    }))
+    .filter(
+      (group) =>
+        group.puzzles.length > 0
+    );
 
-const getDifficultyLabel = (game: GameEntry) =>
-  game.data.difficulty;
+const connections =
+  gamesByEngine.find(
+    (group) =>
+      group.engine === "connections"
+  )?.puzzles ?? [];
+
+const sequence =
+  gamesByEngine.find(
+    (group) =>
+      group.engine === "sequence"
+  )?.puzzles ?? [];
+
+const matching =
+  gamesByEngine.find(
+    (group) =>
+      group.engine === "matching"
+  )?.puzzles ?? [];
+
+/*
+|----------------------------------------------------------------------
+| START HERE
+|----------------------------------------------------------------------
+|
+| Keep the opening recommendations intentional rather than alphabetical.
+| These titles are already part of the current First7 Play library.
+|
+*/
+
+const startHereTitles = [
+  "Bread and Provision",
+  "Shepherds and Flocks",
+  "Rivers and Waters"
+];
+
+const startHere =
+  startHereTitles
+    .map((title) =>
+      games.find(
+        (game) =>
+          game.data.title === title
+      )
+    )
+    .filter(
+      (game): game is GameEntry =>
+        Boolean(game)
+    );
+
+/*
+|----------------------------------------------------------------------
+| FEATURED DISCOVERY
+|----------------------------------------------------------------------
+|
+| Use Bread and Provision when available because it is the first
+| introductory Connections experience in the current library.
+|
+*/
+
+const featuredDiscovery =
+  games.find(
+    (game) =>
+      game.data.title ===
+      "Bread and Provision"
+  ) ??
+  connections[0] ??
+  games[0];
+
+const getDifficultyLabel =
+  (game: GameEntry) =>
+    game.data.difficulty;
+
+const getEngineLabel =
+  (game: GameEntry) =>
+    engineMeta[
+      game.data.engine
+    ].title;
 ---
 
 <Layout
   title="Bible Puzzle Games & Interactive Scripture Challenges | First7 Play"
-  description="Explore Bible puzzle games, scripture challenges, Christian sequence games, Bible matching games, and interactive faith-based puzzle experiences."
+  description="Explore Bible puzzle games, Scripture connections, sequence challenges, matching games, and interactive Christian puzzle experiences designed for discovery and learning."
 >
 
+  <!-- ============================================================ -->
   <!-- HERO -->
+  <!-- ============================================================ -->
 
   <section
-    class="border-b border-[var(--color-border)]"
+    class="relative overflow-hidden border-b border-[var(--color-border)]"
   >
 
+    <!-- Atmosphere -->
+
     <div
-      class="mx-auto max-w-6xl px-5 py-24"
+      class="pointer-events-none absolute inset-0"
+      aria-hidden="true"
+    >
+
+      <div
+        class="absolute left-[8%] top-[18%] h-64 w-64 rounded-full bg-[rgba(214,179,106,0.05)] blur-3xl"
+      ></div>
+
+      <div
+        class="absolute right-[10%] top-[20%] h-72 w-72 rounded-full bg-[rgba(143,191,180,0.035)] blur-3xl"
+      ></div>
+
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(214,179,106,0.035),transparent_55%)]"
+      ></div>
+
+    </div>
+
+    <div
+      class="relative mx-auto max-w-6xl px-5 py-20 sm:py-24 lg:py-28"
     >
 
       <div class="max-w-3xl">
 
         <div
-          class="mb-6 inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+          class="mb-6 inline-flex items-center gap-2 rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.07)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
         >
-          Explore Games
+          First7 Play
         </div>
 
         <h1
-          class="text-5xl font-semibold tracking-tight md:text-6xl"
+          class="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl"
         >
           Interactive Bible Games
-          and Scripture Puzzles
+          <span class="block text-[var(--color-primary)]">
+            and Scripture Puzzles
+          </span>
         </h1>
 
         <p
-          class="mt-8 text-lg leading-8 text-[var(--color-muted)]"
+          class="mt-7 max-w-2xl text-base leading-7 text-[var(--color-muted)] sm:text-lg sm:leading-8"
         >
-          Explore scripture-based puzzle experiences
-          designed around discovery, reflection,
-          hidden meaning, memory, and progression.
+          Discover Scripture through connections,
+          sequence, matching, mystery, and interactive
+          puzzle experiences designed to make biblical
+          learning memorable.
         </p>
+
+        <div
+          class="mt-8 flex flex-wrap gap-3"
+        >
+
+          <a
+            href={
+              featuredDiscovery
+                ? getGameUrl(featuredDiscovery.id)
+                : "/games/connections"
+            }
+            class="inline-flex items-center rounded-xl border border-[var(--color-primary)] bg-[var(--color-primary)] px-5 py-3 text-sm font-medium text-black transition duration-300 hover:brightness-110"
+          >
+            Start Playing
+            <span class="ml-2">
+              →
+            </span>
+          </a>
+
+          <a
+            href="/investigations"
+            class="inline-flex items-center rounded-xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] px-5 py-3 text-sm text-[var(--color-muted)] transition duration-300 hover:border-[rgba(214,179,106,0.22)] hover:text-white"
+          >
+            Explore Investigations
+            <span class="ml-2">
+              →
+            </span>
+          </a>
+
+        </div>
 
       </div>
 
@@ -111,98 +249,316 @@ const getDifficultyLabel = (game: GameEntry) =>
 
   </section>
 
-  <!-- GAME GRID -->
 
-  <section
-    class="mx-auto max-w-6xl px-5 py-20"
-  >
+  <!-- ============================================================ -->
+  <!-- FEATURED DISCOVERY -->
+  <!-- ============================================================ -->
 
-    {
-      gamesByEngine.map((group) => (
+  {
+    featuredDiscovery && (
+      <section
+        class="mx-auto max-w-6xl px-5 pt-16 sm:pt-20"
+      >
 
-        <section class="mb-16 last:mb-0">
+        <div
+          class="overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.16)] bg-[linear-gradient(135deg,rgba(214,179,106,0.08),rgba(255,255,255,0.02)_45%,rgba(143,191,180,0.025))]"
+        >
 
           <div
-            class="mb-8 flex flex-wrap items-end justify-between gap-6"
+            class="grid lg:grid-cols-[1.25fr_0.75fr]"
+          >
+
+            <div
+              class="p-7 sm:p-10 lg:p-12"
+            >
+
+              <div
+                class="text-xs uppercase tracking-[0.2em] text-[var(--color-primary)]"
+              >
+                Featured Discovery
+              </div>
+
+              <h2
+                class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+              >
+                {featuredDiscovery.data.title}
+              </h2>
+
+              <p
+                class="mt-5 max-w-2xl leading-8 text-[var(--color-muted)]"
+              >
+                {featuredDiscovery.data.description}
+              </p>
+
+              <div
+                class="mt-7 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.14em]"
+              >
+
+                <span
+                  class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-[var(--color-muted)]"
+                >
+                  {getEngineLabel(featuredDiscovery)}
+                </span>
+
+                <span
+                  class="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-[var(--color-muted)]"
+                >
+                  {getDifficultyLabel(featuredDiscovery)}
+                </span>
+
+              </div>
+
+              <a
+                href={getGameUrl(featuredDiscovery.id)}
+                class="mt-8 inline-flex items-center text-sm text-[var(--color-primary)] transition duration-300 hover:translate-x-1 hover:text-white"
+              >
+                Play Discovery
+                <span class="ml-2">
+                  →
+                </span>
+              </a>
+
+            </div>
+
+            <div
+              class="relative min-h-[220px] overflow-hidden border-t border-[rgba(214,179,106,0.1)] lg:border-l lg:border-t-0"
+            >
+
+              <div
+                class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(214,179,106,0.16),transparent_60%)]"
+                aria-hidden="true"
+              ></div>
+
+              <div
+                class="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(214,179,106,0.22)] bg-[rgba(8,12,11,0.5)] shadow-[0_0_80px_rgba(214,179,106,0.08)]"
+              >
+
+                <div
+                  class="absolute inset-3 rounded-full border border-dashed border-[rgba(214,179,106,0.16)]"
+                ></div>
+
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-3xl font-semibold tracking-[0.16em] text-[var(--color-primary)]"
+                >
+                  F7
+                </div>
+
+              </div>
+
+              <div
+                class="absolute left-[18%] top-[24%] h-2 w-2 rounded-full bg-[var(--color-primary)] opacity-60"
+              ></div>
+
+              <div
+                class="absolute right-[18%] top-[34%] h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] opacity-50"
+              ></div>
+
+              <div
+                class="absolute bottom-[22%] left-[28%] h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] opacity-40"
+              ></div>
+
+              <div
+                class="absolute bottom-[28%] right-[26%] h-2 w-2 rounded-full bg-[var(--color-primary)] opacity-50"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    )
+  }
+
+
+  <!-- ============================================================ -->
+  <!-- CHOOSE YOUR WAY -->
+  <!-- ============================================================ -->
+
+  <section
+    class="mx-auto max-w-6xl px-5 py-16 sm:py-20"
+  >
+
+    <div
+      class="max-w-2xl"
+    >
+
+      <div
+        class="text-xs uppercase tracking-[0.2em] text-[var(--color-primary)]"
+      >
+        Choose Your Way
+      </div>
+
+      <h2
+        class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+      >
+        Discover Scripture your way.
+      </h2>
+
+      <p
+        class="mt-4 leading-8 text-[var(--color-muted)]"
+      >
+        Each game type approaches Scripture differently,
+        so you can explore biblical ideas through
+        patterns, progression, and reflection.
+      </p>
+
+    </div>
+
+
+    <div
+      class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+    >
+
+      {
+        gamesByEngine.map((group) => (
+
+          <a
+            href={group.href}
+            class="group relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.22)] hover:bg-[rgba(255,255,255,0.035)]"
+          >
+
+            <div
+              class="absolute right-6 top-5 text-4xl font-serif text-[rgba(214,179,106,0.09)]"
+              aria-hidden="true"
+            >
+              {group.icon}
+            </div>
+
+            <div
+              class="text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+            >
+              {group.badge}
+            </div>
+
+            <h3
+              class="mt-5 text-2xl font-semibold tracking-tight"
+            >
+              {group.title}
+            </h3>
+
+            <p
+              class="mt-4 leading-7 text-[var(--color-muted)]"
+            >
+              {group.description}
+            </p>
+
+            <div
+              class="mt-7 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+            >
+              Explore {group.title}
+              <span class="ml-1">
+                →
+              </span>
+            </div>
+
+          </a>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- START HERE -->
+  <!-- ============================================================ -->
+
+  {
+    startHere.length > 0 && (
+      <section
+        class="border-y border-[var(--color-border)] bg-[rgba(255,255,255,0.012)]"
+      >
+
+        <div
+          class="mx-auto max-w-6xl px-5 py-16 sm:py-20"
+        >
+
+          <div
+            class="flex flex-wrap items-end justify-between gap-5"
           >
 
             <div>
 
               <div
-                class="inline-flex rounded-full border border-[rgba(214,179,106,0.18)] bg-[rgba(214,179,106,0.08)] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+                class="text-xs uppercase tracking-[0.2em] text-[var(--color-primary)]"
               >
-                {group.badge}
+                Start Here
               </div>
 
               <h2
-                class="mt-5 text-3xl font-semibold tracking-tight"
+                class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
               >
-                {group.title}
+                Begin with a simple discovery.
               </h2>
-
-              <p
-                class="mt-4 max-w-2xl leading-8 text-[var(--color-muted)]"
-              >
-                {group.description}
-              </p>
 
             </div>
 
             <a
-              href={group.href}
-              class="text-sm text-[var(--color-primary)] transition-colors duration-300 hover:text-white"
+              href="/games/connections"
+              class="text-sm text-[var(--color-primary)] transition duration-300 hover:text-white"
             >
-              Explore {group.title} &rarr;
+              Browse Connections
+              <span class="ml-1">
+                →
+              </span>
             </a>
 
           </div>
 
+
           <div
-            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+            class="mt-10 grid gap-5 md:grid-cols-3"
           >
 
             {
-              group.puzzles.map((game) => (
+              startHere.map((game) => (
 
                 <a
                   href={getGameUrl(game.id)}
-                  class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.04)]"
+                  class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)]"
                 >
 
                   <div
                     class="flex items-center justify-between gap-4"
                   >
 
-                    <div
-                      class="text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+                    <span
+                      class="text-xs uppercase tracking-[0.16em] text-[var(--color-primary)]"
                     >
-                      {group.title}
-                    </div>
+                      {getEngineLabel(game)}
+                    </span>
 
-                    <div
+                    <span
                       class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
                     >
                       {getDifficultyLabel(game)}
-                    </div>
+                    </span>
 
                   </div>
 
                   <h3
-                    class="mt-8 text-2xl font-semibold tracking-tight"
+                    class="mt-6 text-xl font-semibold tracking-tight"
                   >
                     {game.data.title}
                   </h3>
 
                   <p
-                    class="mt-5 leading-8 text-[var(--color-muted)]"
+                    class="mt-4 text-sm leading-7 text-[var(--color-muted)]"
                   >
                     {game.data.description}
                   </p>
 
                   <div
-                    class="mt-8 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+                    class="mt-6 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
                   >
-                    Play Puzzle &rarr;
+                    Play Puzzle
+                    <span class="ml-1">
+                      →
+                    </span>
                   </div>
 
                 </a>
@@ -212,20 +568,448 @@ const getDifficultyLabel = (game: GameEntry) =>
 
           </div>
 
-        </section>
+        </div>
 
-      ))
+      </section>
+    )
+  }
+
+
+  <!-- ============================================================ -->
+  <!-- GAME LIBRARY -->
+  <!-- ============================================================ -->
+
+  <section
+    class="mx-auto max-w-6xl px-5 py-16 sm:py-20"
+  >
+
+    <div
+      class="max-w-2xl"
+    >
+
+      <div
+        class="text-xs uppercase tracking-[0.2em] text-[var(--color-primary)]"
+      >
+        Explore the Library
+      </div>
+
+      <h2
+        class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+      >
+        More ways to explore Scripture.
+      </h2>
+
+      <p
+        class="mt-4 leading-8 text-[var(--color-muted)]"
+      >
+        Once you have found your starting point,
+        explore the growing collection of First7
+        puzzle experiences.
+      </p>
+
+    </div>
+
+
+    <!-- CONNECTIONS -->
+
+    {
+      connections.length > 0 && (
+        <section class="mt-12">
+
+          <div
+            class="flex flex-wrap items-end justify-between gap-5"
+          >
+
+            <div>
+
+              <div
+                class="text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+              >
+                Hidden Patterns
+              </div>
+
+              <h3
+                class="mt-3 text-2xl font-semibold tracking-tight"
+              >
+                Connections
+              </h3>
+
+              <p
+                class="mt-3 max-w-2xl leading-7 text-[var(--color-muted)]"
+              >
+                Discover hidden relationships between
+                biblical words, themes, people, symbols,
+                and Scripture.
+              </p>
+
+            </div>
+
+            <a
+              href="/games/connections"
+              class="text-sm text-[var(--color-primary)] hover:text-white"
+            >
+              View all Connections →
+            </a>
+
+          </div>
+
+
+          <div
+            class="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+          >
+
+            {
+              connections
+                .slice(0, 6)
+                .map((game) => (
+
+                  <a
+                    href={getGameUrl(game.id)}
+                    class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)] hover:bg-[rgba(255,255,255,0.035)]"
+                  >
+
+                    <div
+                      class="flex items-center justify-between gap-4"
+                    >
+
+                      <span
+                        class="text-xs uppercase tracking-[0.16em] text-[var(--color-primary)]"
+                      >
+                        Connections
+                      </span>
+
+                      <span
+                        class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+                      >
+                        {getDifficultyLabel(game)}
+                      </span>
+
+                    </div>
+
+                    <h4
+                      class="mt-6 text-xl font-semibold tracking-tight"
+                    >
+                      {game.data.title}
+                    </h4>
+
+                    <p
+                      class="mt-4 text-sm leading-7 text-[var(--color-muted)]"
+                    >
+                      {game.data.description}
+                    </p>
+
+                    <div
+                      class="mt-6 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      Play Puzzle →
+                    </div>
+
+                  </a>
+
+                ))
+            }
+
+          </div>
+
+        </section>
+      )
+    }
+
+
+    <!-- SEQUENCE -->
+
+    {
+      sequence.length > 0 && (
+        <section
+          class="mt-16 border-t border-[var(--color-border)] pt-16"
+        >
+
+          <div
+            class="flex flex-wrap items-end justify-between gap-5"
+          >
+
+            <div>
+
+              <div
+                class="text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+              >
+                Progression
+              </div>
+
+              <h3
+                class="mt-3 text-2xl font-semibold tracking-tight"
+              >
+                Sequence
+              </h3>
+
+              <p
+                class="mt-3 max-w-2xl leading-7 text-[var(--color-muted)]"
+              >
+                Arrange biblical journeys, events,
+                themes, and spiritual progression
+                into the correct order.
+              </p>
+
+            </div>
+
+            <a
+              href="/games/sequence"
+              class="text-sm text-[var(--color-primary)] hover:text-white"
+            >
+              View all Sequence →
+            </a>
+
+          </div>
+
+
+          <div
+            class="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+          >
+
+            {
+              sequence
+                .slice(0, 3)
+                .map((game) => (
+
+                  <a
+                    href={getGameUrl(game.id)}
+                    class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)]"
+                  >
+
+                    <div
+                      class="flex items-center justify-between gap-4"
+                    >
+
+                      <span
+                        class="text-xs uppercase tracking-[0.16em] text-[var(--color-primary)]"
+                      >
+                        Sequence
+                      </span>
+
+                      <span
+                        class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+                      >
+                        {getDifficultyLabel(game)}
+                      </span>
+
+                    </div>
+
+                    <h4
+                      class="mt-6 text-xl font-semibold tracking-tight"
+                    >
+                      {game.data.title}
+                    </h4>
+
+                    <p
+                      class="mt-4 text-sm leading-7 text-[var(--color-muted)]"
+                    >
+                      {game.data.description}
+                    </p>
+
+                    <div
+                      class="mt-6 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      Play Puzzle →
+                    </div>
+
+                  </a>
+
+                ))
+            }
+
+          </div>
+
+        </section>
+      )
+    }
+
+
+    <!-- MATCHING -->
+
+    {
+      matching.length > 0 && (
+        <section
+          class="mt-16 border-t border-[var(--color-border)] pt-16"
+        >
+
+          <div
+            class="flex flex-wrap items-end justify-between gap-5"
+          >
+
+            <div>
+
+              <div
+                class="text-xs uppercase tracking-[0.18em] text-[var(--color-primary)]"
+              >
+                Reflection
+              </div>
+
+              <h3
+                class="mt-3 text-2xl font-semibold tracking-tight"
+              >
+                Matching
+              </h3>
+
+              <p
+                class="mt-3 max-w-2xl leading-7 text-[var(--color-muted)]"
+              >
+                Connect Scripture references, meanings,
+                symbols, and biblical ideas through
+                careful discovery.
+              </p>
+
+            </div>
+
+            <a
+              href="/games/matching"
+              class="text-sm text-[var(--color-primary)] hover:text-white"
+            >
+              View all Matching →
+            </a>
+
+          </div>
+
+
+          <div
+            class="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+          >
+
+            {
+              matching
+                .slice(0, 3)
+                .map((game) => (
+
+                  <a
+                    href={getGameUrl(game.id)}
+                    class="group rounded-3xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(214,179,106,0.2)]"
+                  >
+
+                    <div
+                      class="flex items-center justify-between gap-4"
+                    >
+
+                      <span
+                        class="text-xs uppercase tracking-[0.16em] text-[var(--color-primary)]"
+                      >
+                        Matching
+                      </span>
+
+                      <span
+                        class="text-xs uppercase tracking-[0.14em] text-[var(--color-muted)]"
+                      >
+                        {getDifficultyLabel(game)}
+                      </span>
+
+                    </div>
+
+                    <h4
+                      class="mt-6 text-xl font-semibold tracking-tight"
+                    >
+                      {game.data.title}
+                    </h4>
+
+                    <p
+                      class="mt-4 text-sm leading-7 text-[var(--color-muted)]"
+                    >
+                      {game.data.description}
+                    </p>
+
+                    <div
+                      class="mt-6 text-sm text-[var(--color-primary)] transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      Play Puzzle →
+                    </div>
+
+                  </a>
+
+                ))
+            }
+
+          </div>
+
+        </section>
+      )
     }
 
   </section>
 
+
+  <!-- ============================================================ -->
+  <!-- INVESTIGATION ARCHIVE -->
+  <!-- ============================================================ -->
+
+  <section
+    class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20"
+  >
+
+    <div
+      class="relative overflow-hidden rounded-3xl border border-[rgba(214,179,106,0.16)] bg-[linear-gradient(135deg,rgba(214,179,106,0.07),rgba(255,255,255,0.015),rgba(143,191,180,0.025))]"
+    >
+
+      <div
+        class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[rgba(214,179,106,0.06)] blur-3xl"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="relative grid gap-8 p-8 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center lg:p-12"
+      >
+
+        <div>
+
+          <div
+            class="text-xs uppercase tracking-[0.2em] text-[var(--color-primary)]"
+          >
+            The Investigation Archive
+          </div>
+
+          <h2
+            class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+          >
+            Follow the clues.
+            <span class="block text-[var(--color-primary)]">
+              Discover what Scripture reveals.
+            </span>
+          </h2>
+
+          <p
+            class="mt-5 max-w-2xl leading-8 text-[var(--color-muted)]"
+          >
+            Explore visual scenes, Scripture clues,
+            hidden patterns, and biblical mysteries
+            through First7 Investigations.
+          </p>
+
+        </div>
+
+        <a
+          href="/investigations"
+          class="inline-flex shrink-0 items-center justify-center rounded-xl border border-[var(--color-primary)] px-5 py-3 text-sm text-[var(--color-primary)] transition duration-300 hover:bg-[var(--color-primary)] hover:text-black"
+        >
+          Enter the Archive
+          <span class="ml-2">
+            →
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
   <!-- SEO -->
+  <!-- ============================================================ -->
 
   <section
     class="mx-auto max-w-4xl px-5 pb-24"
   >
 
-    <div class="prose prose-invert max-w-none">
+    <div
+      class="prose prose-invert max-w-none"
+    >
 
       <h2>
         Bible Puzzle Games and Interactive Scripture Challenges
@@ -233,15 +1017,27 @@ const getDifficultyLabel = (game: GameEntry) =>
 
       <p>
         First7 Play offers interactive Bible games
-        and scripture puzzle experiences designed around
+        and Scripture puzzle experiences designed around
         reflection, learning, progression, and discovery.
+        Players can explore biblical connections,
+        sequence challenges, matching puzzles,
+        and deeper investigation experiences.
       </p>
 
       <p>
-        Explore Bible sequence games,
-        scripture matching puzzles,
-        Christian connections games,
-        and hidden mystery challenges.
+        Each game is designed to encourage players
+        to look more closely at Scripture, remember
+        biblical relationships, and discover meaningful
+        connections between people, places, events,
+        symbols, themes, and teachings.
+      </p>
+
+      <p>
+        Explore Christian puzzle games,
+        Bible connections games,
+        Scripture sequence challenges,
+        Bible matching games, and interactive
+        investigation experiences through First7 Play.
       </p>
 
     </div>

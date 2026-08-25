@@ -1,95 +1,181 @@
 <div class="chamber-seal" aria-hidden="true">
-  <svg
-    viewBox="0 0 160 160"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <circle class="seal-glow" cx="80" cy="80" r="58" />
-    <g class="seal-rotor">
-      <circle cx="80" cy="80" r="58" />
-      <circle cx="80" cy="80" r="43" />
-      <circle cx="80" cy="80" r="24" />
-      <path d="M80 22v22" />
-      <path d="M80 116v22" />
-      <path d="M22 80h22" />
-      <path d="M116 80h22" />
-      <path d="M39 39l16 16" />
-      <path d="M121 39l-16 16" />
-      <path d="M39 121l16-16" />
-      <path d="M121 121l-16-16" />
-      <path d="M80 54l23 26-23 26-23-26 23-26z" />
-      <path d="M68 80h24" />
-      <path d="M80 68v24" />
+  <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="chamber-light">
+        <stop stop-color="#f7e2a0" stop-opacity=".22"/>
+        <stop offset=".45" stop-color="#d6b36a" stop-opacity=".06"/>
+        <stop offset="1" stop-color="#d6b36a" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="chamber-glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="6" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <circle cx="160" cy="160" r="138" fill="url(#chamber-light)" class="ambient"/>
+    <circle class="stone-ring" cx="160" cy="160" r="126"/>
+    <circle class="engraved-ring" cx="160" cy="160" r="115"/>
+    <circle class="dashed-ring" cx="160" cy="160" r="103"/>
+
+    <!-- Four fragment sockets -->
+    <g class="sockets">
+      <circle cx="160" cy="39" r="13"/>
+      <circle cx="281" cy="160" r="13"/>
+      <circle cx="160" cy="281" r="13"/>
+      <circle cx="39" cy="160" r="13"/>
+      <path d="M160 54v20M266 160h-20M160 266v-20M54 160h20"/>
     </g>
-    <g class="seal-stars">
-      <circle cx="80" cy="22" r="2" />
-      <circle cx="80" cy="138" r="2" />
-      <circle cx="22" cy="80" r="2" />
-      <circle cx="138" cy="80" r="2" />
+
+    <!-- Ancient architectural seal -->
+    <g class="architecture">
+      <path d="M87 207V132l20-31h106l20 31v75"/>
+      <path d="M105 207v-57c0-28 110-28 110 0v57"/>
+      <path d="M105 150h110M160 150v57"/>
+      <path d="M78 213h164"/>
+      <path d="M92 223h136"/>
+    </g>
+
+    <!-- Central doorway -->
+    <g class="door" filter="url(#chamber-glow)">
+      <path d="M119 207v-53c0-23 18-42 41-42s41 19 41 42v53"/>
+      <path d="M119 207h82"/>
+      <path d="M160 112v95"/>
+      <path d="M137 207v-38c0-13 10-23 23-23s23 10 23 23v38"/>
+      <circle cx="160" cy="171" r="4"/>
+    </g>
+
+    <!-- Seal over the door -->
+    <g class="seal">
+      <circle cx="160" cy="112" r="39"/>
+      <path d="m160 82 21 30-21 30-21-30z"/>
+      <circle cx="160" cy="112" r="13"/>
+      <path d="M160 99v26M147 112h26"/>
+    </g>
+
+    <!-- Rotating outer mechanism -->
+    <g class="rotor">
+      <path d="M160 25v18M160 277v18M25 160h18M277 160h18"/>
+      <path d="m64 64 13 13M243 243l13 13M256 64l-13 13M77 243l-13 13"/>
+      <path d="M93 35l7 18M220 267l7 18M35 93l18 7M267 220l18 7"/>
+    </g>
+
+    <g class="stars">
+      <circle cx="160" cy="28" r="3"/>
+      <circle cx="292" cy="160" r="3"/>
+      <circle cx="160" cy="292" r="3"/>
+      <circle cx="28" cy="160" r="3"/>
     </g>
   </svg>
 </div>
 
 <style>
   .chamber-seal {
+    min-height: 18rem;
     display: grid;
-    min-height: 11rem;
     place-items: center;
+    position: relative;
   }
 
   .chamber-seal svg {
-    height: clamp(8.5rem, 20vw, 12rem);
-    width: clamp(8.5rem, 20vw, 12rem);
-    color: rgba(214, 179, 106, 0.76);
-    filter: drop-shadow(0 0 26px rgba(214, 179, 106, 0.13));
+    width: clamp(15rem, 35vw, 20rem);
+    height: clamp(15rem, 35vw, 20rem);
+    overflow: visible;
+    color: #d6b36a;
     stroke: currentColor;
-    stroke-width: 1.35;
     stroke-linecap: round;
     stroke-linejoin: round;
+    filter: drop-shadow(0 0 30px rgba(214,179,106,.14));
   }
 
-  .seal-glow {
-    fill: rgba(214, 179, 106, 0.035);
-    stroke: rgba(214, 179, 106, 0.16);
-    transform-origin: 80px 80px;
-    animation: seal-pulse 5.5s ease-in-out infinite;
+  .ambient {
+    animation: ambient-pulse 6s ease-in-out infinite;
   }
 
-  .seal-rotor {
-    opacity: 0.72;
-    transform-origin: 80px 80px;
-    animation: seal-rotate 34s linear infinite;
+  .stone-ring {
+    stroke: #9c8457;
+    stroke-width: 2;
+    opacity: .28;
   }
 
-  .seal-stars {
-    fill: currentColor;
-    opacity: 0.48;
+  .engraved-ring {
+    stroke: #d6b36a;
+    stroke-width: 1.2;
+    opacity: .42;
+  }
+
+  .dashed-ring {
+    stroke: #f0d58a;
+    stroke-width: 1;
+    stroke-dasharray: 3 8;
+    opacity: .5;
+  }
+
+  .sockets {
+    stroke: #e6c978;
+    stroke-width: 1.4;
+    opacity: .6;
+  }
+
+  .sockets circle {
+    fill: rgba(214,179,106,.045);
+  }
+
+  .architecture {
+    stroke: #ad9463;
+    stroke-width: 1.35;
+    opacity: .48;
+  }
+
+  .door {
+    stroke: #f0d58a;
+    stroke-width: 1.5;
+    opacity: .75;
+  }
+
+  .seal {
+    stroke: #f7e2a0;
+    stroke-width: 1.7;
+    opacity: .9;
+  }
+
+  .rotor {
+    opacity: .34;
+    transform-origin: 160px 160px;
+    animation: chamber-rotate 42s linear infinite;
+  }
+
+  .stars {
+    fill: #f7df96;
     stroke: none;
-    animation: seal-pulse 4.5s ease-in-out infinite reverse;
+    opacity: .7;
+    animation: star-pulse 4s ease-in-out infinite;
   }
 
-  @keyframes seal-rotate {
-    to {
-      transform: rotate(360deg);
-    }
+  .chamber-seal:hover svg {
+    filter: drop-shadow(0 0 42px rgba(214,179,106,.24));
   }
 
-  @keyframes seal-pulse {
-    0%,
-    100% {
-      opacity: 0.34;
-    }
+  .chamber-seal:hover .seal {
+    opacity: 1;
+  }
 
-    50% {
-      opacity: 0.86;
-    }
+  @keyframes chamber-rotate {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes ambient-pulse {
+    0%, 100% { opacity: .35; }
+    50% { opacity: .8; }
+  }
+
+  @keyframes star-pulse {
+    0%, 100% { opacity: .4; }
+    50% { opacity: .95; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .seal-glow,
-    .seal-rotor,
-    .seal-stars {
-      animation: none;
-    }
+    .ambient,
+    .rotor,
+    .stars { animation: none; }
   }
 </style>
