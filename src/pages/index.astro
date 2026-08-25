@@ -226,90 +226,799 @@ const dailyPuzzle = {
         class="relative hidden lg:flex items-center justify-center"
       >
 
-        <div
-          class="relative aspect-square w-full max-w-[540px]"
-        >
+        <!-- SACRED ARCHIVE HERO VISUAL -->
 
-          <!-- OUTER GLOW -->
+<div class="relative aspect-square w-full max-w-[560px]">
 
-          <div
-            class="absolute inset-0 rounded-full bg-[rgba(214,179,106,0.06)] blur-3xl"
-          ></div>
+  <!-- ATMOSPHERIC LIGHT -->
 
-          <!-- SVG VISUAL -->
+  <div
+    class="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(214,179,106,0.14),rgba(214,179,106,0.04)_38%,transparent_70%)] blur-2xl"
+  ></div>
 
-          <svg
-            viewBox="0 0 600 600"
-            class="relative z-10 h-full w-full"
-            fill="none"
-          >
+  <div
+    class="absolute left-[18%] top-[12%] h-40 w-40 rounded-full bg-[rgba(143,191,180,0.05)] blur-3xl"
+  ></div>
 
-            <!-- CIRCLES -->
+  <div
+    class="absolute bottom-[12%] right-[12%] h-48 w-48 rounded-full bg-[rgba(214,179,106,0.06)] blur-3xl"
+  ></div>
 
-            <circle
-              cx="300"
-              cy="300"
-              r="220"
-              stroke="rgba(214,179,106,0.14)"
-              stroke-width="1"
-            />
 
-            <circle
-              cx="300"
-              cy="300"
-              r="160"
-              stroke="rgba(214,179,106,0.1)"
-              stroke-width="1"
-            />
+  <!-- MAIN SVG -->
 
-            <circle
-              cx="300"
-              cy="300"
-              r="100"
-              stroke="rgba(214,179,106,0.08)"
-              stroke-width="1"
-            />
+  <svg
+    viewBox="0 0 620 620"
+    class="relative z-10 h-full w-full"
+    fill="none"
+    aria-hidden="true"
+  >
 
-            <!-- CONNECTION PATHS -->
+    <defs>
 
-            <path
-              d="M180 220 L300 150 L420 240 L360 380 L220 420 L180 220"
-              stroke="rgba(214,179,106,0.28)"
-              stroke-width="2"
-            />
+      <!-- GOLD LIGHT -->
 
-            <!-- NODES -->
+      <radialGradient id="f7-gold-glow">
+        <stop
+          offset="0%"
+          stop-color="#f3d994"
+          stop-opacity="0.9"
+        />
 
-            <circle cx="180" cy="220" r="8" fill="#d6b36a" />
-            <circle cx="300" cy="150" r="8" fill="#d6b36a" />
-            <circle cx="420" cy="240" r="8" fill="#d6b36a" />
-            <circle cx="360" cy="380" r="8" fill="#d6b36a" />
-            <circle cx="220" cy="420" r="8" fill="#d6b36a" />
+        <stop
+          offset="35%"
+          stop-color="#d6b36a"
+          stop-opacity="0.32"
+        />
 
-            <!-- CENTER -->
+        <stop
+          offset="100%"
+          stop-color="#d6b36a"
+          stop-opacity="0"
+        />
+      </radialGradient>
 
-            <circle
-              cx="300"
-              cy="300"
-              r="42"
-              fill="rgba(214,179,106,0.12)"
-              stroke="rgba(214,179,106,0.35)"
-            />
 
-            <text
-              x="300"
-              y="308"
-              text-anchor="middle"
-              fill="#d6b36a"
-              font-size="18"
-              letter-spacing="4"
-            >
-              F7
-            </text>
+      <!-- PARCHMENT -->
 
-          </svg>
+      <linearGradient
+        id="f7-parchment"
+        x1="0"
+        y1="0"
+        x2="1"
+        y2="1"
+      >
+        <stop
+          offset="0%"
+          stop-color="#e8d7a8"
+        />
 
-        </div>
+        <stop
+          offset="45%"
+          stop-color="#c9ad70"
+        />
+
+        <stop
+          offset="100%"
+          stop-color="#80683d"
+        />
+      </linearGradient>
+
+
+      <!-- STONE -->
+
+      <linearGradient
+        id="f7-stone"
+        x1="0"
+        y1="0"
+        x2="1"
+        y2="1"
+      >
+        <stop
+          offset="0%"
+          stop-color="#29302f"
+        />
+
+        <stop
+          offset="55%"
+          stop-color="#171c1b"
+        />
+
+        <stop
+          offset="100%"
+          stop-color="#0b0f0e"
+        />
+      </linearGradient>
+
+
+      <!-- ARCH LIGHT -->
+
+      <linearGradient
+        id="f7-arch-light"
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="1"
+      >
+        <stop
+          offset="0%"
+          stop-color="#d6b36a"
+          stop-opacity="0.32"
+        />
+
+        <stop
+          offset="100%"
+          stop-color="#d6b36a"
+          stop-opacity="0.02"
+        />
+      </linearGradient>
+
+
+      <!-- SOFT GLOW -->
+
+      <filter
+        id="f7-soft-glow"
+        x="-100%"
+        y="-100%"
+        width="300%"
+        height="300%"
+      >
+        <feGaussianBlur
+          stdDeviation="10"
+        />
+      </filter>
+
+
+      <filter
+        id="f7-small-glow"
+        x="-100%"
+        y="-100%"
+        width="300%"
+        height="300%"
+      >
+        <feGaussianBlur
+          stdDeviation="4"
+        />
+      </filter>
+
+
+      <!-- ARCH TEXTURE -->
+
+      <pattern
+        id="f7-stone-lines"
+        width="80"
+        height="40"
+        patternUnits="userSpaceOnUse"
+      >
+
+        <path
+          d="M0 20 H80"
+          stroke="#d6b36a"
+          stroke-opacity="0.035"
+          stroke-width="1"
+        />
+
+        <path
+          d="M40 0 V20 M20 20 V40 M60 20 V40"
+          stroke="#d6b36a"
+          stroke-opacity="0.025"
+          stroke-width="1"
+        />
+
+      </pattern>
+
+    </defs>
+
+
+    <!-- ========================================================= -->
+    <!-- OUTER ATMOSPHERE -->
+    <!-- ========================================================= -->
+
+    <circle
+      cx="310"
+      cy="310"
+      r="270"
+      fill="url(#f7-gold-glow)"
+      opacity="0.55"
+      filter="url(#f7-soft-glow)"
+    />
+
+    <circle
+      cx="310"
+      cy="310"
+      r="250"
+      stroke="#d6b36a"
+      stroke-opacity="0.08"
+      stroke-width="1"
+    />
+
+    <circle
+      cx="310"
+      cy="310"
+      r="220"
+      stroke="#d6b36a"
+      stroke-opacity="0.05"
+      stroke-width="1"
+      stroke-dasharray="2 12"
+    />
+
+
+    <!-- ========================================================= -->
+    <!-- DISTANT STARS -->
+    <!-- ========================================================= -->
+
+    <g
+      fill="#d6b36a"
+      class="f7-stars"
+    >
+
+      <circle cx="112" cy="158" r="2" opacity="0.45" />
+      <circle cx="170" cy="102" r="1.5" opacity="0.35" />
+      <circle cx="454" cy="112" r="2" opacity="0.5" />
+      <circle cx="522" cy="176" r="1.5" opacity="0.3" />
+      <circle cx="536" cy="382" r="2" opacity="0.42" />
+      <circle cx="106" cy="398" r="1.5" opacity="0.35" />
+      <circle cx="158" cy="478" r="2" opacity="0.4" />
+      <circle cx="466" cy="494" r="1.5" opacity="0.35" />
+      <circle cx="380" cy="82" r="1.5" opacity="0.4" />
+
+    </g>
+
+
+    <!-- ========================================================= -->
+    <!-- SUBTLE CONSTELLATION -->
+    <!-- ========================================================= -->
+
+    <g
+      stroke="#d6b36a"
+      stroke-opacity="0.12"
+      stroke-width="1"
+    >
+
+      <path d="M112 158 L170 102 L235 128" />
+      <path d="M454 112 L522 176 L536 242" />
+      <path d="M106 398 L158 478 L220 460" />
+
+    </g>
+
+
+    <!-- ========================================================= -->
+    <!-- ANCIENT ARCH -->
+    <!-- ========================================================= -->
+
+    <path
+      d="
+        M120 480
+        V270
+        C120 165 196 92 310 92
+        C424 92 500 165 500 270
+        V480
+      "
+      fill="url(#f7-stone)"
+      stroke="#d6b36a"
+      stroke-opacity="0.15"
+      stroke-width="2"
+    />
+
+    <!-- STONE TEXTURE -->
+
+    <path
+      d="
+        M120 480
+        V270
+        C120 165 196 92 310 92
+        C424 92 500 165 500 270
+        V480
+        Z
+      "
+      fill="url(#f7-stone-lines)"
+    />
+
+    <!-- INNER ARCH -->
+
+    <path
+      d="
+        M168 480
+        V275
+        C168 196 226 142 310 142
+        C394 142 452 196 452 275
+        V480
+      "
+      fill="#080c0b"
+      stroke="#d6b36a"
+      stroke-opacity="0.18"
+      stroke-width="2"
+    />
+
+    <!-- ARCH INNER LIGHT -->
+
+    <path
+      d="
+        M185 440
+        V278
+        C185 211 237 164 310 164
+        C383 164 435 211 435 278
+        V440
+      "
+      fill="url(#f7-arch-light)"
+      opacity="0.32"
+    />
+
+
+    <!-- ========================================================= -->
+    <!-- LIGHT SHAFT -->
+    <!-- ========================================================= -->
+
+    <path
+      d="
+        M268 160
+        L225 448
+        L395 448
+        L352 160
+        Z
+      "
+      fill="url(#f7-gold-glow)"
+      opacity="0.12"
+    />
+
+
+    <!-- ========================================================= -->
+    <!-- FLOATING SCRIPTURE FRAGMENTS -->
+    <!-- ========================================================= -->
+
+    <g
+      fill="#d6b36a"
+      font-family="serif"
+      font-size="10"
+      letter-spacing="2"
+      opacity="0.18"
+    >
+
+      <text
+        x="82"
+        y="246"
+        transform="rotate(-90 82 246)"
+      >
+        THE WORD
+      </text>
+
+      <text
+        x="538"
+        y="374"
+        transform="rotate(90 538 374)"
+      >
+        THE WAY
+      </text>
+
+      <text
+        x="170"
+        y="530"
+      >
+        SEEK
+      </text>
+
+      <text
+        x="416"
+        y="530"
+      >
+        DISCOVER
+      </text>
+
+    </g>
+
+
+    <!-- ========================================================= -->
+    <!-- CENTRAL SCROLL GLOW -->
+    <!-- ========================================================= -->
+
+    <circle
+      cx="310"
+      cy="302"
+      r="125"
+      fill="url(#f7-gold-glow)"
+      opacity="0.55"
+      filter="url(#f7-soft-glow)"
+    />
+
+
+    <!-- ========================================================= -->
+    <!-- OPEN SCROLL -->
+    <!-- ========================================================= -->
+
+    <g class="f7-scroll">
+
+      <!-- LEFT ROLL -->
+
+      <ellipse
+        cx="218"
+        cy="300"
+        rx="18"
+        ry="31"
+        fill="#80683d"
+        stroke="#d6b36a"
+        stroke-opacity="0.55"
+        stroke-width="2"
+      />
+
+      <!-- RIGHT ROLL -->
+
+      <ellipse
+        cx="402"
+        cy="300"
+        rx="18"
+        ry="31"
+        fill="#80683d"
+        stroke="#d6b36a"
+        stroke-opacity="0.55"
+        stroke-width="2"
+      />
+
+      <!-- PARCHMENT -->
+
+      <path
+        d="
+          M222 270
+          Q310 250 398 270
+          L398 330
+          Q310 350 222 330
+          Z
+        "
+        fill="url(#f7-parchment)"
+        stroke="#d6b36a"
+        stroke-opacity="0.65"
+        stroke-width="2"
+      />
+
+      <!-- PARCHMENT LINES -->
+
+      <g
+        stroke="#5f4d2f"
+        stroke-opacity="0.28"
+        stroke-width="2"
+      >
+
+        <path d="M248 285 Q310 275 372 285" />
+        <path d="M244 296 Q310 286 376 296" />
+        <path d="M250 307 Q310 297 370 307" />
+        <path d="M260 318 Q310 310 360 318" />
+
+      </g>
+
+    </g>
+
+
+    <!-- ========================================================= -->
+    <!-- CENTRAL F7 SEAL -->
+    <!-- ========================================================= -->
+
+    <circle
+      cx="310"
+      cy="300"
+      r="58"
+      fill="#0c1110"
+      stroke="#d6b36a"
+      stroke-opacity="0.45"
+      stroke-width="2"
+    />
+
+    <circle
+      cx="310"
+      cy="300"
+      r="48"
+      stroke="#d6b36a"
+      stroke-opacity="0.18"
+      stroke-width="1"
+      stroke-dasharray="2 7"
+    />
+
+    <circle
+      cx="310"
+      cy="300"
+      r="36"
+      fill="#d6b36a"
+      fill-opacity="0.08"
+      stroke="#d6b36a"
+      stroke-opacity="0.25"
+      stroke-width="1"
+    />
+
+    <text
+      x="310"
+      y="306"
+      text-anchor="middle"
+      fill="#e8d7a8"
+      font-size="20"
+      font-weight="600"
+      letter-spacing="4"
+    >
+      F7
+    </text>
+
+
+    <!-- ========================================================= -->
+    <!-- DISCOVERY NODES -->
+    <!-- ========================================================= -->
+
+    <g class="f7-nodes">
+
+      <!-- Scripture -->
+
+      <g transform="translate(165 205)">
+
+        <circle
+          r="22"
+          fill="#0d1312"
+          stroke="#d6b36a"
+          stroke-opacity="0.28"
+        />
+
+        <path
+          d="M-8 -7 H8 M-8 0 H8 M-8 7 H4"
+          stroke="#d6b36a"
+          stroke-opacity="0.75"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+
+      </g>
+
+
+      <!-- Mystery -->
+
+      <g transform="translate(455 205)">
+
+        <circle
+          r="22"
+          fill="#0d1312"
+          stroke="#d6b36a"
+          stroke-opacity="0.28"
+        />
+
+        <path
+          d="M-7 -5 Q0 -12 7 -5 Q7 1 0 4 V9"
+          stroke="#d6b36a"
+          stroke-opacity="0.75"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+        />
+
+        <circle
+          cx="0"
+          cy="14"
+          r="1.5"
+          fill="#d6b36a"
+        />
+
+      </g>
+
+
+      <!-- Discovery -->
+
+      <g transform="translate(165 395)">
+
+        <circle
+          r="22"
+          fill="#0d1312"
+          stroke="#d6b36a"
+          stroke-opacity="0.28"
+        />
+
+        <path
+          d="M-7 -2 L0 -9 L7 -2 L0 7 Z"
+          stroke="#d6b36a"
+          stroke-opacity="0.75"
+          stroke-width="2"
+          fill="none"
+        />
+
+      </g>
+
+
+      <!-- Investigation -->
+
+      <g transform="translate(455 395)">
+
+        <circle
+          r="22"
+          fill="#0d1312"
+          stroke="#d6b36a"
+          stroke-opacity="0.28"
+        />
+
+        <circle
+          cx="-3"
+          cy="-3"
+          r="7"
+          stroke="#d6b36a"
+          stroke-opacity="0.75"
+          stroke-width="2"
+        />
+
+        <path
+          d="M2 2 L8 8"
+          stroke="#d6b36a"
+          stroke-opacity="0.75"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+
+      </g>
+
+    </g>
+
+
+    <!-- ========================================================= -->
+    <!-- CONNECTION LINES -->
+    <!-- ========================================================= -->
+
+    <g
+      stroke="#d6b36a"
+      stroke-opacity="0.15"
+      stroke-width="1"
+      stroke-dasharray="3 8"
+    >
+
+      <path d="M165 205 Q220 230 255 260" />
+      <path d="M455 205 Q400 230 365 260" />
+      <path d="M165 395 Q220 365 255 340" />
+      <path d="M455 395 Q400 365 365 340" />
+
+    </g>
+
+
+    <!-- ========================================================= -->
+    <!-- LOWER DISCOVERY PLATE -->
+    <!-- ========================================================= -->
+
+    <path
+      d="
+        M190 462
+        Q310 440 430 462
+        L420 490
+        Q310 510 200 490
+        Z
+      "
+      fill="#0c1110"
+      stroke="#d6b36a"
+      stroke-opacity="0.16"
+      stroke-width="1"
+    />
+
+    <text
+      x="310"
+      y="482"
+      text-anchor="middle"
+      fill="#d6b36a"
+      fill-opacity="0.5"
+      font-size="9"
+      letter-spacing="3"
+    >
+      DISCOVER • CONNECT • REVEAL
+    </text>
+
+
+    <!-- ========================================================= -->
+    <!-- DUST / LIGHT PARTICLES -->
+    <!-- ========================================================= -->
+
+    <g
+      fill="#e8d7a8"
+      class="f7-particles"
+    >
+
+      <circle cx="205" cy="175" r="1.5" />
+      <circle cx="398" cy="180" r="1" />
+      <circle cx="132" cy="315" r="1" />
+      <circle cx="492" cy="298" r="1.5" />
+      <circle cx="238" cy="438" r="1" />
+      <circle cx="382" cy="425" r="1.5" />
+      <circle cx="310" cy="115" r="1" />
+
+    </g>
+
+  </svg>
+
+</div>
+
+
+<!-- ============================================================= -->
+<!-- HERO MOTION -->
+<!-- ============================================================= -->
+
+<style>
+
+  .f7-scroll {
+    transform-origin: 310px 300px;
+    animation: f7-scroll-breathe 8s ease-in-out infinite;
+  }
+
+  .f7-nodes {
+    transform-origin: 310px 300px;
+    animation: f7-nodes-breathe 7s ease-in-out infinite;
+  }
+
+  .f7-stars {
+    animation: f7-stars-pulse 6s ease-in-out infinite;
+  }
+
+  .f7-particles circle:nth-child(1),
+  .f7-particles circle:nth-child(4),
+  .f7-particles circle:nth-child(7) {
+    animation: f7-particle-float 7s ease-in-out infinite;
+  }
+
+  .f7-particles circle:nth-child(2),
+  .f7-particles circle:nth-child(5) {
+    animation: f7-particle-float 9s ease-in-out infinite reverse;
+  }
+
+  @keyframes f7-scroll-breathe {
+
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+
+    50% {
+      transform: translateY(-4px) scale(1.012);
+    }
+
+  }
+
+  @keyframes f7-nodes-breathe {
+
+    0%,
+    100% {
+      opacity: 0.82;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+  }
+
+  @keyframes f7-stars-pulse {
+
+    0%,
+    100% {
+      opacity: 0.65;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+  }
+
+  @keyframes f7-particle-float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.3;
+    }
+
+    50% {
+      transform: translateY(-8px);
+      opacity: 0.8;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .f7-scroll,
+    .f7-nodes,
+    .f7-stars,
+    .f7-particles circle {
+      animation: none;
+    }
+
+  }
+
+</style>
 
       </div>
 
